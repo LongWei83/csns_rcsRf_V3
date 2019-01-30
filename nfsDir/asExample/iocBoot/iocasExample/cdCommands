@@ -1,0 +1,11 @@
+startup = "/home/long/nfsDir/asExample/iocBoot/iocasExample"
+putenv("IOC=iocasExample")
+top = "/home/long/nfsDir/asExample"
+putenv("TOP=/home/long/nfsDir/asExample")
+topbin = "/home/long/nfsDir/asExample/bin/vxWorks-mpc8572"
+epics_base = "/home/long/Epics/base-3.15.4"
+putenv("EPICS_BASE=/home/long/Epics/base-3.15.4")
+epics_basebin = "/home/long/Epics/base-3.15.4/bin/vxWorks-mpc8572"
+autosave = "/home/long/Epics/autosave-R5-7-1"
+putenv("AUTOSAVE=/home/long/Epics/autosave-R5-7-1")
+autosavebin = "/home/long/Epics/autosave-R5-7-1/bin/vxWorks-mpc8572"

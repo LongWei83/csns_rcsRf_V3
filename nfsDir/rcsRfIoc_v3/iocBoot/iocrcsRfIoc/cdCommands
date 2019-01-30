@@ -1,0 +1,11 @@
+startup = "/home/long/nfsDir/rcsRfIoc_v3/iocBoot/iocrcsRfIoc"
+putenv("IOC=iocrcsRfIoc")
+top = "/home/long/nfsDir/rcsRfIoc_v3"
+putenv("TOP=/home/long/nfsDir/rcsRfIoc_v3")
+topbin = "/home/long/nfsDir/rcsRfIoc_v3/bin/vxWorks-mpc8572"
+epics_base = "/home/long/Epics/base-3.15.4"
+putenv("EPICS_BASE=/home/long/Epics/base-3.15.4")
+epics_basebin = "/home/long/Epics/base-3.15.4/bin/vxWorks-mpc8572"
+autosave = "/home/long/Epics/autosave-R5-7-1"
+putenv("AUTOSAVE=/home/long/Epics/autosave-R5-7-1")
+autosavebin = "/home/long/Epics/autosave-R5-7-1/bin/vxWorks-mpc8572"
