@@ -261,6 +261,9 @@ int D212Config (int cardNum, int index)
    pCard->next = NULL;
    pCard->cardNum = cardNum;
    pCard->preTrig_offset = 0;
+   
+   /*将int processing元素初始化为0，标识当前自动开机程序没有运行*/
+   pCard->processing = 0;
 
 
    /*BAR0 corresponds to 9656 register*/
@@ -289,6 +292,9 @@ int D212Config (int cardNum, int index)
    pCard->intLine = intLine;
 
    /*pCard->intLine = getIntLine(bus,device);*/
+   
+   /*创建semSaveParm互斥信号量，用来多个saveParmsCardNo的任务的通讯，避免对同一文件资源的抢占，造成文件的错误操作*/
+   semSaveParm = semMCreate(SEM_Q_FIFO | SEM_DELETE_SAFE);
 
    /* create DMA0 semphore */
    pCard->semDMA0 = semBCreate(SEM_Q_PRIORITY, SEM_EMPTY);
@@ -1734,6 +1740,14 @@ void set_AMP_Coefficient (D212Card* pCard, float ampCoefficient)
    unsigned int value;
    value = (unsigned int)(ampCoefficient * CALC_AMP_Coefficient_MUL + CALC_AMP_Coefficient_ADD);
    FPGA_REG_WRITE32(pCard->fpgaAddr, REG_AMP_Coefficient, value);
+   
+   /*调用保存参数的函数saveParms*/
+   /*使用PV值覆写序号为29的文件参数*/
+   if(pCard->processing != 0)
+   {
+	   saveParms(29, pCard->cardNum, ampCoefficient);
+   }
+   /*调用保存参数的函数saveParms——结束*/
 }
 
 float get_AMP_Coefficient (D212Card* pCard)
@@ -1822,6 +1836,14 @@ void set_Tune_I (D212Card* pCard, float tuneI)
    unsigned int value;
    value = (unsigned int)(tuneI * CALC_Tune_I_Set_MUL + CALC_Tune_I_Set_ADD);
    FPGA_REG_WRITE32(pCard->fpgaAddr, REG_Tune_I_Set, value);
+   
+   /*调用保存参数的函数saveParms*/
+   /*使用PV值覆写序号为23的文件参数*/
+   if(pCard->processing != 0)
+   {
+	   saveParms(23, pCard->cardNum, tuneI);
+   }
+   /*调用保存参数的函数saveParms——结束*/
 }
 
 float get_Tune_I (D212Card* pCard)
@@ -1834,6 +1856,14 @@ void set_Tune_I_1 (D212Card* pCard, float tuneI_1)
    unsigned int value;
    value = (unsigned int)(tuneI_1 * CALC_Tune_I_Set1_MUL + CALC_Tune_I_Set1_ADD);
    FPGA_REG_WRITE32(pCard->fpgaAddr, REG_Tune_I_Set1, value);
+   
+   /*调用保存参数的函数saveParms*/
+   /*使用PV值覆写序号为24的文件参数*/
+   if(pCard->processing != 0)
+   {
+	   saveParms(24, pCard->cardNum, tuneI_1);
+   }
+   /*调用保存参数的函数saveParms——结束*/
 }
 
 float get_Tune_I_1 (D212Card* pCard)
@@ -1846,6 +1876,14 @@ void set_Tune_I_2 (D212Card* pCard, float tuneI_2)
    unsigned int value;
    value = (unsigned int)(tuneI_2 * CALC_Tune_I_Set2_MUL + CALC_Tune_I_Set2_ADD);
    FPGA_REG_WRITE32(pCard->fpgaAddr, REG_Tune_I_Set2, value);
+   
+   /*调用保存参数的函数saveParms*/
+   /*使用PV值覆写序号为25的文件参数*/
+   if(pCard->processing != 0)
+   {
+	   saveParms(25, pCard->cardNum, tuneI_2);
+   }
+   /*调用保存参数的函数saveParms——结束*/
 }
 
 float get_Tune_I_2 (D212Card* pCard)
@@ -1858,6 +1896,14 @@ void set_Tune_I_3 (D212Card* pCard, float tuneI_3)
    unsigned int value;
    value = (unsigned int)(tuneI_3 * CALC_Tune_I_Set3_MUL + CALC_Tune_I_Set3_ADD);
    FPGA_REG_WRITE32(pCard->fpgaAddr, REG_Tune_I_Set3, value);
+   
+   /*调用保存参数的函数saveParms*/
+   /*使用PV值覆写序号为31的文件参数*/
+   if(pCard->processing != 0)
+   {
+	   saveParms(31, pCard->cardNum, tuneI_3);
+   }
+   /*调用保存参数的函数saveParms——结束*/
 }
 
 float get_Tune_I_3 (D212Card* pCard)
@@ -1894,6 +1940,14 @@ void set_Front_Tune_I (D212Card* pCard, float frontTuneI)
    unsigned int value;
    value = (unsigned int)(frontTuneI * CALC_Front_Tune_I_Set_MUL + CALC_Front_Tune_I_Set_ADD);
    FPGA_REG_WRITE32(pCard->fpgaAddr, REG_Front_Tune_I_Set, value);
+   
+   /*调用保存参数的函数saveParms*/
+   /*使用PV值覆写序号为30的文件参数*/
+   if(pCard->processing != 0)
+   {
+	   saveParms(30, pCard->cardNum, frontTuneI);
+   }
+   /*调用保存参数的函数saveParms——结束*/
 }
 
 float get_Front_Tune_I (D212Card* pCard)
@@ -2470,4 +2524,477 @@ void netCloseAll(int mode){
 		printf("netCloseAll: net connection will restart\n");
 		taskSpawn(taskName, TPRI_NETINIT, 0, USER_STACK_SIZE, (FUNCPTR)netInit, mode, 0,0,0,0,0,0,0,0,0);
 	}
+}
+
+int autoOn(int cardNum)
+{
+	char taskName[10];
+	
+	sprintf(taskName,"%s%d","autoOnCardNo",cardNum); /*在每个自动开机任务名的后面加上板卡号，用来识别开机的系统*/
+	/* 发起自动开机的任务 */
+	if( ERROR == taskSpawn(taskName, 100, VX_FP_TASK, 100000, (FUNCPTR) autoOnCardNo, cardNum, 0, 0, 0, 0, 0, 0, 0, 0, 0))
+	{
+	   printf("Fail to spawn autoOn task!\n");
+	   return ERROR;
+	}
+}
+
+int autoOff(int cardNum)
+{
+	char taskName[10];
+	
+	sprintf(taskName,"%s%d","autoOffCardNo",cardNum); /*在每个自动关机任务名的后面加上板卡号，用来识别关机的系统*/
+	/* 发起自动关机的任务 */
+	if( ERROR == taskSpawn(taskName, 99, VX_FP_TASK, 100000, (FUNCPTR) autoOffCardNo, cardNum, 0, 0, 0, 0, 0, 0, 0, 0, 0))
+	{
+	   printf("Fail to spawn autoOff task!\n");
+	   return ERROR;
+	}
+}
+
+/*自动开机任务的执行函数*/
+void autoOnCardNo(int cardNum)
+{
+	D212Card *pCard;
+	
+	FILE * fp;
+	
+	double parms[35]={0}; /*自动开机所用到的参数为35个参数*/
+	
+	char fileName[20];
+	
+	char charParm[20];
+	
+	int i = 0;
+	
+	unsigned int value; /*value used to set the FPGA reg*/
+	
+	pCard = getCardStruct(cardNum); /*获取对应板卡号的FPGA板卡的资源<结构体>*/
+	
+	pCard->processing = 1; /*将板卡结构体中int processing元素赋值为1，用来标识板卡开始运行自动开机程序*/
+	
+	sprintf(fileName,"parmCardNo%d",cardNum); /*存放参数的文件名为parmCardNo[cardNum]*/
+	/*读取文件中的各参数并存入数组中*/
+	if((fp = fopen(fileName,"r")) == NULL) /*打开参数文件*/
+	{
+		printf("can't open file\n");
+	}
+	
+	while(fscanf(fp,"%s",charParm) == 1) /*循环读取文件的每个参数并存入字符串charParm中*/
+	{
+		parms[i] = atof(charParm); /*将读取到的字符串参数转化为double类型的数据并存入到数组parms中*/
+	}
+	
+	rewind(fp); /*将文件指针返回到文件的开头*/
+	
+	/*关闭文件*/
+	if(fclose(fp) != 0)
+	{
+		printf("Error in closing file\n");
+	}
+	
+	/*对FPGA寄存器进行写操作，正式进入自动开机的过程*/
+	/*设置点频频率*/
+	set_Fix_Frequency (pCard, parms[0]);
+	
+	/*设置工作的脉冲周期*/
+	set_Work_Period (pCard, parms[1]);
+	
+	/*设置点频下幅度*/
+	set_AMP (pCard, parms[2]);
+	
+	/*设置FF Delay的值*/
+	set_FF_Delay (pCard, parms[3]);
+	
+	/*设置幅度曲线的系数*/
+	set_AMP_Coefficient (pCard, parms[4]);
+	
+	/*设置幅度闭环的P参数*/
+	set_AMP_P (pCard, parms[5]);
+	
+	/*设置幅度闭环的I参数*/
+	set_AMP_I (pCard, parms[6]);
+	
+	/*设置调谐闭环大偏流的值*/
+	set_Bias (pCard, parms[7]);
+	
+	/*设置调谐闭环的相位角*/
+	set_Fix_Tuning_Angle (pCard, parms[8]);
+	
+	/*设置调谐闭环的P值*/
+	set_Tune_P (pCard, parms[9]);
+	
+	/*设置调谐闭环的I值*/
+	set_Tune_I (pCard, parms[10]);
+	
+	/*设置调谐闭环的I1值*/
+	set_Tune_I_1 (pCard, parms[11]);
+	
+	/*设置调谐闭环的I2值*/
+	set_Tune_I_2 (pCard, parms[12]);
+	
+	/*设置调谐闭环的I3值*/
+	set_Tune_I_3 (pCard, parms[13]);
+	
+	/*设置栅极调谐闭环的小偏流值*/
+	set_Front_Bias (pCard, parms[14]);
+	
+	/*设置栅极调谐闭环的相位角*/
+	set_Front_Fix_Tuning_Angle (pCard, parms[15]);
+	
+	/*设置栅极调谐闭环的P值*/
+	set_Front_Tune_P (pCard, parms[16]);
+	
+	/*设置栅极调谐的I值*/
+	set_Front_Tune_I (pCard, parms[17]);
+	
+	/*设置相位闭环的初始相位*/
+	set_Initial_Phase (pCard, parms[18]);
+	
+	/*设置相位闭环的P值*/
+	set_phase_p (pCard, parms[19]);
+	
+	/*设置相位闭环的I值*/
+	set_phase_i (pCard, parms[20]);
+	
+	pCard->processing = 10; /*标识自动开机过程参数初始化完成*/
+	
+	/*切换到扫频模式*/
+	set_point_Sweep(pCard);
+	
+	/*切换到脉冲工作模式*/
+	set_Sweep_Option (pCard);
+	
+	/*切换sg到脉冲模式*/
+	set_SG_Mode (pCard);
+	
+	/*开幅度闭环*/
+	clear_AMP_Option (pCard);
+	
+	/*关幅度闭环前馈功能*/
+	clear_AMP_FF_Option (pCard);
+	
+	/*关幅度闭环前馈表计算功能*/
+	clear_AMP_Modify_Option (pCard);
+	
+	/*开调谐闭环*/
+	clear_Tune_Option (pCard);
+	
+	/*关调谐闭环前馈功能*/
+	clear_Tune_FF_Option (pCard);
+	
+	/*关调谐闭环前馈表计算功能*/
+	clear_Tune_Modify_Option (pCard);
+	
+	/*开栅极调谐闭环*/
+	clear_Front_Tune_Option (pCard);
+	
+	/*开相位闭环*/
+	clear_Phase_Option (pCard);
+	
+	/*关相位闭环前馈功能*/
+	clear_Phase_FF_Option (pCard);
+	
+	/*关相位闭环前馈表计算功能*/
+	clear_Phase_Modify_Option (pCard);
+	
+	/*复位中断*/
+	set_RFReset_Option (pCard);
+	
+	/*复位驱动*/
+	set_Drv_Option (pCard);
+	
+	/*复位中断*/
+	set_RFReset_Option (pCard);
+	
+	/*复位驱动*/
+	set_Drv_Option (pCard);
+	
+	pCard->processing = 20; /*标识自动开机过程开关量初始化完成*/
+	
+	/*启动幅度闭环前馈表计算功能*/
+	set_AMP_Modify_Option (pCard);
+	
+	/*启动调谐闭环前馈表计算功能*/
+	set_Tune_Modify_Option (pCard);
+	
+	/*启动相位闭环前馈表计算功能*/
+	set_Phase_Modify_Option (pCard);
+	
+	/*延时0.5s*/
+	/*任务主动放弃CPU资源进入延时态，此时其他同级别的任务可以获取CPU资源并运行*/
+	taskDelay(sysClkRateGet()/2);
+	
+	/*复位中断*/
+	set_RFReset_Option (pCard);
+	
+	/*复位驱动*/
+	set_Drv_Option (pCard);
+	
+	/*复位中断*/
+	set_RFReset_Option (pCard);
+	
+	/*复位驱动*/
+	set_Drv_Option (pCard);
+	
+	pCard->processing = 30; /*标识自动开机过程前馈计算启动完成*/
+	
+	/*升点频幅度值*/
+	set_AMP (pCard, parms[21]);
+	
+	/*延时0.5s*/
+	taskDelay(sysClkRateGet()/2);
+	
+	/*闭调谐闭环*/
+	set_Tune_Option (pCard);
+	
+	/*延时0.5s*/
+	taskDelay(sysClkRateGet()/2);
+	
+	/*闭栅极调谐闭环*/
+	set_Front_Tune_Option (pCard);
+	
+	pCard->processing = 40; /*标识调谐闭环和栅极调谐闭环完成*/
+	
+	/*延时0.5s*/
+	taskDelay(sysClkRateGet()/2);
+	
+	/*加调谐闭环前馈功能*/
+	set_Tune_FF_Option (pCard);
+	
+	/*延时5s*/
+	taskDelay(sysClkRateGet() * 5);
+	
+	/*关调谐闭环前馈表计算功能，固定前馈表的值*/
+	clear_Tune_Modify_Option (pCard);
+	
+	pCard->processing = 60; /*标识调谐闭环前馈修正完成*/
+	
+	/*调整栅极调谐闭环的I值*/
+	set_Front_Tune_I (pCard, parms[22]);
+	
+	/*延时0.5s*/
+	taskDelay(sysClkRateGet()/2);
+	
+	/*闭幅度闭环*/
+	set_AMP_Option (pCard);
+	
+	/*延时0.5s*/
+	taskDelay(sysClkRateGet()/2);
+	
+	/*调整调谐闭环I的值*/
+	set_Tune_I (pCard, parms[23]);
+	
+	/*调整调谐闭环I1的值*/
+	set_Tune_I_1 (pCard, parms[24]);
+	
+	/*调整调谐闭环I2的值*/
+	set_Tune_I_2 (pCard, parms[25]);
+	
+	/*调整调谐闭环I3的值*/
+	set_Tune_I_3 (pCard, parms[26]);
+	
+	pCard->processing = 70; /*标识幅度闭环、调谐闭环和栅极调谐闭环I值调整完成*/
+	
+	/*延时0.5s*/
+	taskDelay(sysClkRateGet()/2);
+	
+	/*加幅度闭环前馈功能*/
+	set_AMP_FF_Option (pCard);
+	
+	/*延时0.5s*/
+	taskDelay(sysClkRateGet()/2);
+	
+	/*升扫频幅度曲线系数*/
+	set_AMP_Coefficient (pCard, parms[27]);
+	
+		/*延时0.5s*/
+	taskDelay(sysClkRateGet()/2);
+	
+	/*升扫频幅度曲线系数*/
+	set_AMP_Coefficient (pCard, parms[28]);
+	
+	/*延时0.5s*/
+	taskDelay(sysClkRateGet()/2);
+	
+	/*升扫频幅度曲线系数*/
+	set_AMP_Coefficient (pCard, parms[29]);
+	
+	pCard->processing = 90; /*标识加幅度闭环前馈功能和升幅度系数完成*/
+	
+	/*最后调整栅极调谐闭环I值*/
+	set_Front_Tune_I (pCard, parms[30]);
+	
+	/*最后调整调谐闭环I3值*/
+	set_Tune_I_3 (pCard, parms[31]);
+	
+	
+	/*延时0.5s*/
+	taskDelay(sysClkRateGet()/2);
+	
+	/*再次计算调谐前馈表的值*/
+	set_Tune_Modify_Option (pCard);
+	
+	/*延时0.5s*/
+	taskDelay(sysClkRateGet()/2);
+	
+	/*闭相位闭环*/
+	set_Phase_Option (pCard);
+	
+	/*延时0.5s*/
+	taskDelay(sysClkRateGet()/2);
+	
+	/*加相位闭环前馈功能*/
+	set_Phase_FF_Option (pCard);
+	
+	/*设置腔间相位*/
+	set_Initial_Ref_Phase (pCard, parms[32]);
+	
+	/*设置FF DELAY的值*/
+	set_FF_Delay (pCard, parms[33]);
+	
+	/*设置RBF DELAY的值*/
+	set_RBF_Delay (pCard, parms[34]);
+	
+	pCard->processing = 100; /*最后的栅极调谐闭环I值和调谐闭环I3值调整完成、相位闭环完成和腔间相位以及电缆延时补偿设置完成*/
+	
+	/*延时1s*/
+	taskDelay(sysClkRateGet());
+	
+	pCard->processing = 0;  /*标识自动开机任务的完成*/
+}
+
+void autoOffCardNo(int cardNum)
+{
+	D212Card *pCard;
+	
+	char taskName[50];
+	
+	int taskId;
+	
+	pCard = getCardStruct(cardNum); /*获取对应板卡号的FPGA板卡的资源<结构体>*/
+	
+	/*如果对应板卡上的自动开机任务正在运行则删除该任务*/
+	if(pCard->processing != 0)
+	{
+		sprintf(taskName, "%s%d","autoOnCardNo",cardNum);
+		taskId = taskNameToId(taskName);
+		if(taskId != taskIdSelf() && taskId != ERROR)
+		{
+			taskDelete(taskId);
+		}
+	}
+	
+	/*如果此时没有正在运行的自动开机任务，需要在自动关机任务进入延时状态时禁止运行自动开机任务*/
+	if(pCard->processing == 0)
+	{
+		pCard->processing = 200;
+	}
+	
+	/*开相位闭环*/
+	clear_Phase_Option (pCard);
+	
+	/*延时0.5s*/
+	taskDelay(sysClkRateGet()/2);
+	
+	/*开栅极调谐闭环*/
+	clear_Front_Tune_Option (pCard);
+	
+	/*延时0.5s*/
+	taskDelay(sysClkRateGet()/2);
+	
+	/*点频下幅度降为0*/
+	set_AMP (pCard, 0);
+	
+	/*停止计算幅度闭环前馈表的值*/
+	clear_AMP_Modify_Option (pCard);
+	
+	/*停止计算调谐闭环前馈表的值*/
+	clear_Tune_Modify_Option (pCard);
+	
+	/*停止计算相位闭环前馈表的值*/
+	clear_Phase_Modify_Option (pCard);
+	
+	/*关调谐闭环前馈功能*/
+	clear_Tune_FF_Option (pCard);
+	
+	/*关幅度闭环前馈功能*/
+	clear_AMP_FF_Option (pCard);
+	
+	/*关相位闭环前馈功能*/
+	clear_Phase_FF_Option (pCard);
+	
+	pCard->processing = 0; /*此时可以允许自动开机任务的运行了*/
+}
+
+int saveParms(int index, int cardNum, double val)
+{
+	char taskName[10];
+	int val2int;
+	
+	sprintf(taskName,"%s%d","saveParmsCardNo",cardNum); /*在每个保存参数任务名的后面加上板卡号，用来识别保存的是第几套高频系统的参数*/
+	
+	/*因为传递给任务的参数只能为整数，因此将其保留小数点后3位，再乘上1000*/
+	/*在保存参数任务中需要将该值转换为double类型再除以1000*/
+	if(0 < val < 100)
+	{
+		val2int = (int)(val * 1000);
+		/* 发起保存参数的任务 */
+		/*保存参数的任务的具体的执行函数为saveParmsCardNo*/
+		/*任务的优先级别设置为较低的优先级别，低于之前的自动开关机程序以及其它的数据采集任务等*/
+		/*这样可以不影响系统其他较为重要功能的运行*/
+		if( ERROR == taskSpawn(taskName, 150, VX_FP_TASK, 100000, (FUNCPTR) saveParmsCardNo, index, cardNum, val2int, 0, 0, 0, 0, 0, 0, 0))
+		{
+		   printf("Fail to spawn saveParms task!\n");
+		   return ERROR;
+		}
+	}
+	else
+	{
+		return ERROR;
+	}
+	return OK;
+}
+
+void saveParmsCardNo(int index, int cardNum, int val2int)
+{
+	D212Card *pCard;
+	double val;
+	FILE * fp;
+	char fileName[20];
+	char tmp[20];
+	int i;
+	
+	pCard = getCardStruct(cardNum); /*获取对应板卡号的FPGA板卡的资源<结构体>*/
+	semTake(pCard->semSaveParm, WAIT_FOREVER);
+	
+	val = ((double) val2int) / 1000; /*将之前saveParms函数传递过来的PV的值恢复为double类型，并保留小数点后3位精度*/
+	sprintf(fileName,"parmCardNo%d",cardNum); /*存放参数的文件名为parmCardNo[cardNum]*/
+	
+	/*以可读写的方式打开参数文件*/
+	if((fp = fopen(fileName,"r+")) == NULL)
+	{
+		printf("can't open file\n");
+	}
+	
+	/*fscanf函数读取参数文件，并且移动文件指针fp到第index个参数之前（不包括换行符"\n"）*/
+	for(i=0;i<index;i++)
+	{
+		fscanf(fp,"%s",tmp);
+	}
+	
+	/*fprintf将fp指针处的内容覆写替换为val的值，由于fp位于"/n"换行符之前，所以替换文件内容时在前面加上换行符*/
+	fprintf(fp,"\n%f",val);
+	
+	/*将fp指针返回到文件的开头*/
+	rewind(fp);
+	
+	/*关闭文件*/
+	if(fclose(fp) != 0)
+	{
+		printf("Error in closing file\n");
+	}
+	
+	/*释放互斥信号量*/
+	semGive(pCard->semSaveParm);
 }

@@ -24,6 +24,8 @@ DBD += asInclude.dbd
 rcsRfIocSupport_SRCS += devD212.c
 rcsRfIocSupport_SRCS += drvD212.c
 rcsRfIocSupport_SRCS += dbSubExample.c
+rcsRfIocSupport_SRCS += devAutoOn.c
+rcsRfIocSupport_SRCS += devAutoOff.c
 
 # Link locally-provided code into the support library,
 # rather than directly into the IOC application.

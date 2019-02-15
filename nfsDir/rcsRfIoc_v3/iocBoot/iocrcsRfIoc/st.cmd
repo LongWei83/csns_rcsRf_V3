@@ -2,6 +2,12 @@
 
 ## The following is needed if your board support package doesn't at boot time
 ## automatically cd to the directory containing its startup script
+
+## 将VxWorks的同优先级的任务调度方式设置为：时间片轮转
+## 时间片的长度为1/60 (s)
+
+kernelTimeSlice(sysClkRateGet()/60)
+
 cd "/home/long/nfsDir/rcsRfIoc_v3"
 
 ld <bin/vxWorks-mpc8572/rcsRfIoc.munch

@@ -93,7 +93,9 @@ struct D212Card {
    int readDMA2;
    unsigned int intLine;
    unsigned int fpgaVersion;
+   SEM_ID semSaveParm; /*该互斥信号，用来多个saveParmsCardNo的任务的通讯，避免对同一文件资源的抢占，造成文件的错误操作*/
    SEM_ID semDMA0;              /*DMA0 interrupt*/
+   int processing;        /*标识该板卡的自动开机程序正在运行中，避免重复发起自动开机程序的任务*/
 
    int *buffer;       /*store data transferred via DMA*/
 
@@ -297,6 +299,12 @@ int Front_Tune_FF_OPTION_get (D212Card* pCard);
 void set_Front_Tune_Modify_Option (D212Card* pCard);
 void clear_Front_Tune_Modify_Option (D212Card* pCard);
 int Front_Tune_Modify_OPTION_get (D212Card* pCard);
+int autoOn(int cardNum); /*声明自动开机函数*/
+int autoOff(int cardNum); /*声明自动关机函数*/
+void autoOffCardNo(int cardNum); /*声明自动关机任务的执行函数*/
+void autoOnCardNo(int cardNum); /*声明自动开机任务的执行函数*/
+int saveParms(int index, int cardNum, double val); /*声明保存参数的函数*/
+void saveParmsCardNo(int index, int cardNum, int val2int) /*声明保存参数任务的执行函数*/
 
 
 #endif  /*end of DRV_D212_h*/
