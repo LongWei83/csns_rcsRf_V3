@@ -2573,7 +2573,7 @@ void autoOnCardNo(int cardNum)
 	
 	pCard->processing = 1; /*将板卡结构体中int processing元素赋值为1，用来标识板卡开始运行自动开机程序*/
 	
-	sprintf(fileName,"parmCardNo%d",cardNum); /*存放参数的文件名为parmCardNo[cardNum]*/
+	sprintf(fileName,"parmCardNo%d.txt",cardNum); /*存放参数的文件名为parmCardNo[cardNum].txt*/
 	/*读取文件中的各参数并存入数组中*/
 	if((fp = fopen(fileName,"r")) == NULL) /*打开参数文件*/
 	{
@@ -2969,7 +2969,7 @@ void saveParmsCardNo(int index, int cardNum, int val2int)
 	semTake(pCard->semSaveParm, WAIT_FOREVER);
 	
 	val = ((double) val2int) / 1000; /*将之前saveParms函数传递过来的PV的值恢复为double类型，并保留小数点后3位精度*/
-	sprintf(fileName,"parmCardNo%d",cardNum); /*存放参数的文件名为parmCardNo[cardNum]*/
+	sprintf(fileName,"parmCardNo%d.txt",cardNum); /*存放参数的文件名为parmCardNo[cardNum].txt*/
 	
 	/*以可读写的方式打开参数文件*/
 	if((fp = fopen(fileName,"r+")) == NULL)
