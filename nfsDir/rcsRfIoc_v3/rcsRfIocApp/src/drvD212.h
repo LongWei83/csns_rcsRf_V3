@@ -304,7 +304,7 @@ int autoOff(int cardNum); /*声明自动关机函数*/
 void autoOffCardNo(int cardNum); /*声明自动关机任务的执行函数*/
 void autoOnCardNo(int cardNum); /*声明自动开机任务的执行函数*/
 int saveParms(int index, int cardNum, double val); /*声明保存参数的函数*/
-void saveParmsCardNo(int index, int cardNum, int val2int) /*声明保存参数任务的执行函数*/
+void saveParmsCardNo(int index, int cardNum, int val2int); /*声明保存参数任务的执行函数*/
 
 
 #endif  /*end of DRV_D212_h*/

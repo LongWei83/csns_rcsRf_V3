@@ -294,7 +294,12 @@ int D212Config (int cardNum, int index)
    /*pCard->intLine = getIntLine(bus,device);*/
    
    /*创建semSaveParm互斥信号量，用来多个saveParmsCardNo的任务的通讯，避免对同一文件资源的抢占，造成文件的错误操作*/
-   semSaveParm = semMCreate(SEM_Q_FIFO | SEM_DELETE_SAFE);
+   pCard->semSaveParm = semMCreate(SEM_Q_FIFO | SEM_DELETE_SAFE);
+   if(pCard->semSaveParm == NULL)
+   {
+        fprintf(stderr,"create semSaveParm error\n");
+        return ERROR;
+   }
 
    /* create DMA0 semphore */
    pCard->semDMA0 = semBCreate(SEM_Q_PRIORITY, SEM_EMPTY);
@@ -1743,7 +1748,7 @@ void set_AMP_Coefficient (D212Card* pCard, float ampCoefficient)
    
    /*调用保存参数的函数saveParms*/
    /*使用PV值覆写序号为29的文件参数*/
-   if(pCard->processing != 0)
+   if(pCard->processing == 0)
    {
 	   saveParms(29, pCard->cardNum, ampCoefficient);
    }
@@ -1839,7 +1844,7 @@ void set_Tune_I (D212Card* pCard, float tuneI)
    
    /*调用保存参数的函数saveParms*/
    /*使用PV值覆写序号为23的文件参数*/
-   if(pCard->processing != 0)
+   if(pCard->processing == 0)
    {
 	   saveParms(23, pCard->cardNum, tuneI);
    }
@@ -1859,7 +1864,7 @@ void set_Tune_I_1 (D212Card* pCard, float tuneI_1)
    
    /*调用保存参数的函数saveParms*/
    /*使用PV值覆写序号为24的文件参数*/
-   if(pCard->processing != 0)
+   if(pCard->processing == 0)
    {
 	   saveParms(24, pCard->cardNum, tuneI_1);
    }
@@ -1879,7 +1884,7 @@ void set_Tune_I_2 (D212Card* pCard, float tuneI_2)
    
    /*调用保存参数的函数saveParms*/
    /*使用PV值覆写序号为25的文件参数*/
-   if(pCard->processing != 0)
+   if(pCard->processing == 0)
    {
 	   saveParms(25, pCard->cardNum, tuneI_2);
    }
@@ -1899,7 +1904,7 @@ void set_Tune_I_3 (D212Card* pCard, float tuneI_3)
    
    /*调用保存参数的函数saveParms*/
    /*使用PV值覆写序号为31的文件参数*/
-   if(pCard->processing != 0)
+   if(pCard->processing == 0)
    {
 	   saveParms(31, pCard->cardNum, tuneI_3);
    }
@@ -1943,7 +1948,7 @@ void set_Front_Tune_I (D212Card* pCard, float frontTuneI)
    
    /*调用保存参数的函数saveParms*/
    /*使用PV值覆写序号为30的文件参数*/
-   if(pCard->processing != 0)
+   if(pCard->processing == 0)
    {
 	   saveParms(30, pCard->cardNum, frontTuneI);
    }
@@ -2583,6 +2588,7 @@ void autoOnCardNo(int cardNum)
 	while(fscanf(fp,"%s",charParm) == 1) /*循环读取文件的每个参数并存入字符串charParm中*/
 	{
 		parms[i] = atof(charParm); /*将读取到的字符串参数转化为double类型的数据并存入到数组parms中*/
+                i++;
 	}
 	
 	rewind(fp); /*将文件指针返回到文件的开头*/
@@ -2742,28 +2748,28 @@ void autoOnCardNo(int cardNum)
 	/*升点频幅度值*/
 	set_AMP (pCard, parms[21]);
 	
-	/*延时0.5s*/
-	taskDelay(sysClkRateGet()/2);
+	/*延时1s*/
+	taskDelay(sysClkRateGet());
 	
 	/*闭调谐闭环*/
 	set_Tune_Option (pCard);
 	
 	/*延时0.5s*/
-	taskDelay(sysClkRateGet()/2);
+	taskDelay(sysClkRateGet());
 	
 	/*闭栅极调谐闭环*/
 	set_Front_Tune_Option (pCard);
 	
 	pCard->processing = 40; /*标识调谐闭环和栅极调谐闭环完成*/
 	
-	/*延时0.5s*/
-	taskDelay(sysClkRateGet()/2);
+	/*延时5s*/
+	taskDelay(sysClkRateGet() * 5);
 	
 	/*加调谐闭环前馈功能*/
 	set_Tune_FF_Option (pCard);
 	
 	/*延时5s*/
-	taskDelay(sysClkRateGet() * 5);
+	taskDelay(sysClkRateGet() * 5 * 1.6);
 	
 	/*关调谐闭环前馈表计算功能，固定前馈表的值*/
 	clear_Tune_Modify_Option (pCard);
@@ -2773,8 +2779,8 @@ void autoOnCardNo(int cardNum)
 	/*调整栅极调谐闭环的I值*/
 	set_Front_Tune_I (pCard, parms[22]);
 	
-	/*延时0.5s*/
-	taskDelay(sysClkRateGet()/2);
+	/*延时5s*/
+	taskDelay(sysClkRateGet() * 5);
 	
 	/*闭幅度闭环*/
 	set_AMP_Option (pCard);
@@ -2829,8 +2835,8 @@ void autoOnCardNo(int cardNum)
 	set_Tune_I_3 (pCard, parms[31]);
 	
 	
-	/*延时0.5s*/
-	taskDelay(sysClkRateGet()/2);
+	/*延时1s*/
+	taskDelay(sysClkRateGet());
 	
 	/*再次计算调谐前馈表的值*/
 	set_Tune_Modify_Option (pCard);
@@ -2962,8 +2968,9 @@ void saveParmsCardNo(int index, int cardNum, int val2int)
 	double val;
 	FILE * fp;
 	char fileName[20];
-	char tmp[20];
+	char charParm[20];
 	int i;
+        double parms[35]={0}; /*自动开机所用到的参数为35个参数*/
 	
 	pCard = getCardStruct(cardNum); /*获取对应板卡号的FPGA板卡的资源<结构体>*/
 	semTake(pCard->semSaveParm, WAIT_FOREVER);
@@ -2971,30 +2978,47 @@ void saveParmsCardNo(int index, int cardNum, int val2int)
 	val = ((double) val2int) / 1000; /*将之前saveParms函数传递过来的PV的值恢复为double类型，并保留小数点后3位精度*/
 	sprintf(fileName,"parmCardNo%d.txt",cardNum); /*存放参数的文件名为parmCardNo[cardNum].txt*/
 	
-	/*以可读写的方式打开参数文件*/
-	if((fp = fopen(fileName,"r+")) == NULL)
+	/*读取文件中的各参数并存入数组中*/
+	if((fp = fopen(fileName,"r")) == NULL) /*打开参数文件*/
 	{
 		printf("can't open file\n");
 	}
 	
-	/*fscanf函数读取参数文件，并且移动文件指针fp到第index个参数之前（不包括换行符"\n"）*/
-	for(i=0;i<index;i++)
+        i = 0;
+	while(fscanf(fp,"%s",charParm) == 1) /*循环读取文件的每个参数并存入字符串charParm中*/
 	{
-		fscanf(fp,"%s",tmp);
+		parms[i] = atof(charParm); /*将读取到的字符串参数转化为double类型的数据并存入到数组parms中*/
+                i++;
 	}
 	
-	/*fprintf将fp指针处的内容覆写替换为val的值，由于fp位于"/n"换行符之前，所以替换文件内容时在前面加上换行符*/
-	fprintf(fp,"\n%f",val);
-	
-	/*将fp指针返回到文件的开头*/
-	rewind(fp);
+	rewind(fp); /*将文件指针返回到文件的开头*/
 	
 	/*关闭文件*/
 	if(fclose(fp) != 0)
 	{
 		printf("Error in closing file\n");
 	}
-	
+
+        parms[index] = val;
+
+        /*open parms file for write*/
+	if((fp = fopen(fileName,"w")) == NULL) /*打开参数文件*/
+	{
+		printf("can't open file\n");
+	}
+
+	for(i =0; i< 35; i++)
+        {
+            fprintf(fp,"%f\n",parms[i]);
+	}
+
+        rewind(fp);
+	/*关闭文件*/
+	if(fclose(fp) != 0)
+	{
+		printf("Error in closing file\n");
+	}
+
 	/*释放互斥信号量*/
 	semGive(pCard->semSaveParm);
 }

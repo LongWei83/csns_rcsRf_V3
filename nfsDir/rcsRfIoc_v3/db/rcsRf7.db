@@ -1,3 +1,15 @@
+record(bo,"rcsRf7:autoOff") {
+		field(DESC,"6")
+		field(DTYP,"AutoOff")
+		field(ZNAM,"0")
+		field(ONAM,"1")
+}
+record(bo,"rcsRf7:autoOn") {
+		field(DESC,"6")
+		field(DTYP,"AutoOn")
+		field(ZNAM,"0")
+		field(ONAM,"1")
+}
 record(bi,"rcsRf7:frontTuneFFOption_get") {
         field(DESC, "")
         field(DTYP,"D212")
