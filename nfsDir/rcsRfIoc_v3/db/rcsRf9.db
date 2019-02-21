@@ -942,7 +942,6 @@ record(ao,"rcsRf9:Chopper_Duty_set")
         field(PREC, "4")
         field(DTYP, "D212")
         field(OUT, "#C8 S @CHOPPER_DUTY")
-	field(PINI, "YES")
 }
 
 record(ao,"rcsRf9:Rf_Harmonic_set")
@@ -951,7 +950,6 @@ record(ao,"rcsRf9:Rf_Harmonic_set")
         field(PREC, "4")
         field(DTYP, "D212")
         field(OUT, "#C8 S @RF_HARMONIC")
-	field(PINI, "YES")
 }
 
 
@@ -969,7 +967,6 @@ record(ao,"rcsRf9:allBeamPhase_set")
         field(PREC, "6")
         field(DTYP, "D212")
         field(OUT, "#C8 S @ALL_BEAM_PHASE")
-	field(PINI, "YES")
 }
 
 record(ao,"rcsRf9:allPretrig_set")
@@ -995,7 +992,6 @@ record(ao,"rcsRf9:exPhase_set")
         field(PREC, "6")
         field(DTYP, "D212")
         field(OUT, "#C8 S @EX_PHASE")
-	field(PINI, "YES")
 }
 
 record(ao,"rcsRf9:BPM_Delay_set")
@@ -1004,7 +1000,6 @@ record(ao,"rcsRf9:BPM_Delay_set")
         field(PREC, "6")
         field(DTYP, "D212")
         field(OUT, "#C8 S @BPM_DELAY_SET")
-	field(PINI, "YES")
 }
 
 record(ao,"rcsRf9:chopper_Phase_set")
@@ -1013,7 +1008,6 @@ record(ao,"rcsRf9:chopper_Phase_set")
         field(PREC, "6")
         field(DTYP, "D212")
         field(OUT, "#C8 S @CHOPPER_PAHSE_SET")
-	field(PINI, "YES")
 }
 
 record(ao,"rcsRf9:ex_Delay_set")
@@ -1022,7 +1016,6 @@ record(ao,"rcsRf9:ex_Delay_set")
         field(PREC, "6")
         field(DTYP, "D212")
         field(OUT, "#C8 S @EX_DELAY_SET")
-	field(PINI, "YES")
 }
 
 record(ao,"rcsRf9:ref_delayAB_set")

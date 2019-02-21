@@ -1,4 +1,4 @@
-# autosave R5.3	Automatically generated - DO NOT MODIFY - 190220-133523
+# autosave R5.3	Automatically generated - DO NOT MODIFY - 190219-223501
 rcsRf1:PreTrig_Delay_set 0
 rcsRf2:PreTrig_Delay_set 0
 rcsRf3:PreTrig_Delay_set 0
@@ -10,8 +10,8 @@ rcsRf8:PreTrig_Delay_set 0
 rcsRf9:allPretrig_set 128700
 rcsRf9:PreTrig_Delay_set 0
 rcsRf9:allPretrig_set 128700
-rcsRf9:Rf_Harmonic_set 2
-rcsRf9:chopper_Phase_set 60
+rcsRf9:Rf_Harmonic_set 1
+rcsRf9:chopper_Phase_set 192
 rcsRf9:ex_Delay_set 510
 rcsRf9:BPM_Delay_set 100
 rcsRf9:exPhase_set 0

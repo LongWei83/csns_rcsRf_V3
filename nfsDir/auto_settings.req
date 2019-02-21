@@ -11,6 +11,7 @@ rcsRf9:PreTrig_Delay_set
 rcsRf9:allPretrig_set
 rcsRf9:Rf_Harmonic_set
 rcsRf9:chopper_Phase_set
+rcsRf9:Chopper_Duty_set
 rcsRf9:ex_Delay_set
 rcsRf9:BPM_Delay_set
 rcsRf9:exPhase_set
