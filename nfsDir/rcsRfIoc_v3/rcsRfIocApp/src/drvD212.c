@@ -1777,6 +1777,14 @@ void set_AMP_I (D212Card* pCard, float ampI)
    unsigned int value;
    value = (unsigned int)(ampI * CALC_AMP_I_Set_MUL + CALC_AMP_I_Set_ADD);
    FPGA_REG_WRITE32(pCard->fpgaAddr, REG_AMP_I_Set, value);
+   
+   /*调用保存参数的函数saveParms*/
+   /*使用PV值覆写序号为6的文件参数*/
+   if(pCard->processing == 0)
+   {
+	   saveParms(6, pCard->cardNum, ampI);
+   }
+   /*调用保存参数的函数saveParms——结束*/
 }
 
 float get_AMP_I (D212Card* pCard)
