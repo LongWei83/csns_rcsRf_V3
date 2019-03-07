@@ -1,3 +1,15 @@
+record(bo,"rcsRfGl:allOff") {
+		field(DESC,"")
+		field(DTYP,"AllOff")
+		field(ZNAM,"0")
+		field(ONAM,"1")
+}
+record(bo,"rcsRfGl:allOn") {
+		field(DESC,"")
+		field(DTYP,"AllOn")
+		field(ZNAM,"0")
+		field(ONAM,"1")
+}
 record(waveform,"rcsRfGl:xwf") {
         field(SCAN,"10 second")
         field(DTYP,"XWF READ")

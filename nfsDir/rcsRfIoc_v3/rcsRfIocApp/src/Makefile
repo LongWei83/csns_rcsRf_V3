@@ -26,6 +26,8 @@ rcsRfIocSupport_SRCS += drvD212.c
 rcsRfIocSupport_SRCS += dbSubExample.c
 rcsRfIocSupport_SRCS += devAutoOn.c
 rcsRfIocSupport_SRCS += devAutoOff.c
+rcsRfIocSupport_SRCS += devAllOn.c
+rcsRfIocSupport_SRCS += devAllOff.c
 
 # Link locally-provided code into the support library,
 # rather than directly into the IOC application.

@@ -1988,6 +1988,14 @@ void set_phase_i (D212Card* pCard, float phase_i)
    unsigned int value;
    value = (unsigned int)(phase_i * CALC_PHASE_I_MUL + CALC_PHASE_I_ADD);
    FPGA_REG_WRITE32(pCard->fpgaAddr, REG_Phase_I, value);
+
+   /*调用保存参数的函数saveParms*/
+   /*使用PV值覆写序号为20的文件参数*/
+   if(pCard->processing == 0)
+   {
+	   saveParms(20, pCard->cardNum, phase_i);
+   }
+   /*调用保存参数的函数saveParms——结束*/
 }
 
 float get_Phase_i (D212Card* pCard)
