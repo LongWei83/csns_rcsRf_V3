@@ -265,6 +265,9 @@ int D212Config (int cardNum, int index)
    /*将int processing元素初始化为0，标识当前自动开机程序没有运行*/
    pCard->processing = 0;
 
+   /*将int dataProcessing元素初始化为0，标识当前dataProcessing程序没有运行*/
+   pCard->dataProcessing = 0;
+
 
    /*BAR0 corresponds to 9656 register*/
    pciConfigInLong (bus, device, function,
@@ -686,8 +689,11 @@ void cpciIntISR(int intLine)
 	       /* disable dma interrupt, enable local interrupt*/
                /*BRIDGE_REG_WRITE32(pCard->bridgeAddr, REG_9656_INTCSR, 0x0f080900); */
                /* synchronize data process task */
+	       if(pCard->dataProcessing == 0) /*if dataProcessing task is not running, give the sem to dataProcessing*/
+	       {
+               	    semGive(pCard->semDMA0);
+	       }
 
-               semGive(pCard->semDMA0);
                /*scanIoRequest(pCard->ioScanPvt);*/
             }
          }        
@@ -700,6 +706,7 @@ void cpciIntISR(int intLine)
          }
    /*   }*/
    }
+
 }
 
 void dataProcess(D212Card *pCard)
@@ -718,6 +725,8 @@ void dataProcess(D212Card *pCard)
    {
       /* synchronize with ISR */
       semTake(pCard->semDMA0, WAIT_FOREVER); 
+    pCard->dataProcessing = 321;
+
 
     if(pCard->cardNum < 8){
 
@@ -860,7 +869,10 @@ void dataProcess(D212Card *pCard)
     }/*end of if(pCard->cardNum < 8) */
     else
     {
-      semGive(semSend);
+      if(flagNetInit == NET_INIT_COMMUSKT)
+      {
+      	semGive(semSend);
+      }
       /* process waveform BPM1P data */
       pDest = pCard->floatBuffer + WF1_FADDR;
       pSrc = pCard->buffer + WF1_ADDR;
@@ -948,6 +960,7 @@ void dataProcess(D212Card *pCard)
     }
 
       scanIoRequest(pCard->ioScanPvt);
+      pCard->dataProcessing = 0;
    }
 }
 
@@ -2824,17 +2837,29 @@ void autoOnCardNo(int cardNum)
 	/*加幅度闭环前馈功能*/
 	set_AMP_FF_Option (pCard);
 	
-	/*延时0.5s*/
-	taskDelay(sysClkRateGet()/2);
+	/*延时1s*/
+	taskDelay(sysClkRateGet());
 	
 	/*升扫频幅度曲线系数*/
 	set_AMP_Coefficient (pCard, parms[27]);
 	
-		/*延时0.5s*/
+	/*延时0.5s*/
 	taskDelay(sysClkRateGet()/2);
 	
 	/*升扫频幅度曲线系数*/
 	set_AMP_Coefficient (pCard, parms[28]);
+	
+	/*延时0.5s*/
+	taskDelay(sysClkRateGet()/2);
+
+	/*升扫频幅度曲线系数*/
+	set_AMP_Coefficient (pCard, parms[28]+40);
+	
+	/*延时0.5s*/
+	taskDelay(sysClkRateGet()/2);
+
+	/*升扫频幅度曲线系数*/
+	set_AMP_Coefficient (pCard, parms[28]+80);
 	
 	/*延时0.5s*/
 	taskDelay(sysClkRateGet()/2);

@@ -1,0 +1,11 @@
+boot device          : motetsec
+unit number          : 0 
+processor number     : 0 
+host name            : RCSRFDevelopment
+file name            : /home/long/Epics/bootdir/RCSRF/vxWorks_2nets
+inet on ethernet (e) : 192.168.0.66:ffffff00
+host inet (h)        : 192.168.0.88
+user (u)             : long
+flags (f)            : 0x0 
+target name (tn)     : cpci6200
+startup script (s)   : /home/long/nfsDir/rcsRfIoc_v3/iocBoot/iocrcsRfIoc/st.cmd

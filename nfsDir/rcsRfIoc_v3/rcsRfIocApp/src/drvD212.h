@@ -117,6 +117,7 @@ struct D212Card {
    float front_rf_vol;
    float cav_rf_vol;
    float grid_rf_vol;
+   int dataProcessing;
 };
 
 struct recPrivate {
