@@ -23,10 +23,10 @@
 #define    CALC_WF7_ADD                  0.0
 #define    CALC_WF8_MUL                  1.0
 #define    CALC_WF8_ADD                  0.0
-#define    CALC_WFBPM_MUL                1.0
-#define    CALC_WFBPM_ADD                0.0
-#define    CALC_WFBPM_PHASE_MUL          0.000343323
-#define    CALC_WFBPM_PHASE_ADD          0.0
+#define    CALC_WF_MUL                   1.0
+#define    CALC_WF_ADD                   0.0
+#define    CALC_WF_PHASE_MUL             0.000343323
+#define    CALC_WF_PHASE_ADD             0.0
 
 
 /* parameter for float value setting */
@@ -109,6 +109,6 @@
 #define	   CALC_Syn_Osc_Delay_MUL		1.0
 #define    CALC_Syn_Osc_Delay_ADD		0
 #define	   CALC_Syn_Osc_Count_MUL		1.0
-#define    CALC_Syn_Osc_Count_ADD		0
+#define    CALC_Syn_Osc_Count_ADD		0.0
 
 #endif  /*end of PARAMETER_h*/

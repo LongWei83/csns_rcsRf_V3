@@ -112,7 +112,7 @@ struct D212Card {
    IOSCANPVT ioScanPvt;
    int errorFlag;
    unsigned int intTime;
-   unsigned int preTrig_offset;
+   float preTrig_offset;
 
    float front_rf_vol;
    float cav_rf_vol;
@@ -300,6 +300,10 @@ int Front_Tune_FF_OPTION_get (D212Card* pCard);
 void set_Front_Tune_Modify_Option (D212Card* pCard);
 void clear_Front_Tune_Modify_Option (D212Card* pCard);
 int Front_Tune_Modify_OPTION_get (D212Card* pCard);
+void set_Syn_Osc_S_Enable (D212Card* pCard, float syn_osc_s_enable);
+void set_Syn_Osc_E_Enable (D212Card* pCard, float syn_osc_e_enable);
+float get_Syn_Osc_S_Enable (D212Card* pCard);
+float get_Syn_Osc_E_Enable (D212Card* pCard);
 int autoOn(int cardNum); /*声明自动开机函数*/
 int autoOff(int cardNum); /*声明自动关机函数*/
 void autoOffCardNo(int cardNum); /*声明自动关机任务的执行函数*/

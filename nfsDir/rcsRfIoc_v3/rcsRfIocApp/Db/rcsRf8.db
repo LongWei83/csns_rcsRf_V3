@@ -1,11 +1,11 @@
 record(bo,"rcsRf8:autoOff") {
-		field(DESC,"5")
+		field(DESC,"6")
 		field(DTYP,"AutoOff")
 		field(ZNAM,"0")
 		field(ONAM,"1")
 }
 record(bo,"rcsRf8:autoOn") {
-		field(DESC,"5")
+		field(DESC,"6")
 		field(DTYP,"AutoOn")
 		field(ZNAM,"0")
 		field(ONAM,"1")
@@ -13,7 +13,7 @@ record(bo,"rcsRf8:autoOn") {
 record(bi,"rcsRf8:frontTuneFFOption_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @FRONT_TUNE_FF_OPTION")
+        field(INP,"#C6 S @FRONT_TUNE_FF_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -22,7 +22,7 @@ record(bi,"rcsRf8:frontTuneFFOption_get") {
 record(bo,"rcsRf8:frontTuneFFOption_set") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(OUT,"#C5 S @FRONT_TUNE_FF_OPTION")
+        field(OUT,"#C6 S @FRONT_TUNE_FF_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
 }
@@ -30,7 +30,7 @@ record(bo,"rcsRf8:frontTuneFFOption_set") {
 record(bi,"rcsRf8:frontTuneModifyOption_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @FRONT_TUNE_MODIFY_OPTION")
+        field(INP,"#C6 S @FRONT_TUNE_MODIFY_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -39,7 +39,7 @@ record(bi,"rcsRf8:frontTuneModifyOption_get") {
 record(bo,"rcsRf8:frontTuneModifyOption_set") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(OUT,"#C5 S @FRONT_TUNE_MODIFY_OPTION")
+        field(OUT,"#C6 S @FRONT_TUNE_MODIFY_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
 }
@@ -47,7 +47,7 @@ record(bo,"rcsRf8:frontTuneModifyOption_set") {
 record(bi,"rcsRf8:beamPhaseOption_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @BEAM_PHASE_OPTION")
+        field(INP,"#C6 S @BEAM_PHASE_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -56,7 +56,7 @@ record(bi,"rcsRf8:beamPhaseOption_get") {
 record(bo,"rcsRf8:beamPhaseOption_set") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(OUT,"#C5 S @BEAM_PHASE_OPTION")
+        field(OUT,"#C6 S @BEAM_PHASE_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
 }
@@ -64,7 +64,7 @@ record(bo,"rcsRf8:beamPhaseOption_set") {
 record(bi,"rcsRf8:intEnable_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @INT_ENABLE")
+        field(INP,"#C6 S @INT_ENABLE")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -73,7 +73,7 @@ record(bi,"rcsRf8:intEnable_get") {
 record(bi,"rcsRf8:sweepOption_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @SWEEP_OPTION")
+        field(INP,"#C6 S @SWEEP_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -82,7 +82,7 @@ record(bi,"rcsRf8:sweepOption_get") {
 record(bi,"rcsRf8:pointSweep_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @POINT_SWEEP")
+        field(INP,"#C6 S @POINT_SWEEP")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -90,7 +90,7 @@ record(bi,"rcsRf8:pointSweep_get") {
 record(bi,"rcsRf8:rfReset_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @RF_RESET")
+        field(INP,"#C6 S @RF_RESET")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -99,7 +99,7 @@ record(bi,"rcsRf8:rfReset_get") {
 record(bi,"rcsRf8:ampOption_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @AMP_OPTION")
+        field(INP,"#C6 S @AMP_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -107,7 +107,7 @@ record(bi,"rcsRf8:ampOption_get") {
 record(bi,"rcsRf8:ampFFOption_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @AMP_FF_OPTION")
+        field(INP,"#C6 S @AMP_FF_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -115,7 +115,7 @@ record(bi,"rcsRf8:ampFFOption_get") {
 record(bi,"rcsRf8:ampModifyOption_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @AMP_MODIFY_OPTION")
+        field(INP,"#C6 S @AMP_MODIFY_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -123,7 +123,7 @@ record(bi,"rcsRf8:ampModifyOption_get") {
 record(bi,"rcsRf8:tuneOption_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @TUNE_OPTION")
+        field(INP,"#C6 S @TUNE_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -131,7 +131,7 @@ record(bi,"rcsRf8:tuneOption_get") {
 record(bi,"rcsRf8:frontTuneOption_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @FRONT_TUNE_OPTION")
+        field(INP,"#C6 S @FRONT_TUNE_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -139,7 +139,7 @@ record(bi,"rcsRf8:frontTuneOption_get") {
 record(bi,"rcsRf8:tuneFFOption_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @TUNE_FF_OPTION")
+        field(INP,"#C6 S @TUNE_FF_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -147,7 +147,7 @@ record(bi,"rcsRf8:tuneFFOption_get") {
 record(bi,"rcsRf8:tuneModifyOption_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @TUNE_MODIFY_OPTION")
+        field(INP,"#C6 S @TUNE_MODIFY_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -156,7 +156,7 @@ record(bi,"rcsRf8:tuneModifyOption_get") {
 record(bi,"rcsRf8:phaseOption_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @PHASE_OPTION")
+        field(INP,"#C6 S @PHASE_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -166,7 +166,7 @@ record(bi,"rcsRf8:phaseOption_get") {
 record(bi,"rcsRf8:freChangeOption_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @FRE_CHANGE_OPTION")
+        field(INP,"#C6 S @FRE_CHANGE_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -175,7 +175,7 @@ record(bi,"rcsRf8:freChangeOption_get") {
 record(bi,"rcsRf8:ampChangeOption_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @AMP_CHANGE_OPTION")
+        field(INP,"#C6 S @AMP_CHANGE_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -184,7 +184,7 @@ record(bi,"rcsRf8:ampChangeOption_get") {
 record(bi,"rcsRf8:alarm0_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @ALARM0")
+        field(INP,"#C6 S @ALARM0")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -193,7 +193,7 @@ record(bi,"rcsRf8:alarm0_get") {
 record(bi,"rcsRf8:alarm1_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @ALARM1")
+        field(INP,"#C6 S @ALARM1")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -202,7 +202,7 @@ record(bi,"rcsRf8:alarm1_get") {
 record(bi,"rcsRf8:alarm2_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @ALARM2")
+        field(INP,"#C6 S @ALARM2")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -211,7 +211,7 @@ record(bi,"rcsRf8:alarm2_get") {
 record(bi,"rcsRf8:alarm3_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @ALARM3")
+        field(INP,"#C6 S @ALARM3")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -220,7 +220,7 @@ record(bi,"rcsRf8:alarm3_get") {
 record(bi,"rcsRf8:alarm4_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @ALARM4")
+        field(INP,"#C6 S @ALARM4")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -229,7 +229,7 @@ record(bi,"rcsRf8:alarm4_get") {
 record(bi,"rcsRf8:alarm5_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @ALARM5")
+        field(INP,"#C6 S @ALARM5")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -238,7 +238,7 @@ record(bi,"rcsRf8:alarm5_get") {
 record(bi,"rcsRf8:alarm6_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @ALARM6")
+        field(INP,"#C6 S @ALARM6")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -247,7 +247,7 @@ record(bi,"rcsRf8:alarm6_get") {
 record(bi,"rcsRf8:alarm7_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @ALARM7")
+        field(INP,"#C6 S @ALARM7")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -256,7 +256,7 @@ record(bi,"rcsRf8:alarm7_get") {
 record(bi,"rcsRf8:alarm8_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @ALARM8")
+        field(INP,"#C6 S @ALARM8")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -265,7 +265,7 @@ record(bi,"rcsRf8:alarm8_get") {
 record(bi,"rcsRf8:phaseFFOption_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @PHASE_FF_OPTION")
+        field(INP,"#C6 S @PHASE_FF_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -274,7 +274,7 @@ record(bi,"rcsRf8:phaseFFOption_get") {
 record(bi,"rcsRf8:phaseModifyOption_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @PHASE_MODIFY_OPTION")
+        field(INP,"#C6 S @PHASE_MODIFY_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -283,7 +283,7 @@ record(bi,"rcsRf8:phaseModifyOption_get") {
 record(bi,"rcsRf8:drvReset_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @DRV_RESET")
+        field(INP,"#C6 S @DRV_RESET")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -292,7 +292,7 @@ record(bi,"rcsRf8:drvReset_get") {
 record(bi,"rcsRf8:sgMode_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @SG_MODE")
+        field(INP,"#C6 S @SG_MODE")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -302,7 +302,7 @@ record(bi,"rcsRf8:sgMode_get") {
 record(bi,"rcsRf8:beam_int_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @BEAM_INT")
+        field(INP,"#C6 S @BEAM_INT")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -311,7 +311,7 @@ record(bi,"rcsRf8:beam_int_get") {
 record(bi,"rcsRf8:beam_feedforward_get") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(INP,"#C5 S @BEAM_FEEDFW")
+        field(INP,"#C6 S @BEAM_FEEDFW")
         field(ZNAM,"0")
         field(ONAM,"1")
         field(SCAN,"1 second")
@@ -320,7 +320,7 @@ record(bi,"rcsRf8:beam_feedforward_get") {
 record(bo,"rcsRf8:beam_feedforward_set") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(OUT,"#C5 S @BEAM_FEEDFW")
+        field(OUT,"#C6 S @BEAM_FEEDFW")
         field(ZNAM,"0")
         field(ONAM,"1")
 }
@@ -328,7 +328,7 @@ record(bo,"rcsRf8:beam_feedforward_set") {
 record(bo,"rcsRf8:beam_int_set") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(OUT,"#C5 S @BEAM_INT")
+        field(OUT,"#C6 S @BEAM_INT")
         field(ZNAM,"0")
         field(ONAM,"1")
 }
@@ -336,7 +336,7 @@ record(bo,"rcsRf8:beam_int_set") {
 record(bo,"rcsRf8:intEnable_set") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(OUT,"#C5 S @INT_ENABLE")
+        field(OUT,"#C6 S @INT_ENABLE")
         field(ZNAM,"0")
         field(ONAM,"1")
 }
@@ -344,7 +344,7 @@ record(bo,"rcsRf8:intEnable_set") {
 record(bo,"rcsRf8:sweepOption_set") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(OUT,"#C5 S @SWEEP_OPTION")
+        field(OUT,"#C6 S @SWEEP_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
 }
@@ -352,7 +352,7 @@ record(bo,"rcsRf8:sweepOption_set") {
 record(bo,"rcsRf8:pointSweep_set") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(OUT,"#C5 S @POINT_SWEEP")
+        field(OUT,"#C6 S @POINT_SWEEP")
         field(ZNAM,"0")
         field(ONAM,"1")
 }
@@ -360,7 +360,7 @@ record(bo,"rcsRf8:pointSweep_set") {
 record(bo,"rcsRf8:rfReset_set") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(OUT,"#C5 S @RF_RESET")
+        field(OUT,"#C6 S @RF_RESET")
         field(ZNAM,"0")
         field(ONAM,"1")
 }
@@ -368,63 +368,63 @@ record(bo,"rcsRf8:rfReset_set") {
 record(bo,"rcsRf8:ampOption_set") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(OUT,"#C5 S @AMP_OPTION")
+        field(OUT,"#C6 S @AMP_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
 }
 record(bo,"rcsRf8:ampFFOption_set") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(OUT,"#C5 S @AMP_FF_OPTION")
+        field(OUT,"#C6 S @AMP_FF_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
 }
 record(bo,"rcsRf8:ampModifyOption_set") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(OUT,"#C5 S @AMP_MODIFY_OPTION")
+        field(OUT,"#C6 S @AMP_MODIFY_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
 }
 record(bo,"rcsRf8:tuneOption_set") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(OUT,"#C5 S @TUNE_OPTION")
+        field(OUT,"#C6 S @TUNE_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
 }
 record(bo,"rcsRf8:frontTuneOption_set") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(OUT,"#C5 S @FRONT_TUNE_OPTION")
+        field(OUT,"#C6 S @FRONT_TUNE_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
 }
 record(bo,"rcsRf8:tuneFFOption_set") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(OUT,"#C5 S @TUNE_FF_OPTION")
+        field(OUT,"#C6 S @TUNE_FF_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
 }
 record(bo,"rcsRf8:tuneModifyOption_set") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(OUT,"#C5 S @TUNE_MODIFY_OPTION")
+        field(OUT,"#C6 S @TUNE_MODIFY_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
 }
 record(bo,"rcsRf8:phaseOption_set") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(OUT,"#C5 S @PHASE_OPTION")
+        field(OUT,"#C6 S @PHASE_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
 }
 record(bo,"rcsRf8:errorOption_set") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(OUT,"#C5 S @ERROR_OPTION")
+        field(OUT,"#C6 S @ERROR_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
 }
@@ -432,7 +432,7 @@ record(bo,"rcsRf8:errorOption_set") {
 record(bo,"rcsRf8:phaseFFOption_set") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(OUT,"#C5 S @PHASE_FF_OPTION")
+        field(OUT,"#C6 S @PHASE_FF_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
 }
@@ -440,7 +440,7 @@ record(bo,"rcsRf8:phaseFFOption_set") {
 record(bo,"rcsRf8:phaseModifyOption_set") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(OUT,"#C5 S @PHASE_MODIFY_OPTION")
+        field(OUT,"#C6 S @PHASE_MODIFY_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
 }
@@ -448,7 +448,7 @@ record(bo,"rcsRf8:phaseModifyOption_set") {
 record(bo,"rcsRf8:freChangeOption_set") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(OUT,"#C5 S @FRE_CHANGE_OPTION")
+        field(OUT,"#C6 S @FRE_CHANGE_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
 }
@@ -456,7 +456,7 @@ record(bo,"rcsRf8:freChangeOption_set") {
 record(bo,"rcsRf8:ampChangeOption_set") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(OUT,"#C5 S @AMP_CHANGE_OPTION")
+        field(OUT,"#C6 S @AMP_CHANGE_OPTION")
         field(ZNAM,"0")
         field(ONAM,"1")
 }
@@ -464,7 +464,7 @@ record(bo,"rcsRf8:ampChangeOption_set") {
 record(bo,"rcsRf8:drvReset_set") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(OUT,"#C5 S @DRV_RESET")
+        field(OUT,"#C6 S @DRV_RESET")
         field(ZNAM,"0")
         field(ONAM,"1")
 }
@@ -472,7 +472,7 @@ record(bo,"rcsRf8:drvReset_set") {
 record(bo,"rcsRf8:sgMode_set") {
         field(DESC, "")
         field(DTYP,"D212")
-        field(OUT,"#C5 S @SG_MODE")
+        field(OUT,"#C6 S @SG_MODE")
         field(ZNAM,"0")
         field(ONAM,"1")
 }
@@ -482,7 +482,7 @@ record(ai,"rcsRf8:FrontRfVol:ai")
 	field(DESC, "")
         field(PREC, "7")
         field(DTYP, "D212")
-	field(INP, "#C5 S @FRONT_RF_VOL")
+	field(INP, "#C6 S @FRONT_RF_VOL")
         field(SCAN,"1 second")
 }
 
@@ -491,7 +491,7 @@ record(ai,"rcsRf8:GridRfVol:ai")
 	field(DESC, "")
         field(PREC, "7")
         field(DTYP, "D212")
-	field(INP, "#C5 S @GRID_RF_VOL")
+	field(INP, "#C6 S @GRID_RF_VOL")
         field(SCAN,"1 second")
 }
 
@@ -500,7 +500,7 @@ record(ai,"rcsRf8:CavRfVol:ai")
 	field(DESC, "")
         field(PREC, "7")
         field(DTYP, "D212")
-	field(INP, "#C5 S @CAV_RF_VOL")
+	field(INP, "#C6 S @CAV_RF_VOL")
         field(SCAN,"1 second")
 }
 
@@ -509,7 +509,7 @@ record(ai,"rcsRf8:workPeriod_get")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(INP, "#C5 S @WORK_PERIOD")
+        field(INP, "#C6 S @WORK_PERIOD")
         field(SCAN,"1 second")
 	field(EGU,"ms")
 }
@@ -520,7 +520,7 @@ record(ai,"rcsRf8:arc_count_get")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(INP, "#C5 S @ARC_COUNT")
+        field(INP, "#C6 S @ARC_COUNT")
         field(SCAN,"1 second")
 }
 
@@ -529,7 +529,7 @@ record(ai,"rcsRf8:fixFrequency_get")
         field(DESC, "")
         field(PREC, "6")
         field(DTYP, "D212")
-        field(INP, "#C5 S @FIX_FREQUENCY")
+        field(INP, "#C6 S @FIX_FREQUENCY")
         field(SCAN,"1 second")
 	field(EGU,"MHz")
 }
@@ -539,7 +539,7 @@ record(ai,"rcsRf8:amp_get")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(INP, "#C5 S @AMP_SET")
+        field(INP, "#C6 S @AMP_SET")
         field(SCAN,"1 second")
 }
 record(ai,"rcsRf8:ampCoefficient_get")
@@ -547,7 +547,7 @@ record(ai,"rcsRf8:ampCoefficient_get")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(INP, "#C5 S @AMP_COEFFICIENT")
+        field(INP, "#C6 S @AMP_COEFFICIENT")
         field(SCAN,"1 second")
 	field(EGU,"kV")
 }
@@ -556,7 +556,7 @@ record(ai,"rcsRf8:ampPSet_get")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(INP, "#C5 S @AMP_P_SET")
+        field(INP, "#C6 S @AMP_P_SET")
         field(SCAN,"1 second")
 }
 record(ai,"rcsRf8:ampISet_get")
@@ -564,7 +564,7 @@ record(ai,"rcsRf8:ampISet_get")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(INP, "#C5 S @AMP_I_SET")
+        field(INP, "#C6 S @AMP_I_SET")
         field(SCAN,"1 second")
 }
 record(ai,"rcsRf8:biasSet_get")
@@ -572,7 +572,7 @@ record(ai,"rcsRf8:biasSet_get")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(INP, "#C5 S @BIAS_SET")
+        field(INP, "#C6 S @BIAS_SET")
         field(SCAN,"1 second")
 }
 record(ai,"rcsRf8:fixTuningAngle_get")
@@ -580,7 +580,7 @@ record(ai,"rcsRf8:fixTuningAngle_get")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(INP, "#C5 S @FIX_TUNING_ANGLE")
+        field(INP, "#C6 S @FIX_TUNING_ANGLE")
         field(SCAN,"1 second")
 }
 record(ai,"rcsRf8:tuningAngleOffset_get")
@@ -588,7 +588,7 @@ record(ai,"rcsRf8:tuningAngleOffset_get")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(INP, "#C5 S @TUNING_ANGLE_OFFSET")
+        field(INP, "#C6 S @TUNING_ANGLE_OFFSET")
         field(SCAN,"1 second")
 }
 record(ai,"rcsRf8:tunePSet_get")
@@ -596,7 +596,7 @@ record(ai,"rcsRf8:tunePSet_get")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(INP, "#C5 S @TUNE_P_SET")
+        field(INP, "#C6 S @TUNE_P_SET")
         field(SCAN,"1 second")
 }
 record(ai,"rcsRf8:tuneISet_get")
@@ -604,7 +604,7 @@ record(ai,"rcsRf8:tuneISet_get")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(INP, "#C5 S @TUNE_I_SET")
+        field(INP, "#C6 S @TUNE_I_SET")
         field(SCAN,"1 second")
 }
 record(ai,"rcsRf8:tuneISet1_get")
@@ -612,7 +612,7 @@ record(ai,"rcsRf8:tuneISet1_get")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(INP, "#C5 S @TUNE_I1_SET")
+        field(INP, "#C6 S @TUNE_I1_SET")
         field(SCAN,"1 second")
 }
 record(ai,"rcsRf8:tuneISet2_get")
@@ -620,7 +620,7 @@ record(ai,"rcsRf8:tuneISet2_get")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(INP, "#C5 S @TUNE_I2_SET")
+        field(INP, "#C6 S @TUNE_I2_SET")
         field(SCAN,"1 second")
 }
 record(ai,"rcsRf8:tuneISet3_get")
@@ -628,7 +628,7 @@ record(ai,"rcsRf8:tuneISet3_get")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(INP, "#C5 S @TUNE_I3_SET")
+        field(INP, "#C6 S @TUNE_I3_SET")
         field(SCAN,"1 second")
 }
 record(ai,"rcsRf8:frontBiasSet_get")
@@ -636,7 +636,7 @@ record(ai,"rcsRf8:frontBiasSet_get")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(INP, "#C5 S @FRONT_BIAS_SET")
+        field(INP, "#C6 S @FRONT_BIAS_SET")
         field(SCAN,"1 second")
 }
 record(ai,"rcsRf8:frontTunePSet_get")
@@ -644,7 +644,7 @@ record(ai,"rcsRf8:frontTunePSet_get")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(INP, "#C5 S @FRONT_TUNE_P_SET")
+        field(INP, "#C6 S @FRONT_TUNE_P_SET")
         field(SCAN,"1 second")
 }
 record(ai,"rcsRf8:frontTuneISet_get")
@@ -652,7 +652,7 @@ record(ai,"rcsRf8:frontTuneISet_get")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(INP, "#C5 S @FRONT_TUNE_I_SET")
+        field(INP, "#C6 S @FRONT_TUNE_I_SET")
         field(SCAN,"1 second")
 }
 
@@ -661,7 +661,7 @@ record(ai,"rcsRf8:frontFixTuningAngle_get")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(INP, "#C5 S @FRONT_FIX_TUNING_ANGLE")
+        field(INP, "#C6 S @FRONT_FIX_TUNING_ANGLE")
         field(SCAN,"1 second")
 }
 
@@ -670,7 +670,7 @@ record(ai,"rcsRf8:phase_i_get")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(INP, "#C5 S @PHASE_I")
+        field(INP, "#C6 S @PHASE_I")
         field(SCAN,"1 second")
 }
 
@@ -679,7 +679,7 @@ record(ai,"rcsRf8:phase_p_get")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(INP, "#C5 S @PHASE_P")
+        field(INP, "#C6 S @PHASE_P")
         field(SCAN,"1 second")
 }
 
@@ -688,7 +688,7 @@ record(ai,"rcsRf8:initial_phase_get")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-	field(INP, "#C5 S @INITIAL_PHASE")
+	field(INP, "#C6 S @INITIAL_PHASE")
         field(SCAN,"1 second")
 }
 
@@ -697,7 +697,7 @@ record(ai,"rcsRf8:FF_Delay_get")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-	field(INP, "#C5 S @FF_DELAY")
+	field(INP, "#C6 S @FF_DELAY")
         field(SCAN,"1 second")
 }
 
@@ -706,7 +706,7 @@ record(ai,"rcsRf8:PreTrig_Delay_get")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-	field(INP, "#C5 S @PRETRIG_DELAY")
+	field(INP, "#C6 S @PRETRIG_DELAY")
         field(SCAN,"1 second")
 }
 
@@ -715,7 +715,7 @@ record(ai,"rcsRf8:Initial_Ref_Phase_get")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-	field(INP, "#C5 S @INITIAL_REF_PHASE")
+	field(INP, "#C6 S @INITIAL_REF_PHASE")
         field(SCAN,"1 second")
 }
 
@@ -724,7 +724,7 @@ record(ai,"rcsRf8:Int_Delay_get")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-	field(INP, "#C5 S @INT_DELAY")
+	field(INP, "#C6 S @INT_DELAY")
         field(SCAN,"1 second")
 }
 
@@ -734,7 +734,7 @@ record(ai,"rcsRf8:RBF_Delay_get")
         field(DESC, "")
         field(PREC, "7")
         field(DTYP, "D212")
-	field(INP, "#C5 S @RBF_DELAY")
+	field(INP, "#C6 S @RBF_DELAY")
         field(SCAN,"1 second")
 }
 
@@ -743,7 +743,7 @@ record(ai,"rcsRf8:amp_i_injection_get")
 	field(DESC, "")
         field(PREC, "7")
         field(DTYP, "D212")
-	field(INP, "#C5 S @AMP_I_INJECTION")
+	field(INP, "#C6 S @AMP_I_INJECTION")
         field(SCAN,"1 second")
 }
 
@@ -752,7 +752,7 @@ record(ai,"rcsRf8:phase_injection_i_get")
 	field(DESC, "")
         field(PREC, "7")
         field(DTYP, "D212")
-	field(INP, "#C5 S @INJ_PHASE")
+	field(INP, "#C6 S @INJ_PHASE")
         field(SCAN,"1 second")
 }
 
@@ -762,7 +762,7 @@ record(ai,"rcsRf8:beam_ff_coef_get")
 	field(DESC, "")
         field(PREC, "7")
         field(DTYP, "D212")
-	field(INP, "#C5 S @BEAM_FF_COEF")
+	field(INP, "#C6 S @BEAM_FF_COEF")
         field(SCAN,"1 second")
 }
 
@@ -771,7 +771,7 @@ record(ai,"rcsRf8:beam_ff_phase_get")
 	field(DESC, "")
         field(PREC, "7")
         field(DTYP, "D212")
-	field(INP, "#C5 S @BEAM_FF_PHASE_SET")
+	field(INP, "#C6 S @BEAM_FF_PHASE_SET")
         field(SCAN,"1 second")
 }
 
@@ -780,7 +780,7 @@ record(ai,"rcsRf8:beam_ff_delay_get")
 	field(DESC, "")
         field(PREC, "7")
         field(DTYP, "D212")
-	field(INP, "#C5 S @BEAM_FF_DELAY")
+	field(INP, "#C6 S @BEAM_FF_DELAY")
         field(SCAN,"1 second")
 }
 
@@ -791,7 +791,7 @@ record(ao,"rcsRf8:beam_ff_delay_set")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @BEAM_FF_DELAY")
+        field(OUT, "#C6 S @BEAM_FF_DELAY")
 }
 
 record(ao,"rcsRf8:beam_ff_phase_set")
@@ -799,7 +799,7 @@ record(ao,"rcsRf8:beam_ff_phase_set")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @BEAM_FF_PHASE_SET")
+        field(OUT, "#C6 S @BEAM_FF_PHASE_SET")
 }
 
 record(ao,"rcsRf8:beam_ff_coef_set")
@@ -807,7 +807,7 @@ record(ao,"rcsRf8:beam_ff_coef_set")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @BEAM_FF_COEF")
+        field(OUT, "#C6 S @BEAM_FF_COEF")
 }
 
 record(ao,"rcsRf8:amp_i_injection_set")
@@ -815,7 +815,7 @@ record(ao,"rcsRf8:amp_i_injection_set")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @AMP_I_INJECTION")
+        field(OUT, "#C6 S @AMP_I_INJECTION")
 }
 
 record(ao,"rcsRf8:phase_injection_i_set")
@@ -823,7 +823,7 @@ record(ao,"rcsRf8:phase_injection_i_set")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @INJ_PHASE")
+        field(OUT, "#C6 S @INJ_PHASE")
 }
 
 record(ao,"rcsRf8:RBF_Delay_set")
@@ -831,7 +831,7 @@ record(ao,"rcsRf8:RBF_Delay_set")
         field(DESC, "")
         field(PREC, "7")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @RBF_DELAY")
+        field(OUT, "#C6 S @RBF_DELAY")
 }
 
 
@@ -840,7 +840,7 @@ record(ao,"rcsRf8:workPeriod_set")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @WORK_PERIOD")
+        field(OUT, "#C6 S @WORK_PERIOD")
 }
 
 
@@ -849,7 +849,7 @@ record(ao,"rcsRf8:fixFrequency_set")
         field(DESC, "")
         field(PREC, "6")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @FIX_FREQUENCY")
+        field(OUT, "#C6 S @FIX_FREQUENCY")
 }
 
 record(ao,"rcsRf8:amp_set")
@@ -857,119 +857,119 @@ record(ao,"rcsRf8:amp_set")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @AMP_SET")
+        field(OUT, "#C6 S @AMP_SET")
 }
 record(ao,"rcsRf8:ampCoefficient_set")
 {
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @AMP_COEFFICIENT")
+        field(OUT, "#C6 S @AMP_COEFFICIENT")
 }
 record(ao,"rcsRf8:ampPSet_set")
 {
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @AMP_P_SET")
+        field(OUT, "#C6 S @AMP_P_SET")
 }
 record(ao,"rcsRf8:ampISet_set")
 {
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @AMP_I_SET")
+        field(OUT, "#C6 S @AMP_I_SET")
 }
 record(ao,"rcsRf8:biasSet_set")
 {
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @BIAS_SET")
+        field(OUT, "#C6 S @BIAS_SET")
 }
 record(ao,"rcsRf8:fixTuningAngle_set")
 {
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @FIX_TUNING_ANGLE")
+        field(OUT, "#C6 S @FIX_TUNING_ANGLE")
 }
 record(ao,"rcsRf8:tuningAngleOffset_set")
 {
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @TUNING_ANGLE_OFFSET")
+        field(OUT, "#C6 S @TUNING_ANGLE_OFFSET")
 }
 record(ao,"rcsRf8:tunePSet_set")
 {
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @TUNE_P_SET")
+        field(OUT, "#C6 S @TUNE_P_SET")
 }
 record(ao,"rcsRf8:tuneISet_set")
 {
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @TUNE_I_SET")
+        field(OUT, "#C6 S @TUNE_I_SET")
 }
 record(ao,"rcsRf8:tuneISet1_set")
 {
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @TUNE_I1")
+        field(OUT, "#C6 S @TUNE_I1")
 }
 record(ao,"rcsRf8:tuneISet2_set")
 {
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @TUNE_I2")
+        field(OUT, "#C6 S @TUNE_I2")
 }
 record(ao,"rcsRf8:tuneISet3_set")
 {
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @TUNE_I3")
+        field(OUT, "#C6 S @TUNE_I3")
 }
 record(ao,"rcsRf8:frontBiasSet_set")
 {
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @FRONT_BIAS_SET")
+        field(OUT, "#C6 S @FRONT_BIAS_SET")
 }
 record(ao,"rcsRf8:frontTunePSet_set")
 {
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @FRONT_TUNE_P_SET")
+        field(OUT, "#C6 S @FRONT_TUNE_P_SET")
 }
 record(ao,"rcsRf8:frontTuneISet_set")
 {
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @FRONT_TUNE_I_SET")
+        field(OUT, "#C6 S @FRONT_TUNE_I_SET")
 }
 record(ao,"rcsRf8:frontFixTuningAngle_set")
 {
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @FRONT_FIX_TUNING_ANGLE")
+        field(OUT, "#C6 S @FRONT_FIX_TUNING_ANGLE")
 }
 record(ao,"rcsRf8:phase_i_set")
 {
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @PHASE_I")
+        field(OUT, "#C6 S @PHASE_I")
 }
 
 record(ao,"rcsRf8:phase_p_set")
@@ -977,7 +977,7 @@ record(ao,"rcsRf8:phase_p_set")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @PHASE_P")
+        field(OUT, "#C6 S @PHASE_P")
 }
 
 record(ao,"rcsRf8:initial_Phase_set")
@@ -985,7 +985,7 @@ record(ao,"rcsRf8:initial_Phase_set")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @INITIAL_PHASE")
+        field(OUT, "#C6 S @INITIAL_PHASE")
 }
 
 record(ao,"rcsRf8:FF_Delay_set")
@@ -993,7 +993,7 @@ record(ao,"rcsRf8:FF_Delay_set")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @FF_DELAY")
+        field(OUT, "#C6 S @FF_DELAY")
 }
 
 record(ao,"rcsRf8:PreTrig_Delay_set")
@@ -1001,7 +1001,7 @@ record(ao,"rcsRf8:PreTrig_Delay_set")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @PRETRIG_DELAY")
+        field(OUT, "#C6 S @PRETRIG_DELAY")
 	field(PINI, "YES")
 }
 
@@ -1010,7 +1010,7 @@ record(ao,"rcsRf8:Initial_Ref_Phase_set")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @INITIAL_REF_PHASE")
+        field(OUT, "#C6 S @INITIAL_REF_PHASE")
 }
 
 record(ao,"rcsRf8:Int_Delay_set")
@@ -1018,83 +1018,83 @@ record(ao,"rcsRf8:Int_Delay_set")
         field(DESC, "")
         field(PREC, "4")
         field(DTYP, "D212")
-        field(OUT, "#C5 S @INT_DELAY")
+        field(OUT, "#C6 S @INT_DELAY")
 }
 
 record(waveform,"rcsRf8:wf_1") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
-        field(INP,"#C5 S @WF_1")
+        field(INP,"#C6 S @WF_1")
         field(NELM,"2048")
         field(FTVL,"FLOAT")
 }
 record(waveform,"rcsRf8:wf_2") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
-        field(INP,"#C5 S @WF_2")
+        field(INP,"#C6 S @WF_2")
         field(NELM,"2048")
         field(FTVL,"FLOAT")
 }
 record(waveform,"rcsRf8:wf_3") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
-        field(INP,"#C5 S @WF_3")
+        field(INP,"#C6 S @WF_3")
         field(NELM,"2048")
         field(FTVL,"FLOAT")
 }
 record(waveform,"rcsRf8:wf_4a") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
-        field(INP,"#C5 S @WF_4_A")
+        field(INP,"#C6 S @WF_4_A")
         field(NELM,"2048")
         field(FTVL,"FLOAT")
 }
 record(waveform,"rcsRf8:wf_4b") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
-        field(INP,"#C5 S @WF_4_B")
+        field(INP,"#C6 S @WF_4_B")
         field(NELM,"2048")
         field(FTVL,"FLOAT")
 }
 record(waveform,"rcsRf8:wf_5a") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
-        field(INP,"#C5 S @WF_5_A")
+        field(INP,"#C6 S @WF_5_A")
         field(NELM,"2048")
         field(FTVL,"FLOAT")
 }
 record(waveform,"rcsRf8:wf_5b") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
-        field(INP,"#C5 S @WF_5_B")
+        field(INP,"#C6 S @WF_5_B")
         field(NELM,"2048")
         field(FTVL,"FLOAT")
 }
 record(waveform,"rcsRf8:wf_6a") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
-        field(INP,"#C5 S @WF_6_A")
+        field(INP,"#C6 S @WF_6_A")
         field(NELM,"2048")
         field(FTVL,"FLOAT")
 }
 record(waveform,"rcsRf8:wf_6b") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
-        field(INP,"#C5 S @WF_6_B")
+        field(INP,"#C6 S @WF_6_B")
         field(NELM,"2048")
         field(FTVL,"FLOAT")
 }
 record(waveform,"rcsRf8:wf_7") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
-        field(INP,"#C5 S @WF_7")
+        field(INP,"#C6 S @WF_7")
         field(NELM,"2048")
         field(FTVL,"FLOAT")
 }
 record(waveform,"rcsRf8:wf_8") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
-        field(INP,"#C5 S @WF_8")
+        field(INP,"#C6 S @WF_8")
         field(NELM,"2048")
         field(FTVL,"FLOAT")
 }
@@ -1102,7 +1102,7 @@ record(waveform,"rcsRf8:wf_amp_skew") {
         field(FLNK, "rcsRf8:ampErrMax")
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
-        field(INP,"#C5 S @WF_AMP_SKEW")
+        field(INP,"#C6 S @WF_AMP_SKEW")
         field(NELM,"2048")
         field(FTVL,"FLOAT")
 }
@@ -1110,7 +1110,7 @@ record(waveform,"rcsRf8:wf_amp_skew") {
 record(waveform,"rcsRf8:wf_grid") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
-        field(INP,"#C5 S @WF_GRID")
+        field(INP,"#C6 S @WF_GRID")
         field(NELM,"2048")
         field(FTVL,"FLOAT")
 }
@@ -1118,7 +1118,7 @@ record(waveform,"rcsRf8:wf_grid") {
 record(waveform,"rcsRf8:wf_front") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
-        field(INP,"#C5 S @WF_FRONT")
+        field(INP,"#C6 S @WF_FRONT")
         field(NELM,"2048")
         field(FTVL,"FLOAT")
 }
@@ -1126,14 +1126,14 @@ record(waveform,"rcsRf8:wf_front") {
 
 record(waveform,"rcsRf8:wr_rd_fre") {
         field(DTYP,"WR READ")
-        field(INP,"#C5 S @WR_RD1")
+        field(INP,"#C6 S @WR_RD1")
         field(NELM,"8192")
         field(FTVL,"ULONG")
 }
 
 record(waveform,"rcsRf8:wr_rd_amp") {
         field(DTYP,"WR READ")
-        field(INP,"#C5 S @WR_RD2")
+        field(INP,"#C6 S @WR_RD2")
         field(NELM,"16640")
         field(FTVL,"ULONG")
 }

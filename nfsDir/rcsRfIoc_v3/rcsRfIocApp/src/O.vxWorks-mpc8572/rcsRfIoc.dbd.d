@@ -51,6 +51,7 @@
     /home/long/Epics/base-3.15.4/dbd/asSub.dbd \
     /home/long/Epics/base-3.15.4/dbd/dbCore.dbd \
     ../devD212.dbd \
+    ../VXStatsSIM.dbd \
     ../asInclude.dbd \
     /home/long/Epics/autosave-R5-7-1/dbd/asSupport.dbd \
     ../dbSubExample.dbd
@@ -108,6 +109,7 @@
 /home/long/Epics/base-3.15.4/dbd/asSub.dbd:
 /home/long/Epics/base-3.15.4/dbd/dbCore.dbd:
 ../devD212.dbd:
+../VXStatsSIM.dbd:
 ../asInclude.dbd:
 /home/long/Epics/autosave-R5-7-1/dbd/asSupport.dbd:
 ../dbSubExample.dbd:

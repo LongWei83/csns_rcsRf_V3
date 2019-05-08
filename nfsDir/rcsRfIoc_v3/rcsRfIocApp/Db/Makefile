@@ -20,6 +20,8 @@ DB += rcsRf6.db
 DB += rcsRf7.db
 DB += rcsRf8.db
 DB += rcsRf9.db
+DB += rcsRf10.db
+DB += rcsRf11.db
 DB += calcPV.db
 #----------------------------------------------------
 # If <anyname>.db template is not named <anyname>*.template add

@@ -134,6 +134,8 @@
 #define CPCI_AI_ALL_PRETRIG		45
 #define CPCI_AI_SYN_OSC_DELAY		46
 #define CPCI_AI_SYN_OSC_COUNT		47
+#define CPCI_AI_SYN_OSC_S_ENABLE	48
+#define CPCI_AI_SYN_OSC_E_ENABLE	49
 
 
 
@@ -183,6 +185,8 @@
 #define CPCI_AO_BEAM_FF_DELAY		44
 #define CPCI_AO_SYN_OSC_DELAY		45
 #define CPCI_AO_SYN_OSC_COUNT		46
+#define CPCI_AO_SYN_OSC_S_ENABLE	47
+#define CPCI_AO_SYN_OSC_E_ENABLE	48
 
 
 /******* no int ***********
@@ -893,14 +897,14 @@ static long write_bo(struct boRecord *pbo) {
        case CPCI_BO_CURVE_CHANGE_OPTION:
            if(pbo->val == 0){
                clear_curve_Change();
-	       for(i=0;i<9;i++){
+	       for(i=0;i<11;i++){
 	           int_Enable(getCardStruct(i));
 	       }
            }
            else
            {
                set_curve_Change();
-	       for(i=0;i<9;i++){
+	       for(i=0;i<11;i++){
 	           int_Enable(getCardStruct(i));
 	       }
            }
@@ -979,6 +983,8 @@ static long init_ai(struct aiRecord *pai)
         CHECK_AIPARM("ALL_PRETRIG", CPCI_AI_ALL_PRETRIG);
         CHECK_AIPARM("SYN_OSC_DELAY", CPCI_AI_SYN_OSC_DELAY);
         CHECK_AIPARM("SYN_OSC_COUNT", CPCI_AI_SYN_OSC_COUNT);
+        CHECK_AIPARM("SYN_OSC_S_ENABLE", CPCI_AI_SYN_OSC_S_ENABLE);
+        CHECK_AIPARM("SYN_OSC_E_ENABLE", CPCI_AI_SYN_OSC_E_ENABLE);
     } while(0);
 
     if (!parmOK) {
@@ -1137,6 +1143,12 @@ static long read_ai(struct aiRecord *pai) {
        case CPCI_AI_SYN_OSC_COUNT:
 	   pai->val=get_Syn_Osc_Count(((recPrivate*)pai->dpvt)->pCard);
            break;
+       case CPCI_AI_SYN_OSC_S_ENABLE:
+	   pai->val=get_Syn_Osc_S_Enable(((recPrivate*)pai->dpvt)->pCard);
+           break;
+       case CPCI_AI_SYN_OSC_E_ENABLE:
+	   pai->val=get_Syn_Osc_E_Enable(((recPrivate*)pai->dpvt)->pCard);
+           break;
        default:
            recGblRecordError(S_db_badField,(void *)pai,
                     "devAiD212 Read_ai, bad parm");
@@ -1212,6 +1224,8 @@ static long init_ao(struct aoRecord *pao)
 	CHECK_AOPARM("BEAM_FF_DELAY", CPCI_AO_BEAM_FF_DELAY);
 	CHECK_AOPARM("SYN_OSC_DELAY", CPCI_AO_SYN_OSC_DELAY);
 	CHECK_AOPARM("SYN_OSC_COUNT", CPCI_AO_SYN_OSC_COUNT);
+	CHECK_AOPARM("SYN_OSC_S_ENABLE", CPCI_AO_SYN_OSC_S_ENABLE);
+	CHECK_AOPARM("SYN_OSC_E_ENABLE", CPCI_AO_SYN_OSC_E_ENABLE);
     } while(0);
 
     if (!parmOK) {
@@ -1359,6 +1373,12 @@ static long init_ao(struct aoRecord *pao)
 	   pao->val=0.0;
 	   break;
        case CPCI_AO_SYN_OSC_COUNT:
+	   pao->val=0.0;
+	   break;
+       case CPCI_AO_SYN_OSC_S_ENABLE:
+	   pao->val=0.0;
+	   break;
+       case CPCI_AO_SYN_OSC_E_ENABLE:
 	   pao->val=0.0;
 	   break;
        default:
@@ -1514,6 +1534,12 @@ static long write_ao(struct aoRecord *pao) {
            break;
        case CPCI_AO_SYN_OSC_COUNT:
            set_Syn_Osc_Count(((recPrivate*)pao->dpvt)->pCard, pao->val);
+           break;
+       case CPCI_AO_SYN_OSC_S_ENABLE:
+           set_Syn_Osc_S_Enable(((recPrivate*)pao->dpvt)->pCard, pao->val);
+           break;
+       case CPCI_AO_SYN_OSC_E_ENABLE:
+           set_Syn_Osc_E_Enable(((recPrivate*)pao->dpvt)->pCard, pao->val);
            break;
        default:
            recGblRecordError(S_db_badField,(void *)pao,
@@ -1707,7 +1733,7 @@ static long write_wf_wr_1(struct waveformRecord *pwf) {
     unsigned int *pwdata;
     int i,j;
 
-    for(i=0;i<9;i++){
+    for(i=0;i<11;i++){
     pwrBuffer = getCardStruct(i)->wrBuffer1;
     pwdata = getCardStruct(i)->wdata1;
 

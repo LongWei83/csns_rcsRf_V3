@@ -1,3 +1,4 @@
+include "VXStatsSIM.dbd"
 device(bi, VME_IO, devBiD212, "D212")
 device(bo, VME_IO, devBoD212, "D212")
 device(ai, VME_IO, devAiD212, "D212")

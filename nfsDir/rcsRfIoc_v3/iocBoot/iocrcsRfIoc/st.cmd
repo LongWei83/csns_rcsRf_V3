@@ -46,7 +46,8 @@ dbLoadRecords "db/rcsRf6.db"
 dbLoadRecords "db/rcsRf7.db"
 dbLoadRecords "db/rcsRf8.db"
 dbLoadRecords "db/rcsRf9.db"
-#dbLoadRecords "db/rcsRf10.db"
+dbLoadRecords "db/rcsRf10.db"
+dbLoadRecords "db/rcsRf11.db"
 dbLoadRecords "db/calcPV.db"
 
 #D212Config(cardNum,index)
@@ -59,7 +60,8 @@ D212Config(5,5)
 D212Config(6,6)
 D212Config(7,7)
 D212Config(8,8)
-#D212Config(9,9)
+D212Config(9,9)
+D212Config(10,10)
 
 iocInit
 
@@ -75,6 +77,7 @@ dbpf "rcsRf7:Int_Delay_set","9"
 dbpf "rcsRf8:Int_Delay_set","10.5"
 dbpf "rcsRf9:Int_Delay_set","12"
 dbpf "rcsRf10:Int_Delay_set","13.5"
+dbpf "rcsRf11:Int_Delay_set","15"
 
 dbpf "rcsRf1:workPeriod_set","40"
 dbpf "rcsRf2:workPeriod_set","40"
@@ -86,3 +89,4 @@ dbpf "rcsRf7:workPeriod_set","40"
 dbpf "rcsRf8:workPeriod_set","40"
 dbpf "rcsRf9:workPeriod_set","40"
 dbpf "rcsRf10:workPeriod_set","40"
+dbpf "rcsRf11:workPeriod_set","40"

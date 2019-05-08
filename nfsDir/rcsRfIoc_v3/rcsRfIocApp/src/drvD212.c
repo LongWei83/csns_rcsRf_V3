@@ -109,6 +109,7 @@
 #define    REG_BEAM_FF_DELAY			0x2a0
 #define    REG_SYN_OSC_DELAY			0x2a4
 #define    REG_SYN_OSC_COUNT			0x2a8
+#define    REG_SYN_E_ENABLE			0x2ac
 
 
 
@@ -127,7 +128,7 @@ static int dmaCount = 0;
 static int intHasConnect[MAX_INT_SUP] = {0, 0, 0, 0};
 static int dmaUse = 0;
 int *pGBuff = NULL;
-static unsigned int preTrigAll = 0;
+static float preTrigAll = 0;
 
 /* This is defined for tcp ip parm */
 static int listenSkt;
@@ -136,6 +137,8 @@ static int flagNetInit;
 static SEM_ID semCmdLink;
 static SEM_ID semSend;
 static int mode;
+static float synS;
+static float synE;
 
 /* This is defined for tcp ip server program*/
 STATUS netInit(int mode);
@@ -873,23 +876,23 @@ void dataProcess(D212Card *pCard)
       {
       	semGive(semSend);
       }
-      /* process waveform BPM1P data */
+      /* process waveform wf1 for amp data */
       pDest = pCard->floatBuffer + WF1_FADDR;
       pSrc = pCard->buffer + WF1_ADDR;
       for(i=1; i<WAVEFOMR_NUM+1; i++)
       {
-           pDest[i] =  (pSrc[i]) * CALC_WFBPM_MUL + CALC_WFBPM_ADD;
+           pDest[i] =  (pSrc[i]) * CALC_WF_MUL + CALC_WF_ADD;
       }
 
-      /* process waveform BPM1N data */
+      /* process waveform wf2 for amp data */
       pDest = pCard->floatBuffer + WF2_FADDR;
       pSrc = pCard->buffer + WF2_ADDR;
       for(i=1; i<WAVEFOMR_NUM+1; i++)
       {
-           pDest[i] =  pSrc[i] * CALC_WFBPM_MUL + CALC_WFBPM_ADD;
+           pDest[i] =  pSrc[i] * CALC_WF_MUL + CALC_WF_ADD;
       }
 
-      /* calculate BPM1 data */
+      /* calculate BPM data to wf3*/
       pTemp1 = pCard->floatBuffer + WF1_FADDR;
       pTemp2 = pCard->floatBuffer + WF2_FADDR;
       pDest = pCard->floatBuffer + WF3_FADDR;
@@ -899,23 +902,23 @@ void dataProcess(D212Card *pCard)
            pDest[i] = (temp)?((pTemp1[i] - pTemp2[i])*140 / temp):0.0;
       }
 
-      /* process waveform BPM2P data */
+      /* process waveform wf4a for amp data */
       pDest = pCard->floatBuffer + WF4_FADDR_A;
       pSrc = pCard->buffer + WF3_ADDR;
       for(i=1; i<WAVEFOMR_NUM+1; i++)
       {
-           pDest[i] =  (pSrc[i]) * CALC_WFBPM_MUL + CALC_WFBPM_ADD;
+           pDest[i] =  (pSrc[i]) * CALC_WF_MUL + CALC_WF_ADD;
       }
 
-      /* process waveform BPM2N data */
+      /* process waveform wf4b for amp data */
       pDest = pCard->floatBuffer + WF4_FADDR_B;
       pSrc = pCard->buffer + WF4_ADDR;
       for(i=1; i<WAVEFOMR_NUM+1; i++)
       {
-           pDest[i] =  pSrc[i] * CALC_WFBPM_MUL + CALC_WFBPM_ADD;
+           pDest[i] =  pSrc[i] * CALC_WF_MUL + CALC_WF_ADD;
       }
 
-      /* calculate BPM2 data */
+      /* calculate BPM data to wf5a*/
       pTemp1 = pCard->floatBuffer + WF4_FADDR_A;
       pTemp2 = pCard->floatBuffer + WF4_FADDR_B;
       pDest = pCard->floatBuffer + WF5_FADDR_A;
@@ -925,36 +928,36 @@ void dataProcess(D212Card *pCard)
            pDest[i] = (temp)?((pTemp1[i] - pTemp2[i])*140 / temp):0.0;
       }
 
-      /* process waveform BPM1P_Phase data */
+      /* process waveform wf5b for phase data */
       pDest = pCard->floatBuffer + WF5_FADDR_B;
       pSrc = pCard->buffer + WF5_ADDR;
       for(i=1; i<WAVEFOMR_NUM+1; i++)
       {
-           pDest[i] =  pSrc[i] * CALC_WFBPM_PHASE_MUL + CALC_WFBPM_PHASE_ADD;
+           pDest[i] =  pSrc[i] * CALC_WF_PHASE_MUL + CALC_WF_PHASE_ADD;
       }
 
-      /* process waveform BPM1N_Phase data */
+      /* process waveform wf6a for phase data */
       pDest = pCard->floatBuffer + WF6_FADDR_A;
       pSrc = pCard->buffer + WF6_ADDR;
       for(i=1; i<WAVEFOMR_NUM+1; i++)
       {
-           pDest[i] =  pSrc[i] * CALC_WFBPM_PHASE_MUL + CALC_WFBPM_PHASE_ADD;
+           pDest[i] =  pSrc[i] * CALC_WF_PHASE_MUL + CALC_WF_PHASE_ADD;
       }
 
-      /* process waveform BPM2P_Phase data */
+      /* process waveform wf6b for phase data */
       pDest = pCard->floatBuffer + WF6_FADDR_B;
       pSrc = pCard->buffer + WF7_ADDR;
       for(i=1; i<WAVEFOMR_NUM+1; i++)
       {
-           pDest[i] =  pSrc[i] * CALC_WFBPM_PHASE_MUL + CALC_WFBPM_PHASE_ADD;
+           pDest[i] =  pSrc[i] * CALC_WF_PHASE_MUL + CALC_WF_PHASE_ADD;
       }
 
-      /* process waveform BPM2N_Phase data */
+      /* process waveform wf7 for phase data */
       pDest = pCard->floatBuffer + WF7_FADDR;
       pSrc = pCard->buffer + WF8_ADDR;
       for(i=1; i<WAVEFOMR_NUM+1; i++)
       {
-           pDest[i] =  pSrc[i] * CALC_WFBPM_PHASE_MUL + CALC_WFBPM_PHASE_ADD;
+           pDest[i] =  pSrc[i] * CALC_WF_PHASE_MUL + CALC_WF_PHASE_ADD;
       }
 
     }
@@ -1138,11 +1141,11 @@ void writeDma1(){
        if(dmaUse == 1);
        else{
            dmaUse = 1;
-           for(i=0;i<9;i++){
+           for(i=0;i<11;i++){
                int_Disable(getCardStruct(i));
            }
            taskDelay(sysClkRateGet()*1.5);
-           for(i=0;i<9;i++){
+           for(i=0;i<11;i++){
 	       BRIDGE_REG_WRITE8(getCardStruct(i)->bridgeAddr, REG_9656_DMA1_CSR, 0x05);
                BRIDGE_REG_WRITE32(getCardStruct(i)->fpgaAddr, 0x20, 0xaaaaaaaa);
                BRIDGE_REG_WRITE32(getCardStruct(i)->bridgeAddr, REG_9656_DMA1_PCI_ADR, (unsigned int) (getCardStruct(i)->wdata1));
@@ -1153,10 +1156,10 @@ void writeDma1(){
            }
            taskDelay(sysClkRateGet()*1.5);
            dmaUse = 0;
-           for(i=0;i<9;i++){
+           for(i=0;i<11;i++){
                getCardStruct(i)->readDMA2 = 0;
            }
-           for(i=0;i<9;i++){
+           for(i=0;i<11;i++){
                getCardStruct(i)->readDMA1 = 1;
            }
        }
@@ -1171,7 +1174,7 @@ void writeDma2(){
        if(dmaUse == 1);
        else{
            dmaUse = 1;
-           for(i=0;i<9;i++){
+           for(i=0;i<8;i++){
                int_Disable(getCardStruct(i));
            }
            taskDelay(sysClkRateGet()*1.5);
@@ -1186,10 +1189,10 @@ void writeDma2(){
            }
            taskDelay(sysClkRateGet()*1.5);
            dmaUse = 0;
-           for(i=0;i<9;i++){
+           for(i=0;i<8;i++){
                getCardStruct(i)->readDMA1 = 0;
            }
-           for(i=0;i<9;i++){
+           for(i=0;i<8;i++){
                getCardStruct(i)->readDMA2 = 1;
            }
        }
@@ -1536,7 +1539,7 @@ void set_curve_Change ()
    {
    	FPGA_REG_WRITE32(getCardStruct(i)->fpgaAddr, REG_Amp_Change_Option, OPTION_SET);
    }
-   for(i=0;i<9;i++)
+   for(i=0;i<11;i++)
    {
    	FPGA_REG_WRITE32(getCardStruct(i)->fpgaAddr, REG_Fre_Change_Option, OPTION_SET);
    }
@@ -1549,7 +1552,7 @@ void clear_curve_Change ()
    {
    	FPGA_REG_WRITE32(getCardStruct(i)->fpgaAddr, REG_Amp_Change_Option, OPTION_CLEAR);
    }
-   for(i=0;i<9;i++)
+   for(i=0;i<11;i++)
    {
    	FPGA_REG_WRITE32(getCardStruct(i)->fpgaAddr, REG_Fre_Change_Option, OPTION_CLEAR);
    }
@@ -2055,10 +2058,10 @@ float get_FF_Delay (D212Card* pCard)
 
 void set_PreTrig_Delay (D212Card* pCard, float ff_delay)
 {
-   unsigned int value;
-   value = (unsigned int)(ff_delay * CALC_PreTrig_Delay_MUL + CALC_PreTrig_Delay_ADD);
+   float value;
+   value = (ff_delay * CALC_PreTrig_Delay_MUL + CALC_PreTrig_Delay_ADD);
    pCard->preTrig_offset = value;
-   FPGA_REG_WRITE32(pCard->fpgaAddr, REG_PreTrig_Delay, value + preTrigAll);
+   FPGA_REG_WRITE32(pCard->fpgaAddr, REG_PreTrig_Delay, (unsigned)(value + preTrigAll));
 }
 
 float get_PreTrig_Delay (D212Card* pCard)
@@ -2127,7 +2130,7 @@ void set_All_Frequency(float all_fre)
    int i;
    unsigned int value;
    value = (unsigned int)(all_fre * CALC_Fix_Frequency_Set_MUL + CALC_Fix_Frequency_Set_ADD);
-   for(i=0;i<9;i++){
+   for(i=0;i<11;i++){
        FPGA_REG_WRITE32(getCardStruct(i)->fpgaAddr, REG_Fix_Frequency_Set, value);
    }
 }
@@ -2152,14 +2155,14 @@ float get_All_Pretrig (D212Card* pCard)
 void set_All_Pretrig(float all_preTrig)
 {
    int i;
-   unsigned int value;
-   value = (unsigned int)(all_preTrig * CALC_PreTrig_Delay_MUL + CALC_PreTrig_Delay_ADD);
+   float value;
+   value = (all_preTrig * CALC_PreTrig_Delay_MUL + CALC_PreTrig_Delay_ADD);
 
    preTrigAll = value;
 
-   for(i=0;i<9;i++){
+   for(i=0;i<11;i++){
        
-       FPGA_REG_WRITE32(getCardStruct(i)->fpgaAddr, REG_PreTrig_Delay, value + (getCardStruct(i)->preTrig_offset));
+       FPGA_REG_WRITE32(getCardStruct(i)->fpgaAddr, REG_PreTrig_Delay, (unsigned int)(value + (getCardStruct(i)->preTrig_offset)));
    }
 }
 
@@ -2321,6 +2324,21 @@ float get_Syn_Osc_Delay (D212Card* pCard)
 }
 
 
+void set_Syn_Osc_S_Enable (D212Card* pCard, float syn_osc_s_enable)
+{
+   unsigned int value;
+   value = (unsigned int)(syn_osc_s_enable * 60000 + CALC_Syn_Osc_Delay_ADD);
+   FPGA_REG_WRITE32(pCard->fpgaAddr, REG_SYN_OSC_COUNT, value);
+}
+
+void set_Syn_Osc_E_Enable (D212Card* pCard, float syn_osc_e_enable)
+{
+   unsigned int value;
+   value = (unsigned int)(syn_osc_e_enable * 60000 + CALC_Syn_Osc_Delay_ADD);
+   FPGA_REG_WRITE32(pCard->fpgaAddr, REG_SYN_E_ENABLE, value);
+}
+
+
 void set_Syn_Osc_Count (D212Card* pCard, float syn_osc_count)
 {
    unsigned int value;
@@ -2331,6 +2349,16 @@ void set_Syn_Osc_Count (D212Card* pCard, float syn_osc_count)
 float get_Syn_Osc_Count (D212Card* pCard)
 {
    return (FPGA_REG_READ32(pCard->fpgaAddr, REG_SYN_OSC_COUNT) - CALC_Syn_Osc_Count_ADD) / CALC_Syn_Osc_Count_MUL;
+}
+
+float get_Syn_Osc_S_Enable (D212Card* pCard)
+{
+   return (FPGA_REG_READ32(pCard->fpgaAddr, REG_SYN_OSC_COUNT) - CALC_Syn_Osc_Count_ADD) / 60000;
+}
+
+float get_Syn_Osc_E_Enable (D212Card* pCard)
+{
+   return (FPGA_REG_READ32(pCard->fpgaAddr, REG_SYN_E_ENABLE) - CALC_Syn_Osc_Count_ADD) / 60000;
 }
 
 
@@ -2746,6 +2774,22 @@ void autoOnCardNo(int cardNum)
 	set_Drv_Option (pCard);
 	
 	pCard->processing = 20; /*标识自动开机过程开关量初始化完成*/
+
+	/*关幅度闭环前馈表计算功能*/
+	clear_AMP_Modify_Option (pCard);
+
+	
+	/*关调谐闭环前馈表计算功能*/
+	clear_Tune_Modify_Option (pCard);
+	
+
+	/*关相位闭环前馈表计算功能*/
+	clear_Phase_Modify_Option (pCard);
+
+	/*延时0.5s*/
+	/*任务主动放弃CPU资源进入延时态，此时其他同级别的任务可以获取CPU资源并运行*/
+	taskDelay(sysClkRateGet()/2);
+	
 	
 	/*启动幅度闭环前馈表计算功能*/
 	set_AMP_Modify_Option (pCard);
@@ -2796,12 +2840,15 @@ void autoOnCardNo(int cardNum)
 	
 	/*加调谐闭环前馈功能*/
 	set_Tune_FF_Option (pCard);
+
+	/*延时2s*/
+	taskDelay(sysClkRateGet() * 2);
 	
 	/*延时5s*/
-	taskDelay(sysClkRateGet() * 5 * 1.6);
+	/*taskDelay(sysClkRateGet() * 5 * 1.6);*/
 	
 	/*关调谐闭环前馈表计算功能，固定前馈表的值*/
-	clear_Tune_Modify_Option (pCard);
+	/*clear_Tune_Modify_Option (pCard);*/
 	
 	pCard->processing = 60; /*标识调谐闭环前馈修正完成*/
 	
@@ -2814,8 +2861,8 @@ void autoOnCardNo(int cardNum)
 	/*闭幅度闭环*/
 	set_AMP_Option (pCard);
 	
-	/*延时0.5s*/
-	taskDelay(sysClkRateGet()/2);
+	/*延时1s*/
+	taskDelay(sysClkRateGet());
 	
 	/*调整调谐闭环I的值*/
 	set_Tune_I (pCard, parms[23]);
@@ -2831,8 +2878,8 @@ void autoOnCardNo(int cardNum)
 	
 	pCard->processing = 70; /*标识幅度闭环、调谐闭环和栅极调谐闭环I值调整完成*/
 	
-	/*延时0.5s*/
-	taskDelay(sysClkRateGet()/2);
+	/*延时2s*/
+	taskDelay(sysClkRateGet() * 2);
 	
 	/*加幅度闭环前馈功能*/
 	set_AMP_FF_Option (pCard);
@@ -2970,6 +3017,42 @@ void autoOffCardNo(int cardNum)
 	
 	/*关相位闭环前馈功能*/
 	clear_Phase_FF_Option (pCard);
+
+	/*开幅度闭环*/
+	clear_AMP_Option (pCard);
+	
+	/*关幅度闭环前馈功能*/
+	clear_AMP_FF_Option (pCard);
+	
+	/*关幅度闭环前馈表计算功能*/
+	clear_AMP_Modify_Option (pCard);
+	
+	/*开调谐闭环*/
+	clear_Tune_Option (pCard);
+	
+	/*关调谐闭环前馈功能*/
+	clear_Tune_FF_Option (pCard);
+	
+	/*关调谐闭环前馈表计算功能*/
+	clear_Tune_Modify_Option (pCard);
+	
+	/*开栅极调谐闭环*/
+	clear_Front_Tune_Option (pCard);
+	
+	/*开相位闭环*/
+	clear_Phase_Option (pCard);
+	
+	/*关相位闭环前馈功能*/
+	clear_Phase_FF_Option (pCard);
+	
+	/*关相位闭环前馈表计算功能*/
+	clear_Phase_Modify_Option (pCard);
+	
+	/*复位中断*/
+	set_RFReset_Option (pCard);
+
+	/*复位中断*/
+	set_RFReset_Option (pCard);
 	
 	pCard->processing = 0; /*此时可以允许自动开机任务的运行了*/
 }
