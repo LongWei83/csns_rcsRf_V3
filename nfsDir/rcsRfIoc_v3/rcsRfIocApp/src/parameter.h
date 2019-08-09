@@ -109,6 +109,6 @@
 #define	   CALC_Syn_Osc_Delay_MUL		1.0
 #define    CALC_Syn_Osc_Delay_ADD		0
 #define	   CALC_Syn_Osc_Count_MUL		1.0
-#define    CALC_Syn_Osc_Count_ADD		0.0
+#define    CALC_Syn_Osc_Count_ADD		0
 
 #endif  /*end of PARAMETER_h*/

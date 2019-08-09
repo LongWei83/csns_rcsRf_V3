@@ -2181,6 +2181,42 @@ void set_All_Amp_Coeffic(float all_ampCeffic)
    FPGA_REG_WRITE32(getCardStruct(7)->fpgaAddr, REG_AMP_Coefficient, value + 0);
    FPGA_REG_WRITE32(getCardStruct(6)->fpgaAddr, REG_AMP_Coefficient, value + 0);
    FPGA_REG_WRITE32(getCardStruct(5)->fpgaAddr, REG_AMP_Coefficient, value + 0);
+
+      /*调用保存参数的函数saveParms*/
+   /*使用PV值覆写序号为29的文件参数*/
+   if(getCardStruct(3) == 0)
+   {
+	   saveParms(29, 3, all_ampCeffic);
+   }
+   if(getCardStruct(2) == 0)
+   {
+	   saveParms(29, 2, all_ampCeffic);
+   }
+   if(getCardStruct(1) == 0)
+   {
+	   saveParms(29, 1, all_ampCeffic);
+   }
+   if(getCardStruct(0) == 0)
+   {
+	   saveParms(29, 0, all_ampCeffic);
+   }
+   if(getCardStruct(4) == 0)
+   {
+	   saveParms(29, 4, all_ampCeffic);
+   }
+   if(getCardStruct(7) == 0)
+   {
+	   saveParms(29, 7, all_ampCeffic);
+   }
+   if(getCardStruct(6) == 0)
+   {
+	   saveParms(29, 6, all_ampCeffic);
+   }
+   if(getCardStruct(5) == 0)
+   {
+	   saveParms(29, 5, all_ampCeffic);
+   }
+   /*调用保存参数的函数saveParms——结束*/
 }
 
 void set_EX_Phase (D212Card* pCard, float ex_phase)
@@ -2774,22 +2810,6 @@ void autoOnCardNo(int cardNum)
 	set_Drv_Option (pCard);
 	
 	pCard->processing = 20; /*标识自动开机过程开关量初始化完成*/
-
-	/*关幅度闭环前馈表计算功能*/
-	clear_AMP_Modify_Option (pCard);
-
-	
-	/*关调谐闭环前馈表计算功能*/
-	clear_Tune_Modify_Option (pCard);
-	
-
-	/*关相位闭环前馈表计算功能*/
-	clear_Phase_Modify_Option (pCard);
-
-	/*延时0.5s*/
-	/*任务主动放弃CPU资源进入延时态，此时其他同级别的任务可以获取CPU资源并运行*/
-	taskDelay(sysClkRateGet()/2);
-	
 	
 	/*启动幅度闭环前馈表计算功能*/
 	set_AMP_Modify_Option (pCard);
@@ -2841,8 +2861,8 @@ void autoOnCardNo(int cardNum)
 	/*加调谐闭环前馈功能*/
 	set_Tune_FF_Option (pCard);
 
-	/*延时2s*/
-	taskDelay(sysClkRateGet() * 2);
+	/*延时0.5s*/
+	taskDelay(sysClkRateGet());
 	
 	/*延时5s*/
 	/*taskDelay(sysClkRateGet() * 5 * 1.6);*/
@@ -2861,8 +2881,8 @@ void autoOnCardNo(int cardNum)
 	/*闭幅度闭环*/
 	set_AMP_Option (pCard);
 	
-	/*延时1s*/
-	taskDelay(sysClkRateGet());
+	/*延时0.5s*/
+	taskDelay(sysClkRateGet()/2);
 	
 	/*调整调谐闭环I的值*/
 	set_Tune_I (pCard, parms[23]);
@@ -2878,8 +2898,8 @@ void autoOnCardNo(int cardNum)
 	
 	pCard->processing = 70; /*标识幅度闭环、调谐闭环和栅极调谐闭环I值调整完成*/
 	
-	/*延时2s*/
-	taskDelay(sysClkRateGet() * 2);
+	/*延时0.5s*/
+	taskDelay(sysClkRateGet()/2);
 	
 	/*加幅度闭环前馈功能*/
 	set_AMP_FF_Option (pCard);
