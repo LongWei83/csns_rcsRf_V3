@@ -122,20 +122,17 @@
 #define CPCI_AI_BPM_DELAY_SET		33
 #define CPCI_AI_CHOPPER_PAHSE_SET	34
 #define CPCI_AI_EX_DELAY_SET		35
-#define	CPCI_AI_FRONT_RF_VOL		36
-#define	CPCI_AI_CAV_RF_VOL		37
-#define	CPCI_AI_GRID_RF_VOL		38
-#define CPCI_AI_REF_DELAY_AB		39
-#define CPCI_AI_REF_DELAY_C		40
-#define CPCI_AI_REF_DELAY_D		41
-#define CPCI_AI_BEAM_FF_COEF		42
-#define CPCI_AI_BEAM_FF_PHASE_SET	43
-#define CPCI_AI_BEAM_FF_DELAY		44
-#define CPCI_AI_ALL_PRETRIG		45
-#define CPCI_AI_SYN_OSC_DELAY		46
-#define CPCI_AI_SYN_OSC_COUNT		47
-#define CPCI_AI_SYN_OSC_S_ENABLE	48
-#define CPCI_AI_SYN_OSC_E_ENABLE	49
+#define CPCI_AI_REF_DELAY_AB		36
+#define CPCI_AI_REF_DELAY_C		37
+#define CPCI_AI_REF_DELAY_D		38
+#define CPCI_AI_BEAM_FF_COEF		39
+#define CPCI_AI_BEAM_FF_PHASE_SET	40
+#define CPCI_AI_BEAM_FF_DELAY		41
+#define CPCI_AI_ALL_PRETRIG		42
+#define CPCI_AI_SYN_OSC_DELAY		43
+#define CPCI_AI_SYN_OSC_COUNT		44
+#define CPCI_AI_SYN_OSC_S_ENABLE	45
+#define CPCI_AI_SYN_OSC_E_ENABLE	46
 
 
 
@@ -195,20 +192,14 @@
 #define CPCI_LO_INT_NUM			0
 ***************************/
 
-#define CPCI_WF_1			0
+#define CPCI_WF_1						0
 #define CPCI_WF_2                       1
 #define CPCI_WF_3                       2
-#define CPCI_WF_4_A                     3
-#define CPCI_WF_4_B                     4
-#define CPCI_WF_5_A                     5
-#define CPCI_WF_5_B                     6
-#define CPCI_WF_6_A                     7
-#define CPCI_WF_6_B                     8
-#define CPCI_WF_7                       9
-#define CPCI_WF_8                       10
-#define CPCI_WF_AMP_SKEW		11
-#define CPCI_WF_GRID	                12
-#define CPCI_WF_FRONT                   13
+#define CPCI_WF_4                       3
+#define CPCI_WF_5                       4
+#define CPCI_WF_6                       5
+#define CPCI_WF_7                       6
+#define CPCI_WF_8                       7
 
 #define CPCI_WR_RD1	                0
 #define CPCI_WR_RD2	                1
@@ -969,9 +960,6 @@ static long init_ai(struct aiRecord *pai)
 	CHECK_AIPARM("BPM_DELAY_SET", CPCI_AI_BPM_DELAY_SET);
 	CHECK_AIPARM("CHOPPER_PAHSE_SET", CPCI_AI_CHOPPER_PAHSE_SET);
 	CHECK_AIPARM("EX_DELAY_SET", CPCI_AI_EX_DELAY_SET);
-	CHECK_AIPARM("FRONT_RF_VOL", CPCI_AI_FRONT_RF_VOL);
-	CHECK_AIPARM("CAV_RF_VOL", CPCI_AI_CAV_RF_VOL);
-	CHECK_AIPARM("GRID_RF_VOL", CPCI_AI_GRID_RF_VOL);
 	CHECK_AIPARM("REF_DELAY_AB", CPCI_AI_REF_DELAY_AB);
 	CHECK_AIPARM("REF_DELAY_C", CPCI_AI_REF_DELAY_C);
 	CHECK_AIPARM("REF_DELAY_D", CPCI_AI_REF_DELAY_D);
@@ -1002,15 +990,6 @@ static long read_ai(struct aiRecord *pai) {
     signal = pai->inp.value.vmeio.signal;
 
     switch (((recPrivate*)pai->dpvt)->function) {
-       case CPCI_AI_CAV_RF_VOL:
-           pai->val=get_Cav_RF_Vol(((recPrivate*)pai->dpvt)->pCard);
-           break;
-       case CPCI_AI_GRID_RF_VOL:
-           pai->val=get_Grid_RF_Vol(((recPrivate*)pai->dpvt)->pCard);
-           break;
-       case CPCI_AI_FRONT_RF_VOL:
-           pai->val=get_Front_RF_Vol(((recPrivate*)pai->dpvt)->pCard);
-           break;
        case CPCI_AI_FIX_FREQUENCY:
            pai->val=get_Fix_Frequency(((recPrivate*)pai->dpvt)->pCard);
            break;
@@ -1569,17 +1548,11 @@ static long init_wf(struct waveformRecord *pwf) {
         CHECK_WFPARM("WF_1", CPCI_WF_1);
         CHECK_WFPARM("WF_2", CPCI_WF_2);
         CHECK_WFPARM("WF_3", CPCI_WF_3);
-        CHECK_WFPARM("WF_4_A", CPCI_WF_4_A);
-        CHECK_WFPARM("WF_4_B", CPCI_WF_4_B);
-        CHECK_WFPARM("WF_5_A", CPCI_WF_5_A);
-        CHECK_WFPARM("WF_5_B", CPCI_WF_5_B);
-        CHECK_WFPARM("WF_6_A", CPCI_WF_6_A);
-        CHECK_WFPARM("WF_6_B", CPCI_WF_6_B);
+        CHECK_WFPARM("WF_4", CPCI_WF_4);
+        CHECK_WFPARM("WF_5", CPCI_WF_5);
+        CHECK_WFPARM("WF_6", CPCI_WF_6);
         CHECK_WFPARM("WF_7", CPCI_WF_7);
         CHECK_WFPARM("WF_8", CPCI_WF_8);
-        CHECK_WFPARM("WF_AMP_SKEW", CPCI_WF_AMP_SKEW);
-        CHECK_WFPARM("WF_GRID", CPCI_WF_GRID);
-        CHECK_WFPARM("WF_FRONT", CPCI_WF_FRONT);
     } while(0);
 
     if (!parmOK) {
@@ -1589,7 +1562,7 @@ static long init_wf(struct waveformRecord *pwf) {
         return (S_db_badField);
     }
 
-    if (pwf->ftvl != DBF_FLOAT) {
+    if (pwf->ftvl != DBF_ULONG) {
         recGblRecordError(S_db_badField, (void *)pwf,
                    "devWfD212 (init_record) Illegal FTVL field");
         return(S_db_badField);
@@ -1600,65 +1573,42 @@ static long init_wf(struct waveformRecord *pwf) {
 
 static long read_wf(struct waveformRecord *pwf) {
     int numRead = pwf->nelm;
-    float *pSrc;
-    float *pDest = pwf->bptr;
+    unsigned int *pSrc;
+    unsigned int *pDest = pwf->bptr;
     switch (((recPrivate*)pwf->dpvt)->function) {
        case CPCI_WF_1:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->floatBuffer + WF1_FADDR + 1;
+          pSrc = ((recPrivate*)pwf->dpvt)->pCard->buffer + WF1_ADDR + 1;
           memcpy(pDest, pSrc, numRead*sizeof(float));
           break;
        case CPCI_WF_2:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->floatBuffer + WF2_FADDR + 1;
+          pSrc = ((recPrivate*)pwf->dpvt)->pCard->buffer + WF2_ADDR + 1;
           memcpy(pDest, pSrc, numRead*sizeof(float));
           break;
        case CPCI_WF_3:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->floatBuffer + WF3_FADDR + 1;
+          pSrc = ((recPrivate*)pwf->dpvt)->pCard->buffer + WF3_ADDR + 1;
           memcpy(pDest, pSrc, numRead*sizeof(float));
           break;
-       case CPCI_WF_4_A:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->floatBuffer + WF4_FADDR_A + 1;
+       case CPCI_WF_4:
+          pSrc = ((recPrivate*)pwf->dpvt)->pCard->buffer + WF4_ADDR + 1;
           memcpy(pDest, pSrc, numRead*sizeof(float));
           break;
-       case CPCI_WF_4_B:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->floatBuffer + WF4_FADDR_B + 1;
+       case CPCI_WF_5:
+          pSrc = ((recPrivate*)pwf->dpvt)->pCard->buffer + WF5_ADDR + 1;
           memcpy(pDest, pSrc, numRead*sizeof(float));
           break;
-       case CPCI_WF_5_A:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->floatBuffer + WF5_FADDR_A + 1;
-          memcpy(pDest, pSrc, numRead*sizeof(float));
-          break;
-       case CPCI_WF_5_B:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->floatBuffer + WF5_FADDR_B + 1;
-          memcpy(pDest, pSrc, numRead*sizeof(float));
-          break;
-       case CPCI_WF_6_A:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->floatBuffer + WF6_FADDR_A + 1;
-          memcpy(pDest, pSrc, numRead*sizeof(float));
-          break;
-       case CPCI_WF_6_B:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->floatBuffer + WF6_FADDR_B + 1;
+       case CPCI_WF_6:
+          pSrc = ((recPrivate*)pwf->dpvt)->pCard->buffer + WF6_ADDR + 1;
           memcpy(pDest, pSrc, numRead*sizeof(float));
           break;
        case CPCI_WF_7:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->floatBuffer + WF7_FADDR + 1;
+          pSrc = ((recPrivate*)pwf->dpvt)->pCard->buffer + WF7_ADDR + 1;
           memcpy(pDest, pSrc, numRead*sizeof(float));
           break;
        case CPCI_WF_8:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->floatBuffer + WF8_FADDR + 1;
+          pSrc = ((recPrivate*)pwf->dpvt)->pCard->buffer + WF8_ADDR + 1;
           memcpy(pDest, pSrc, numRead*sizeof(float));
           break;
-       case CPCI_WF_AMP_SKEW:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->ampSkewBuffer + 1;
-          memcpy(pDest, pSrc, numRead*sizeof(float));
-          break;
-       case CPCI_WF_GRID:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->gridBuffer + 1;
-          memcpy(pDest, pSrc, numRead*sizeof(float));
-          break;
-       case CPCI_WF_FRONT:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->frontBuffer + 1;
-          memcpy(pDest, pSrc, numRead*sizeof(float));
-          break;
+
        default:
            recGblRecordError(S_db_badField,(void *)pwf,
                     "devWfCPCI9110 Read_wf, bad parm");

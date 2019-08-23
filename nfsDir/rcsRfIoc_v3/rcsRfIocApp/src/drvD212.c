@@ -268,8 +268,6 @@ int D212Config (int cardNum, int index)
    /*将int processing元素初始化为0，标识当前自动开机程序没有运行*/
    pCard->processing = 0;
 
-   /*将int dataProcessing元素初始化为0，标识当前dataProcessing程序没有运行*/
-   pCard->dataProcessing = 0;
 
 
    /*BAR0 corresponds to 9656 register*/
@@ -316,62 +314,13 @@ int D212Config (int cardNum, int index)
    }
 
    /* allocate data buffer */
-   pCard->buffer = (int *) calloc (DMA_TRANSFER_NUM, sizeof(int));
+   pCard->buffer = (unsigned int *) calloc (DMA_TRANSFER_NUM, sizeof(unsigned int));
    if (!pCard->buffer)
    {
        fprintf (stderr, "D212Config: fail to alloc buffer\n");
        return ERROR;
    }
 
-   /* allocate processed float data buffer */
-   pCard->floatBuffer = (float *) calloc (0x680B, sizeof(float));
-   if (!pCard->floatBuffer)
-   {
-       fprintf (stderr, "D212Config: fail to alloc float buffer\n");
-       return ERROR;
-   }
-
-
-   /*allocate ampSkew Buffer */
-   pCard->ampSkewBuffer = (float *) calloc (WAVEFOMR_NUM+1, sizeof(float));
-   if (!pCard->ampSkewBuffer)
-   {
-       fprintf (stderr, "D212Config: fail to alloc error all buffer\n");
-       return ERROR;
-   }
-   
-   initData = pCard->ampSkewBuffer;
-   for(i=0; i<WAVEFOMR_NUM+1; i++)
-   {
-       initData[i] =  0.0;
-   }
-
-
-   /*allocate grid buffer */
-   pCard->gridBuffer = (float *) calloc (WAVEFOMR_NUM+1, sizeof(float));
-   if (!pCard->gridBuffer)
-   {
-       fprintf (stderr, "D212Config: fail to alloc grid buffer\n");
-       return ERROR;
-   }
-   initData = pCard->gridBuffer;
-   for(i=0; i<WAVEFOMR_NUM+1; i++)
-      {
-           initData[i] =  0.0;
-      }
-
-   /*allocate front buffer */
-   pCard->frontBuffer = (float *) calloc (WAVEFOMR_NUM+1, sizeof(float));
-   if (!pCard->frontBuffer)
-   {
-       fprintf (stderr, "D212Config: fail to alloc front buffer\n");
-       return ERROR;
-   }
-   initData = pCard->frontBuffer;
-   for(i=0; i<WAVEFOMR_NUM+1; i++)
-      {
-           initData[i] =  0.0;
-      }
    /*allocate wr_rd buffer1 */
    pCard->wrRdBuffer1 = (unsigned int *) calloc (8192, sizeof(unsigned int));
    if (!pCard->wrRdBuffer1)
@@ -487,11 +436,7 @@ int D212Config (int cardNum, int index)
    /* initialize plx9656 bridge chip */
    plx9656Init(pCard);
 
-   /* start data process task */
-   if( ERROR == taskSpawn("dataProcessTask", 52, VX_FP_TASK, 10000, (FUNCPTR) dataProcess, (int) pCard, 0, 0, 0, 0, 0, 0, 0, 0, 0))
-   {
-      printf("Fail to spawn data process task!\n");
-   }
+
        
    if(cardNum == 0)
    {
@@ -689,15 +634,14 @@ void cpciIntISR(int intLine)
             else
             {
                dmaCount = 0;
-	       /* disable dma interrupt, enable local interrupt*/
+			   /* disable dma interrupt, enable local interrupt*/
                /*BRIDGE_REG_WRITE32(pCard->bridgeAddr, REG_9656_INTCSR, 0x0f080900); */
                /* synchronize data process task */
-	       if(pCard->dataProcessing == 0) /*if dataProcessing task is not running, give the sem to dataProcessing*/
-	       {
-               	    semGive(pCard->semDMA0);
-	       }
-
-               /*scanIoRequest(pCard->ioScanPvt);*/
+               scanIoRequest(pCard->ioScanPvt);
+				if(flagNetInit == NET_INIT_COMMUSKT)
+				  {
+					semGive(semSend);
+				  }
             }
          }        
 	 else if(BRIDGE_REG_READ32(pCard->bridgeAddr, REG_9656_INTCSR) & PLX9656_INTCSR_DMA1_INT_ACTIVE)
@@ -710,261 +654,6 @@ void cpciIntISR(int intLine)
    /*   }*/
    }
 
-}
-
-void dataProcess(D212Card *pCard)
-{
-   int i;
-   float *pDest;
-   int *pSrc;
-   float temp;
-   short phase;
-   float *pTemp1, *pTemp2;
-   UINT originIntHigh;
-   UINT originIntLow;
-   
-   /* infinite loop, used for data process */
-   while(1)
-   {
-      /* synchronize with ISR */
-      semTake(pCard->semDMA0, WAIT_FOREVER); 
-    pCard->dataProcessing = 321;
-
-
-    if(pCard->cardNum < 8){
-
-      /* process waveform 1 data */
-      pDest = pCard->floatBuffer + WF1_FADDR;
-      pSrc = pCard->buffer + WF1_ADDR;
-      for(i=1; i<WAVEFOMR_NUM+1; i++)
-      {
-           pDest[i] =  (pSrc[i]>>12) * CALC_WF1_MUL + CALC_WF1_ADD;
-	   /* Mark for the cavity rf vol */
-	   if(i == 1024)
-	   {
-		pCard->cav_rf_vol = pDest[i];
-	   }
-      }
-
-      /* process waveform 2 data */
-      pDest = pCard->floatBuffer + WF2_FADDR;
-      pSrc = pCard->buffer + WF2_ADDR;
-      for(i=1; i<WAVEFOMR_NUM+1; i++)
-      {
-           pDest[i] =  pSrc[i] * CALC_WF2_MUL + CALC_WF2_ADD;
-      }
-
-      /* calculate amplitude skew with wf1 & wf2, i.e. (wf2 - wf1) / wf1 */
-      pSrc = pCard->buffer + WF1_ADDR;
-      pTemp2 = pCard->floatBuffer + WF2_FADDR;
-      pDest = pCard->ampSkewBuffer;
-      for(i=1; i<WAVEFOMR_NUM+1; i++)
-      {
-           pDest[i] = (pSrc[i]*1.0 - pTemp2[i]) / pTemp2[i] * 100.0;
-      }
-
-      /* process waveform 3 data */
-      pDest = pCard->floatBuffer + WF3_FADDR;
-      pSrc = pCard->buffer + WF3_ADDR;
-      for(i=1; i<WAVEFOMR_NUM+1; i++)
-      {
-           pDest[i] =  pSrc[i] * CALC_WF3_MUL + CALC_WF3_ADD;
-      }
-
-      /* process waveform 4 data */
-      pDest = pCard->floatBuffer + WF4_FADDR_A;
-      pSrc = pCard->buffer + WF4_ADDR;
-      for(i=1; i<WAVEFOMR_NUM+1; i++)
-      {
-	   phase = pSrc[i]>>16;
-	   pDest[i] =  phase *32 * CALC_WF4A_MUL + CALC_WF4A_ADD;
-      }
-      /* process waveform 4 data */
-      pDest = pCard->floatBuffer + WF4_FADDR_B;
-      pSrc = pCard->buffer + WF4_ADDR;
-      for(i=1; i<WAVEFOMR_NUM+1; i++)
-      {
-           pDest[i] =  (pSrc[i] << 16) /2048 * CALC_WF4B_MUL + CALC_WF4B_ADD;
-      }
-
-
-      /* process waveform 5 data */
-      pDest = pCard->floatBuffer + WF5_FADDR_A;
-      pSrc = pCard->buffer + WF5_ADDR;
-      for(i=1; i<WAVEFOMR_NUM+1; i++)
-      {
-	   phase = pSrc[i]>>16;
-	   pDest[i] =  phase *32 * CALC_WF5A_MUL + CALC_WF5A_ADD;
-      }
-      /* process waveform 5 data */
-      pDest = pCard->floatBuffer + WF5_FADDR_B;
-      pSrc = pCard->buffer + WF5_ADDR;
-      for(i=1; i<WAVEFOMR_NUM+1; i++)
-      {
-           pDest[i] =  (pSrc[i] << 16) /2048 * CALC_WF5B_MUL + CALC_WF5B_ADD;
-      }
-
-      /* process waveform 6 data */
-      pDest = pCard->floatBuffer + WF6_FADDR_A;
-      pSrc = pCard->buffer + WF6_ADDR;
-      for(i=1; i<WAVEFOMR_NUM+1; i++)
-      {
-           originIntHigh = ((UINT) (pSrc[i]))>>16;
-	   pDest[i] =  originIntHigh * CALC_WF6A_MUL + CALC_WF6A_ADD;
-      }
-
-      /* process waveform 6 data */
-      pDest = pCard->floatBuffer + WF6_FADDR_B;
-      pSrc = pCard->buffer + WF6_ADDR;
-      /*pSrc = pCard->buffer + WF6_ADDR;*/
-      for(i=1; i<WAVEFOMR_NUM+1; i++)
-      {
-           originIntLow=((UINT) (pSrc[i]))&0x0000FFFF;
-           pDest[i] =  originIntLow * CALC_WF6B_MUL + CALC_WF6B_ADD;
-      }
-
-      /* process waveform 7 data */
-      
-      pDest = pCard->floatBuffer + WF7_FADDR;
-      pSrc = pCard->buffer + WF7_ADDR;
-      for(i=1; i<WAVEFOMR_NUM+1; i++)
-      {
-           pDest[i] =  pSrc[i] * CALC_WF7_MUL + CALC_WF7_ADD;
-      }
-
-      /* process waveform 8 data */
-      pDest = pCard->floatBuffer + WF8_FADDR;
-      pSrc = pCard->buffer + WF8_ADDR;
-      for(i=1; i<WAVEFOMR_NUM+1; i++)
-      {
-           pDest[i] =  pSrc[i] * CALC_WF8_MUL + CALC_WF8_ADD;
-      }
-
-      /* calculate gridBuffer with wf8 */
-      pDest = pCard->gridBuffer;
-      pSrc = pCard->buffer + WF8_ADDR;
-      for(i=1; i<WAVEFOMR_NUM+1; i++)
-      {
-           originIntHigh = ((UINT) (pSrc[i]))>>16;
-	   pDest[i] =  originIntHigh * CALC_WF8_MUL + CALC_WF8_ADD;
-
-	   /* Mark for the front rf vol */
-	   if(i == 512)
-	   {
-		pCard->grid_rf_vol = pDest[i];
-	   }
-      }
-
-      /* calculate frontBuffer with wf8 */
-      pDest = pCard->frontBuffer;
-      pSrc = pCard->buffer + WF8_ADDR;
-      for(i=1; i<WAVEFOMR_NUM+1; i++)
-      {
-           originIntLow=((UINT) (pSrc[i]))&0x0000FFFF;
-	   pDest[i] =  originIntLow * CALC_WF8_MUL + CALC_WF8_ADD;
-	   /* Mark for the front rf vol */
-	   if(i == 512)
-	   {
-		pCard->front_rf_vol = pDest[i];
-	   }
-      }
-
-    }/*end of if(pCard->cardNum < 8) */
-    else
-    {
-      if(flagNetInit == NET_INIT_COMMUSKT)
-      {
-      	semGive(semSend);
-      }
-      /* process waveform wf1 for amp data */
-      pDest = pCard->floatBuffer + WF1_FADDR;
-      pSrc = pCard->buffer + WF1_ADDR;
-      for(i=1; i<WAVEFOMR_NUM+1; i++)
-      {
-           pDest[i] =  (pSrc[i]) * CALC_WF_MUL + CALC_WF_ADD;
-      }
-
-      /* process waveform wf2 for amp data */
-      pDest = pCard->floatBuffer + WF2_FADDR;
-      pSrc = pCard->buffer + WF2_ADDR;
-      for(i=1; i<WAVEFOMR_NUM+1; i++)
-      {
-           pDest[i] =  pSrc[i] * CALC_WF_MUL + CALC_WF_ADD;
-      }
-
-      /* calculate BPM data to wf3*/
-      pTemp1 = pCard->floatBuffer + WF1_FADDR;
-      pTemp2 = pCard->floatBuffer + WF2_FADDR;
-      pDest = pCard->floatBuffer + WF3_FADDR;
-      for(i=1; i<WAVEFOMR_NUM+1; i++)
-      {
-	   temp = (pTemp1[i]+pTemp2[i]);
-           pDest[i] = (temp)?((pTemp1[i] - pTemp2[i])*140 / temp):0.0;
-      }
-
-      /* process waveform wf4a for amp data */
-      pDest = pCard->floatBuffer + WF4_FADDR_A;
-      pSrc = pCard->buffer + WF3_ADDR;
-      for(i=1; i<WAVEFOMR_NUM+1; i++)
-      {
-           pDest[i] =  (pSrc[i]) * CALC_WF_MUL + CALC_WF_ADD;
-      }
-
-      /* process waveform wf4b for amp data */
-      pDest = pCard->floatBuffer + WF4_FADDR_B;
-      pSrc = pCard->buffer + WF4_ADDR;
-      for(i=1; i<WAVEFOMR_NUM+1; i++)
-      {
-           pDest[i] =  pSrc[i] * CALC_WF_MUL + CALC_WF_ADD;
-      }
-
-      /* calculate BPM data to wf5a*/
-      pTemp1 = pCard->floatBuffer + WF4_FADDR_A;
-      pTemp2 = pCard->floatBuffer + WF4_FADDR_B;
-      pDest = pCard->floatBuffer + WF5_FADDR_A;
-      for(i=1; i<WAVEFOMR_NUM+1; i++)
-      {
-	   temp = (pTemp1[i]+pTemp2[i]);
-           pDest[i] = (temp)?((pTemp1[i] - pTemp2[i])*140 / temp):0.0;
-      }
-
-      /* process waveform wf5b for phase data */
-      pDest = pCard->floatBuffer + WF5_FADDR_B;
-      pSrc = pCard->buffer + WF5_ADDR;
-      for(i=1; i<WAVEFOMR_NUM+1; i++)
-      {
-           pDest[i] =  pSrc[i] * CALC_WF_PHASE_MUL + CALC_WF_PHASE_ADD;
-      }
-
-      /* process waveform wf6a for phase data */
-      pDest = pCard->floatBuffer + WF6_FADDR_A;
-      pSrc = pCard->buffer + WF6_ADDR;
-      for(i=1; i<WAVEFOMR_NUM+1; i++)
-      {
-           pDest[i] =  pSrc[i] * CALC_WF_PHASE_MUL + CALC_WF_PHASE_ADD;
-      }
-
-      /* process waveform wf6b for phase data */
-      pDest = pCard->floatBuffer + WF6_FADDR_B;
-      pSrc = pCard->buffer + WF7_ADDR;
-      for(i=1; i<WAVEFOMR_NUM+1; i++)
-      {
-           pDest[i] =  pSrc[i] * CALC_WF_PHASE_MUL + CALC_WF_PHASE_ADD;
-      }
-
-      /* process waveform wf7 for phase data */
-      pDest = pCard->floatBuffer + WF7_FADDR;
-      pSrc = pCard->buffer + WF8_ADDR;
-      for(i=1; i<WAVEFOMR_NUM+1; i++)
-      {
-           pDest[i] =  pSrc[i] * CALC_WF_PHASE_MUL + CALC_WF_PHASE_ADD;
-      }
-
-    }
-
-      scanIoRequest(pCard->ioScanPvt);
-      pCard->dataProcessing = 0;
-   }
 }
 
 /*---------------------Comment for hardware register access--------------------
@@ -2426,21 +2115,6 @@ float get_beam_ff_delay (D212Card* pCard)
 float get_EX_Delay_set (D212Card* pCard)
 {
    return (FPGA_REG_READ32(pCard->fpgaAddr, REG_EX_Delay_set));
-}
-
-float get_Front_RF_Vol(D212Card* pCard)
-{
-   return (pCard->front_rf_vol);
-}
-
-float get_Cav_RF_Vol(D212Card* pCard)
-{
-   return (pCard->cav_rf_vol);
-}
-
-float get_Grid_RF_Vol(D212Card* pCard)
-{
-   return (pCard->grid_rf_vol);
 }
 
 /* This is for tcp ip server program */

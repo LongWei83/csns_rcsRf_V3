@@ -97,12 +97,8 @@ struct D212Card {
    SEM_ID semDMA0;              /*DMA0 interrupt*/
    int processing;        /*标识该板卡的自动开机程序正在运行中，避免重复发起自动开机程序的任务*/
 
-   int *buffer;       /*store data transferred via DMA*/
+   unsigned int *buffer;       /*store data transferred via DMA*/
 
-   float *floatBuffer;     /*store processed float data */
-   float *ampSkewBuffer;
-   float *gridBuffer;
-   float *frontBuffer;
    unsigned int *wrRdBuffer1;
    unsigned int *wrRdBuffer2;
    unsigned int *wdata1;
@@ -113,11 +109,6 @@ struct D212Card {
    int errorFlag;
    unsigned int intTime;
    float preTrig_offset;
-
-   float front_rf_vol;
-   float cav_rf_vol;
-   float grid_rf_vol;
-   int dataProcessing;
 };
 
 struct recPrivate {
@@ -136,7 +127,6 @@ float get_RBF_Delay (D212Card* pCard);
 void set_All_Pretrig(float all_preTrig);
 void set_All_Amp_Coeffic(float all_ampCeffic);
 void cpciIntISR(int intLine);
-void dataProcess(D212Card *pCard);
 void int_Enable (D212Card* pCard);
 void int_Disable (D212Card* pCard);
 int int_Enable_get (D212Card* pCard);

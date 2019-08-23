@@ -397,28 +397,27 @@ record(ao,"rcsRf10:ref_delayD_set")
         field(OUT, "#C10 S @REF_DELAY_D")
 }
 
-record(waveform,"rcsRf10:fct_amp") {
+record(waveform,"rcsRf10:wf_4") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
-        field(INP,"#C10 S @WF_4_B")
+        field(INP,"#C10 S @WF_4")
         field(NELM,"2048")
-        field(FTVL,"FLOAT")
+        field(FTVL,"ULONG")
 }
 
-record(waveform,"rcsRf10:fct_phase") {
+record(waveform,"rcsRf10:wf_7") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
         field(INP,"#C10 S @WF_7")
         field(NELM,"2048")
-        field(FTVL,"FLOAT")
+        field(FTVL,"ULONG")
 }
-
-record(waveform,"rcsRf10:syn_phase") {
+record(waveform,"rcsRf10:wf_8") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
-        field(INP,"#C10 S @WF_6_B")
+        field(INP,"#C10 S @WF_8")
         field(NELM,"2048")
-        field(FTVL,"FLOAT")
+        field(FTVL,"ULONG")
 }
 
 record(waveform,"rcsRf10:wr_rd_fre") {

@@ -477,33 +477,6 @@ record(bo,"rcsRf7:sgMode_set") {
         field(ONAM,"1")
 }
 
-record(ai,"rcsRf7:FrontRfVol:ai")
-{
-	field(DESC, "")
-        field(PREC, "7")
-        field(DTYP, "D212")
-	field(INP, "#C6 S @FRONT_RF_VOL")
-        field(SCAN,"1 second")
-}
-
-record(ai,"rcsRf7:GridRfVol:ai")
-{
-	field(DESC, "")
-        field(PREC, "7")
-        field(DTYP, "D212")
-	field(INP, "#C6 S @GRID_RF_VOL")
-        field(SCAN,"1 second")
-}
-
-record(ai,"rcsRf7:CavRfVol:ai")
-{
-	field(DESC, "")
-        field(PREC, "7")
-        field(DTYP, "D212")
-	field(INP, "#C6 S @CAV_RF_VOL")
-        field(SCAN,"1 second")
-}
-
 record(ai,"rcsRf7:workPeriod_get")
 {
         field(DESC, "")
@@ -1026,103 +999,57 @@ record(waveform,"rcsRf7:wf_1") {
         field(DTYP,"D212 READ")
         field(INP,"#C6 S @WF_1")
         field(NELM,"2048")
-        field(FTVL,"FLOAT")
+        field(FTVL,"ULONG")
 }
 record(waveform,"rcsRf7:wf_2") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
         field(INP,"#C6 S @WF_2")
         field(NELM,"2048")
-        field(FTVL,"FLOAT")
+        field(FTVL,"ULONG")
 }
 record(waveform,"rcsRf7:wf_3") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
         field(INP,"#C6 S @WF_3")
         field(NELM,"2048")
-        field(FTVL,"FLOAT")
+        field(FTVL,"ULONG")
 }
-record(waveform,"rcsRf7:wf_4a") {
+record(waveform,"rcsRf7:wf_4") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
-        field(INP,"#C6 S @WF_4_A")
+        field(INP,"#C6 S @WF_4")
         field(NELM,"2048")
-        field(FTVL,"FLOAT")
+        field(FTVL,"ULONG")
 }
-record(waveform,"rcsRf7:wf_4b") {
+record(waveform,"rcsRf7:wf_5") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
-        field(INP,"#C6 S @WF_4_B")
+        field(INP,"#C6 S @WF_5")
         field(NELM,"2048")
-        field(FTVL,"FLOAT")
+        field(FTVL,"ULONG")
 }
-record(waveform,"rcsRf7:wf_5a") {
+record(waveform,"rcsRf7:wf_6") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
-        field(INP,"#C6 S @WF_5_A")
+        field(INP,"#C6 S @WF_6")
         field(NELM,"2048")
-        field(FTVL,"FLOAT")
-}
-record(waveform,"rcsRf7:wf_5b") {
-        field(SCAN,"I/O Intr")
-        field(DTYP,"D212 READ")
-        field(INP,"#C6 S @WF_5_B")
-        field(NELM,"2048")
-        field(FTVL,"FLOAT")
-}
-record(waveform,"rcsRf7:wf_6a") {
-        field(SCAN,"I/O Intr")
-        field(DTYP,"D212 READ")
-        field(INP,"#C6 S @WF_6_A")
-        field(NELM,"2048")
-        field(FTVL,"FLOAT")
-}
-record(waveform,"rcsRf7:wf_6b") {
-        field(SCAN,"I/O Intr")
-        field(DTYP,"D212 READ")
-        field(INP,"#C6 S @WF_6_B")
-        field(NELM,"2048")
-        field(FTVL,"FLOAT")
+        field(FTVL,"ULONG")
 }
 record(waveform,"rcsRf7:wf_7") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
         field(INP,"#C6 S @WF_7")
         field(NELM,"2048")
-        field(FTVL,"FLOAT")
+        field(FTVL,"ULONG")
 }
 record(waveform,"rcsRf7:wf_8") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
         field(INP,"#C6 S @WF_8")
         field(NELM,"2048")
-        field(FTVL,"FLOAT")
+        field(FTVL,"ULONG")
 }
-record(waveform,"rcsRf7:wf_amp_skew") {
-        field(FLNK, "rcsRf7:ampErrMax")
-        field(SCAN,"I/O Intr")
-        field(DTYP,"D212 READ")
-        field(INP,"#C6 S @WF_AMP_SKEW")
-        field(NELM,"2048")
-        field(FTVL,"FLOAT")
-}
-
-record(waveform,"rcsRf7:wf_grid") {
-        field(SCAN,"I/O Intr")
-        field(DTYP,"D212 READ")
-        field(INP,"#C6 S @WF_GRID")
-        field(NELM,"2048")
-        field(FTVL,"FLOAT")
-}
-
-record(waveform,"rcsRf7:wf_front") {
-        field(SCAN,"I/O Intr")
-        field(DTYP,"D212 READ")
-        field(INP,"#C6 S @WF_FRONT")
-        field(NELM,"2048")
-        field(FTVL,"FLOAT")
-}
-
 
 record(waveform,"rcsRf7:wr_rd_fre") {
         field(DTYP,"WR READ")

@@ -337,77 +337,68 @@ record(ao,"rcsRf11:ref_delayD_set")
         field(OUT, "#C9 S @REF_DELAY_D")
 }
 
-record(waveform,"rcsRf11:bpm1p") {
+record(waveform,"rcsRf11:wf_1") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
         field(INP,"#C9 S @WF_1")
         field(NELM,"2048")
-        field(FTVL,"FLOAT")
+        field(FTVL,"ULONG")
 }
-record(waveform,"rcsRf11:bpm1n") {
+
+record(waveform,"rcsRf11:wf_2") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
         field(INP,"#C9 S @WF_2")
         field(NELM,"2048")
-        field(FTVL,"FLOAT")
+        field(FTVL,"ULONG")
 }
-record(waveform,"rcsRf11:bpm1_org") {
-        field(FLNK, "rcsRf11:bpm1")
+
+record(waveform,"rcsRf11:wf_3") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
         field(INP,"#C9 S @WF_3")
         field(NELM,"2048")
-        field(FTVL,"FLOAT")
+        field(FTVL,"ULONG")
 }
-record(waveform,"rcsRf11:bpm2p") {
+
+record(waveform,"rcsRf11:wf_4") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
-        field(INP,"#C9 S @WF_4_A")
+        field(INP,"#C9 S @WF_4")
         field(NELM,"2048")
-        field(FTVL,"FLOAT")
+        field(FTVL,"ULONG")
 }
-record(waveform,"rcsRf11:bpm2n") {
+
+record(waveform,"rcsRf11:wf_5") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
-        field(INP,"#C9 S @WF_4_B")
+        field(INP,"#C9 S @WF_5")
         field(NELM,"2048")
-        field(FTVL,"FLOAT")
+        field(FTVL,"ULONG")
 }
-record(waveform,"rcsRf11:bpm2_org") {
-        field(FLNK, "rcsRf11:bpm2")
+
+record(waveform,"rcsRf11:wf_6") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
-        field(INP,"#C9 S @WF_5_A")
+        field(INP,"#C9 S @WF_6")
         field(NELM,"2048")
-        field(FTVL,"FLOAT")
+        field(FTVL,"ULONG")
 }
-record(waveform,"rcsRf11:bpm1p_phase") {
-        field(SCAN,"I/O Intr")
-        field(DTYP,"D212 READ")
-        field(INP,"#C9 S @WF_5_B")
-        field(NELM,"2048")
-        field(FTVL,"FLOAT")
-}
-record(waveform,"rcsRf11:bpm1n_phase") {
-        field(SCAN,"I/O Intr")
-        field(DTYP,"D212 READ")
-        field(INP,"#C9 S @WF_6_A")
-        field(NELM,"2048")
-        field(FTVL,"FLOAT")
-}
-record(waveform,"rcsRf11:bpm2p_phase") {
-        field(SCAN,"I/O Intr")
-        field(DTYP,"D212 READ")
-        field(INP,"#C9 S @WF_6_B")
-        field(NELM,"2048")
-        field(FTVL,"FLOAT")
-}
-record(waveform,"rcsRf11:bpm2n_phase") {
+
+record(waveform,"rcsRf11:wf_7") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
         field(INP,"#C9 S @WF_7")
         field(NELM,"2048")
-        field(FTVL,"FLOAT")
+        field(FTVL,"ULONG")
+}
+
+record(waveform,"rcsRf11:wf_8") {
+        field(SCAN,"I/O Intr")
+        field(DTYP,"D212 READ")
+        field(INP,"#C9 S @WF_8")
+        field(NELM,"2048")
+        field(FTVL,"ULONG")
 }
 
 record(waveform,"rcsRf11:wr_rd_fre") {
