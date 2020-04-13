@@ -43,6 +43,25 @@ record(bi,"rcsRf9:freChangeOption_get") {
 }
 
 
+record(bi,"rcsRf9:beam_signal_option_get") {
+        field(DESC, "")
+        field(DTYP,"D212")
+        field(INP,"#C8 S @BEAM_SIGNAL_OPTION")
+        field(ZNAM,"0")
+        field(ONAM,"1")
+        field(SCAN,"1 second")
+}
+
+record(bo,"rcsRf9:beam_signal_option_set") {
+        field(DESC, "")
+        field(DTYP,"D212")
+        field(OUT,"#C8 S @BEAM_SIGNAL_OPTION")
+        field(ZNAM,"0")
+        field(ONAM,"1")
+}
+
+
+
 record(bo,"rcsRf9:freChangeOption_set") {
         field(DESC, "")
         field(DTYP,"D212")
@@ -542,6 +561,35 @@ record(waveform,"rcsRf9:wr_rd_fre") {
         field(FTVL,"ULONG")
 }
 
+
+record(ai,"rcsRf9:version_get")
+{
+	field(DESC, "")
+        field(PREC, "7")
+        field(DTYP, "D212")
+	field(INP, "#C8 S @VERSION")
+        field(SCAN,"1 second")
+}
+
+record(ai,"rcsRf9:fpga_restart_get")
+{
+	field(DESC, "")
+        field(PREC, "7")
+        field(DTYP, "D212")
+	field(INP, "#C8 S @FPGA_RESTART")
+        field(SCAN,"1 second")
+}
+
+
+record(ao,"rcsRf9:fpga_restart_set")
+{
+        field(DESC, "")
+        field(PREC, "4")
+        field(DTYP, "D212")
+        field(OUT, "#C8 S @FPGA_RESTART")
+}
+
+
 record(ai,"rcsRf9:tuningAngleOffset_get")
 {
         field(DESC, "")
@@ -549,6 +597,23 @@ record(ai,"rcsRf9:tuningAngleOffset_get")
         field(DTYP, "D212")
         field(INP, "#C8 S @TUNING_ANGLE_OFFSET")
         field(SCAN,"1 second")
+}
+
+record(ai,"rcsRf9:ex_timing_get")
+{
+        field(DESC, "")
+        field(PREC, "4")
+        field(DTYP, "D212")
+        field(INP, "#C8 S @EX_TIMING")
+        field(SCAN,"1 second")
+}
+
+record(ao,"rcsRf9:ex_timing_set")
+{
+        field(DESC, "")
+        field(PREC, "4")
+        field(DTYP, "D212")
+        field(OUT, "#C8 S @EX_TIMING")
 }
 
 record(ao,"rcsRf9:tuningAngleOffset_set")
@@ -559,7 +624,7 @@ record(ao,"rcsRf9:tuningAngleOffset_set")
         field(OUT, "#C8 S @TUNING_ANGLE_OFFSET")
 }
 
-record(bo,"rcsRf8:errorOption_set") {
+record(bo,"rcsRf9:errorOption_set") {
         field(DESC, "")
         field(DTYP,"D212")
         field(OUT,"#C8 S @ERROR_OPTION")

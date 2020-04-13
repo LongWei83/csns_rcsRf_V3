@@ -100,6 +100,8 @@
 #define	   CALC_REF_DELAY_C_MUL			1.0
 #define    CALC_REF_DELAY_AB_ADD		0.0
 #define	   CALC_REF_DELAY_AB_MUL		1.0
+#define    CALC_EX_TIMING_ADD			0.0
+#define	   CALC_EX_TIMING_MUL			1.0
 #define    CALC_REF_DELAY_D_ADD			0.0
 #define	   CALC_REF_DELAY_D_MUL			1.0
 #define    CALC_BEAM_FF_DELAY_ADD		0.0

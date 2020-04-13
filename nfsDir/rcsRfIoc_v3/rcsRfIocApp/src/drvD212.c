@@ -43,6 +43,10 @@
 
 #define    REG_BEAM_INT				0x028
 
+#define    REG_Version				0x0C0
+#define    REG_FPGA_Restart			0x0C4
+#define    REG_EX_Timing			0x0C8
+#define    REG_Beam_Signal			0x0FC
 #define    REG_Point_Sweep			0x100
 #define    REG_Sweep_Option			0x104
 #define    REG_AMP_Option			0x108
@@ -110,6 +114,8 @@
 #define    REG_SYN_OSC_DELAY			0x2a4
 #define    REG_SYN_OSC_COUNT			0x2a8
 #define    REG_SYN_E_ENABLE			0x2ac
+#define    REG_SYN_E_ENABLE			0x2ac
+#define    REG_SYN_PHASE_COEF			0x2b0
 
 
 
@@ -1311,6 +1317,24 @@ int alarm8_get (D212Card* pCard)
       return 1;
 }
 
+void set_Beam_Signal_Option (D212Card* pCard)
+{
+   FPGA_REG_WRITE32(pCard->fpgaAddr, REG_Beam_Signal, OPTION_SET);
+}
+
+void clear_Beam_Signal_Option (D212Card* pCard)
+{
+   FPGA_REG_WRITE32(pCard->fpgaAddr, REG_Beam_Signal, OPTION_CLEAR);
+}
+
+int Beam_signal_OPTION_get (D212Card* pCard)
+{
+   if (FPGA_REG_READ32(pCard->fpgaAddr, REG_Beam_Signal) == 0xAAAAAAAA)
+      return 1;
+   else 
+      return 0;
+}
+
 void set_Drv_Option (D212Card* pCard)
 {
    FPGA_REG_WRITE32(pCard->fpgaAddr, REG_Drv_Reset, OPTION_SET);
@@ -1819,7 +1843,7 @@ void set_All_Frequency(float all_fre)
    int i;
    unsigned int value;
    value = (unsigned int)(all_fre * CALC_Fix_Frequency_Set_MUL + CALC_Fix_Frequency_Set_ADD);
-   for(i=0;i<11;i++){
+   for(i=0;i<12;i++){
        FPGA_REG_WRITE32(getCardStruct(i)->fpgaAddr, REG_Fix_Frequency_Set, value);
    }
 }
@@ -1849,7 +1873,7 @@ void set_All_Pretrig(float all_preTrig)
 
    preTrigAll = value;
 
-   for(i=0;i<11;i++){
+   for(i=0;i<12;i++){
        
        FPGA_REG_WRITE32(getCardStruct(i)->fpgaAddr, REG_PreTrig_Delay, (unsigned int)(value + (getCardStruct(i)->preTrig_offset)));
    }
@@ -1873,35 +1897,35 @@ void set_All_Amp_Coeffic(float all_ampCeffic)
 
       /*调用保存参数的函数saveParms*/
    /*使用PV值覆写序号为29的文件参数*/
-   if(getCardStruct(3) == 0)
+   if(getCardStruct(3)->processing == 0)
    {
 	   saveParms(29, 3, all_ampCeffic);
    }
-   if(getCardStruct(2) == 0)
+   if(getCardStruct(2)->processing == 0)
    {
 	   saveParms(29, 2, all_ampCeffic);
    }
-   if(getCardStruct(1) == 0)
+   if(getCardStruct(1)->processing == 0)
    {
 	   saveParms(29, 1, all_ampCeffic);
    }
-   if(getCardStruct(0) == 0)
+   if(getCardStruct(0)->processing == 0)
    {
 	   saveParms(29, 0, all_ampCeffic);
    }
-   if(getCardStruct(4) == 0)
+   if(getCardStruct(4)->processing == 0)
    {
 	   saveParms(29, 4, all_ampCeffic);
    }
-   if(getCardStruct(7) == 0)
+   if(getCardStruct(7)->processing == 0)
    {
 	   saveParms(29, 7, all_ampCeffic);
    }
-   if(getCardStruct(6) == 0)
+   if(getCardStruct(6)->processing == 0)
    {
 	   saveParms(29, 6, all_ampCeffic);
    }
-   if(getCardStruct(5) == 0)
+   if(getCardStruct(5)->processing == 0)
    {
 	   saveParms(29, 5, all_ampCeffic);
    }
@@ -1975,6 +1999,35 @@ float get_ref_delayAB_set (D212Card* pCard)
    return (FPGA_REG_READ32(pCard->fpgaAddr, REG_REF_DELAY_AB) - CALC_REF_DELAY_AB_ADD) / CALC_REF_DELAY_AB_MUL;
 }
 
+void set_ex_timing(D212Card* pCard, float ex_timing)
+{
+   unsigned int value;
+   value = (unsigned int)(ex_timing);
+   FPGA_REG_WRITE32(pCard->fpgaAddr, REG_EX_Timing, value);
+}
+
+float get_ex_timing (D212Card* pCard)
+{
+   return (FPGA_REG_READ32(pCard->fpgaAddr, REG_EX_Timing) - CALC_EX_TIMING_ADD) / CALC_EX_TIMING_MUL;
+}
+
+float get_version (D212Card* pCard)
+{
+   return (FPGA_REG_READ32(pCard->fpgaAddr, REG_Version) - CALC_EX_TIMING_ADD) / CALC_EX_TIMING_MUL;
+}
+
+void set_fpga_restart(D212Card* pCard, float fpga_restart)
+{
+   unsigned int value;
+   value = (unsigned int)(fpga_restart);
+   FPGA_REG_WRITE32(pCard->fpgaAddr, REG_FPGA_Restart, value);
+}
+
+float get_fpga_restart (D212Card* pCard)
+{
+   return (FPGA_REG_READ32(pCard->fpgaAddr, REG_FPGA_Restart) - CALC_EX_TIMING_ADD) / CALC_EX_TIMING_MUL;
+}
+
 void set_ref_delayC_set(D212Card* pCard, float ref_delayC)
 {
    unsigned int value;
@@ -2033,6 +2086,18 @@ void set_beam_ff_coef (D212Card* pCard, float beam_ff_coef)
 float get_beam_ff_coef (D212Card* pCard)
 {
    return (FPGA_REG_READ32(pCard->fpgaAddr, REG_BEAM_FF_COEF) - CALC_AMP_Coefficient_ADD) / CALC_AMP_Coefficient_MUL;
+}
+
+void set_Syn_Phase_Coef (D212Card* pCard, float syn_phase_coef)
+{
+   unsigned int value;
+   value = (unsigned int)(syn_phase_coef * CALC_Syn_Osc_Delay_MUL + CALC_Syn_Osc_Delay_ADD);
+   FPGA_REG_WRITE32(pCard->fpgaAddr, REG_SYN_PHASE_COEF, value);
+}
+
+float get_Syn_Phase_Coef (D212Card* pCard)
+{
+   return (FPGA_REG_READ32(pCard->fpgaAddr, REG_SYN_PHASE_COEF) - CALC_Syn_Osc_Delay_ADD) / CALC_Syn_Osc_Delay_MUL;
 }
 
 
@@ -2365,6 +2430,16 @@ void autoOnCardNo(int cardNum)
 	{
 		printf("Error in closing file\n");
 	}
+	/*Add the stop calculation of feedforward table, 2019-09-25*/
+	/*停止计算幅度闭环前馈表的值*/
+	clear_AMP_Modify_Option (pCard);
+	
+	/*停止计算调谐闭环前馈表的值*/
+	clear_Tune_Modify_Option (pCard);
+	
+	/*停止计算相位闭环前馈表的值*/
+	clear_Phase_Modify_Option (pCard);
+	/*Add the stop calculation of feedforward table, 2019-09-25, End*/
 	
 	/*对FPGA寄存器进行写操作，正式进入自动开机的过程*/
 	/*设置点频频率*/
@@ -2484,15 +2559,16 @@ void autoOnCardNo(int cardNum)
 	set_Drv_Option (pCard);
 	
 	pCard->processing = 20; /*标识自动开机过程开关量初始化完成*/
+
 	
 	/*启动幅度闭环前馈表计算功能*/
-	set_AMP_Modify_Option (pCard);
+	/*set_AMP_Modify_Option (pCard);*/
 	
 	/*启动调谐闭环前馈表计算功能*/
-	set_Tune_Modify_Option (pCard);
+	/*set_Tune_Modify_Option (pCard);*/
 	
 	/*启动相位闭环前馈表计算功能*/
-	set_Phase_Modify_Option (pCard);
+	/*set_Phase_Modify_Option (pCard);*/
 	
 	/*延时0.5s*/
 	/*任务主动放弃CPU资源进入延时态，此时其他同级别的任务可以获取CPU资源并运行*/
@@ -2521,7 +2597,7 @@ void autoOnCardNo(int cardNum)
 	/*闭调谐闭环*/
 	set_Tune_Option (pCard);
 	
-	/*延时0.5s*/
+	/*延时1s*/
 	taskDelay(sysClkRateGet());
 	
 	/*闭栅极调谐闭环*/
@@ -2529,14 +2605,21 @@ void autoOnCardNo(int cardNum)
 	
 	pCard->processing = 40; /*标识调谐闭环和栅极调谐闭环完成*/
 	
+	/*启动调谐闭环前馈表计算功能*/
+	set_Tune_Modify_Option (pCard);
+
 	/*延时5s*/
 	taskDelay(sysClkRateGet() * 5);
 	
 	/*加调谐闭环前馈功能*/
 	set_Tune_FF_Option (pCard);
 
-	/*延时0.5s*/
-	taskDelay(sysClkRateGet());
+	/*延时10s*/
+	taskDelay(sysClkRateGet() * 10);
+
+	/*关调谐闭环前馈表计算功能，固定前馈表的值*/
+	clear_Tune_Modify_Option (pCard);
+
 	
 	/*延时5s*/
 	/*taskDelay(sysClkRateGet() * 5 * 1.6);*/
@@ -2552,12 +2635,6 @@ void autoOnCardNo(int cardNum)
 	/*延时5s*/
 	taskDelay(sysClkRateGet() * 5);
 	
-	/*闭幅度闭环*/
-	set_AMP_Option (pCard);
-	
-	/*延时0.5s*/
-	taskDelay(sysClkRateGet()/2);
-	
 	/*调整调谐闭环I的值*/
 	set_Tune_I (pCard, parms[23]);
 	
@@ -2569,11 +2646,20 @@ void autoOnCardNo(int cardNum)
 	
 	/*调整调谐闭环I3的值*/
 	set_Tune_I_3 (pCard, parms[26]);
+
+	/*延时5s*/
+	taskDelay(sysClkRateGet() * 5);
+	
+	/*闭幅度闭环*/
+	set_AMP_Option (pCard);
+
+	/*启动幅度闭环前馈表计算功能*/
+	set_AMP_Modify_Option (pCard);
 	
 	pCard->processing = 70; /*标识幅度闭环、调谐闭环和栅极调谐闭环I值调整完成*/
-	
-	/*延时0.5s*/
-	taskDelay(sysClkRateGet()/2);
+
+	/*延时5s*/
+	taskDelay(sysClkRateGet() * 5);
 	
 	/*加幅度闭环前馈功能*/
 	set_AMP_FF_Option (pCard);
@@ -2628,9 +2714,12 @@ void autoOnCardNo(int cardNum)
 	
 	/*闭相位闭环*/
 	set_Phase_Option (pCard);
+
+	/*启动相位闭环前馈表计算功能*/
+	set_Phase_Modify_Option (pCard);
 	
-	/*延时0.5s*/
-	taskDelay(sysClkRateGet()/2);
+	/*延时5s*/
+	taskDelay(sysClkRateGet() * 5);
 	
 	/*加相位闭环前馈功能*/
 	set_Phase_FF_Option (pCard);

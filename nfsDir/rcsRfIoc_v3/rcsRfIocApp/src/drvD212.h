@@ -294,6 +294,14 @@ void set_Syn_Osc_S_Enable (D212Card* pCard, float syn_osc_s_enable);
 void set_Syn_Osc_E_Enable (D212Card* pCard, float syn_osc_e_enable);
 float get_Syn_Osc_S_Enable (D212Card* pCard);
 float get_Syn_Osc_E_Enable (D212Card* pCard);
+void set_ex_timing(D212Card* pCard, float ex_timing);
+float get_ex_timing (D212Card* pCard);
+float get_version (D212Card* pCard);
+void set_fpga_restart(D212Card* pCard, float fpga_restart);
+float get_fpga_restart (D212Card* pCard);
+float get_Syn_Phase_Coef (D212Card* pCard);
+void set_Syn_Phase_Coef (D212Card* pCard, float syn_phase_coef);
+
 int autoOn(int cardNum); /*声明自动开机函数*/
 int autoOff(int cardNum); /*声明自动关机函数*/
 void autoOffCardNo(int cardNum); /*声明自动关机任务的执行函数*/

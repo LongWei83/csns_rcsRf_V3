@@ -57,6 +57,7 @@
 #define CPCI_BI_BEAM_PHASE_OPTION	30
 #define CPCI_BI_FRONT_TUNE_FF_OPTION	31
 #define CPCI_BI_FRONT_TUNE_MODIFY_OPTION	32
+#define CPCI_BI_BEAM_SIGNAL_OPTION	33
 
 /******* no int ***********
 #define CPCI_BO_RUN_MODE		0
@@ -86,6 +87,7 @@
 #define CPCI_BO_BEAM_PHASE_OPTION	23
 #define CPCI_BO_FRONT_TUNE_FF_OPTION	24
 #define CPCI_BO_FRONT_TUNE_MODIFY_OPTION	25
+#define CPCI_BO_BEAM_SIGNAL_OPTION	26
 
 #define CPCI_AI_FIX_FREQUENCY           0
 #define CPCI_AI_WORK_PERIOD             1
@@ -133,6 +135,10 @@
 #define CPCI_AI_SYN_OSC_COUNT		44
 #define CPCI_AI_SYN_OSC_S_ENABLE	45
 #define CPCI_AI_SYN_OSC_E_ENABLE	46
+#define CPCI_AI_SYN_PHASE_COEF		47
+#define CPCI_AI_EX_TIMING		48
+#define CPCI_AI_VERSION			49
+#define CPCI_AI_FPGA_RESTART		50
 
 
 
@@ -184,6 +190,9 @@
 #define CPCI_AO_SYN_OSC_COUNT		46
 #define CPCI_AO_SYN_OSC_S_ENABLE	47
 #define CPCI_AO_SYN_OSC_E_ENABLE	48
+#define CPCI_AO_SYN_PHASE_COEF		49
+#define CPCI_AO_EX_TIMING		50
+#define CPCI_AO_FPGA_RESTART		51
 
 
 /******* no int ***********
@@ -192,7 +201,7 @@
 #define CPCI_LO_INT_NUM			0
 ***************************/
 
-#define CPCI_WF_1						0
+#define CPCI_WF_1			0
 #define CPCI_WF_2                       1
 #define CPCI_WF_3                       2
 #define CPCI_WF_4                       3
@@ -481,6 +490,7 @@ static long init_bi(struct biRecord *pbi) {
 	CHECK_BIPARM("BEAM_PHASE_OPTION",  CPCI_BI_BEAM_PHASE_OPTION);
 	CHECK_BIPARM("FRONT_TUNE_FF_OPTION",  CPCI_BI_FRONT_TUNE_FF_OPTION);
 	CHECK_BIPARM("FRONT_TUNE_MODIFY_OPTION",  CPCI_BI_FRONT_TUNE_MODIFY_OPTION);
+	CHECK_BIPARM("BEAM_SIGNAL_OPTION",  CPCI_BI_BEAM_SIGNAL_OPTION);
     } while(0);
 
     if (!parmOK) {
@@ -591,6 +601,9 @@ static long read_bi(struct biRecord *pbi) {
        case CPCI_BI_FRONT_TUNE_MODIFY_OPTION:
            pbi->val = Front_Tune_Modify_OPTION_get(((recPrivate*)pbi->dpvt)->pCard);
            break;
+       case CPCI_BI_BEAM_SIGNAL_OPTION:
+           pbi->val = Beam_signal_OPTION_get(((recPrivate*)pbi->dpvt)->pCard);
+           break;
        default:
            recGblRecordError(S_db_badField,(void *)pbi,
                     "devBiD212 Read_bi, bad parm");
@@ -641,6 +654,7 @@ static long init_bo(struct boRecord *pbo) {
 	CHECK_BOPARM("BEAM_PHASE_OPTION",   CPCI_BO_BEAM_PHASE_OPTION);
 	CHECK_BOPARM("FRONT_TUNE_FF_OPTION",   CPCI_BO_FRONT_TUNE_FF_OPTION);
 	CHECK_BOPARM("FRONT_TUNE_MODIFY_OPTION",   CPCI_BO_FRONT_TUNE_MODIFY_OPTION);
+	CHECK_BOPARM("BEAM_SIGNAL_OPTION",   CPCI_BO_BEAM_SIGNAL_OPTION);
     } while(0);
 
     if (!parmOK) {
@@ -725,6 +739,9 @@ static long init_bo(struct boRecord *pbo) {
            pbo->val=0;
            break;
        case CPCI_BO_FRONT_TUNE_MODIFY_OPTION:
+           pbo->val=0;
+           break;
+       case CPCI_BO_BEAM_SIGNAL_OPTION:
            pbo->val=0;
            break;
        default:
@@ -885,6 +902,12 @@ static long write_bo(struct boRecord *pbo) {
            else
                set_Front_Tune_Modify_Option(((recPrivate*)pbo->dpvt)->pCard);
            break;
+       case CPCI_BO_BEAM_SIGNAL_OPTION:
+           if(pbo->val == 0)
+               clear_Beam_Signal_Option(((recPrivate*)pbo->dpvt)->pCard);
+           else
+               set_Beam_Signal_Option(((recPrivate*)pbo->dpvt)->pCard);
+           break;
        case CPCI_BO_CURVE_CHANGE_OPTION:
            if(pbo->val == 0){
                clear_curve_Change();
@@ -973,6 +996,10 @@ static long init_ai(struct aiRecord *pai)
         CHECK_AIPARM("SYN_OSC_COUNT", CPCI_AI_SYN_OSC_COUNT);
         CHECK_AIPARM("SYN_OSC_S_ENABLE", CPCI_AI_SYN_OSC_S_ENABLE);
         CHECK_AIPARM("SYN_OSC_E_ENABLE", CPCI_AI_SYN_OSC_E_ENABLE);
+        CHECK_AIPARM("SYN_PHASE_COEF", CPCI_AI_SYN_PHASE_COEF);
+	CHECK_AIPARM("EX_TIMING", CPCI_AI_EX_TIMING);
+	CHECK_AIPARM("VERSION", CPCI_AI_VERSION);
+	CHECK_AIPARM("FPGA_RESTART", CPCI_AI_FPGA_RESTART);
     } while(0);
 
     if (!parmOK) {
@@ -1128,6 +1155,18 @@ static long read_ai(struct aiRecord *pai) {
        case CPCI_AI_SYN_OSC_E_ENABLE:
 	   pai->val=get_Syn_Osc_E_Enable(((recPrivate*)pai->dpvt)->pCard);
            break;
+       case CPCI_AI_SYN_PHASE_COEF:
+	   pai->val=get_Syn_Phase_Coef(((recPrivate*)pai->dpvt)->pCard);
+           break;
+       case CPCI_AI_EX_TIMING:
+	   pai->val=get_ex_timing(((recPrivate*)pai->dpvt)->pCard);
+           break;
+       case CPCI_AI_VERSION:
+	   pai->val=get_version(((recPrivate*)pai->dpvt)->pCard);
+           break;
+       case CPCI_AI_FPGA_RESTART:
+	   pai->val=get_fpga_restart(((recPrivate*)pai->dpvt)->pCard);
+           break;
        default:
            recGblRecordError(S_db_badField,(void *)pai,
                     "devAiD212 Read_ai, bad parm");
@@ -1205,6 +1244,9 @@ static long init_ao(struct aoRecord *pao)
 	CHECK_AOPARM("SYN_OSC_COUNT", CPCI_AO_SYN_OSC_COUNT);
 	CHECK_AOPARM("SYN_OSC_S_ENABLE", CPCI_AO_SYN_OSC_S_ENABLE);
 	CHECK_AOPARM("SYN_OSC_E_ENABLE", CPCI_AO_SYN_OSC_E_ENABLE);
+	CHECK_AOPARM("SYN_PHASE_COEF", CPCI_AO_SYN_PHASE_COEF);
+	CHECK_AOPARM("EX_TIMING", CPCI_AO_EX_TIMING);
+	CHECK_AOPARM("FPGA_RESTART", CPCI_AO_FPGA_RESTART);
     } while(0);
 
     if (!parmOK) {
@@ -1358,6 +1400,15 @@ static long init_ao(struct aoRecord *pao)
 	   pao->val=0.0;
 	   break;
        case CPCI_AO_SYN_OSC_E_ENABLE:
+	   pao->val=0.0;
+	   break;
+       case CPCI_AO_SYN_PHASE_COEF:
+	   pao->val=0.0;
+	   break;
+       case CPCI_AO_EX_TIMING:
+	   pao->val=0.0;
+	   break;
+       case CPCI_AO_FPGA_RESTART:
 	   pao->val=0.0;
 	   break;
        default:
@@ -1519,6 +1570,15 @@ static long write_ao(struct aoRecord *pao) {
            break;
        case CPCI_AO_SYN_OSC_E_ENABLE:
            set_Syn_Osc_E_Enable(((recPrivate*)pao->dpvt)->pCard, pao->val);
+           break;
+       case CPCI_AO_SYN_PHASE_COEF:
+           set_Syn_Phase_Coef(((recPrivate*)pao->dpvt)->pCard, pao->val);
+           break;
+       case CPCI_AO_EX_TIMING:
+           set_ex_timing(((recPrivate*)pao->dpvt)->pCard, pao->val);
+           break;
+       case CPCI_AO_FPGA_RESTART:
+           set_fpga_restart(((recPrivate*)pao->dpvt)->pCard, pao->val);
            break;
        default:
            recGblRecordError(S_db_badField,(void *)pao,

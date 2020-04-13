@@ -424,3 +424,21 @@ record(ao,"rcsRf11:tuningAngleOffset_set")
         field(DTYP, "D212")
         field(OUT, "#C9 S @TUNING_ANGLE_OFFSET")
 }
+
+record(ai,"rcsRf11:fpga_restart_get")
+{
+	field(DESC, "")
+        field(PREC, "7")
+        field(DTYP, "D212")
+	field(INP, "#C9 S @FPGA_RESTART")
+        field(SCAN,"1 second")
+}
+
+
+record(ao,"rcsRf11:fpga_restart_set")
+{
+        field(DESC, "")
+        field(PREC, "4")
+        field(DTYP, "D212")
+        field(OUT, "#C9 S @FPGA_RESTART")
+}

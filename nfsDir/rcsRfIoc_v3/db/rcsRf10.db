@@ -312,6 +312,24 @@ record(ai,"rcsRf10:SynOscEEnable_get")
 	field(EGU,"ms")
 }
 
+record(ai,"rcsRf10:syn_phase_coef_get")
+{
+        field(DESC, "")
+        field(PREC, "7")
+        field(DTYP, "D212")
+        field(INP, "#C10 S @SYN_PHASE_COEF")
+        field(SCAN,"1 second")
+	field(EGU,"ms")
+}
+
+record(ao,"rcsRf10:syn_phase_coef_set")
+{
+        field(DESC, "")
+        field(PREC, "7")
+        field(DTYP, "D212")
+        field(OUT, "#C10 S @SYN_PHASE_COEF")
+}
+
 record(ao,"rcsRf10:SynOscSEnable_set")
 {
         field(DESC, "")
@@ -401,6 +419,22 @@ record(waveform,"rcsRf10:wf_4") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
         field(INP,"#C10 S @WF_4")
+        field(NELM,"2048")
+        field(FTVL,"ULONG")
+}
+
+record(waveform,"rcsRf10:wf_5") {
+        field(SCAN,"I/O Intr")
+        field(DTYP,"D212 READ")
+        field(INP,"#C10 S @WF_5")
+        field(NELM,"2048")
+        field(FTVL,"ULONG")
+}
+
+record(waveform,"rcsRf10:wf_6") {
+        field(SCAN,"I/O Intr")
+        field(DTYP,"D212 READ")
+        field(INP,"#C10 S @WF_6")
         field(NELM,"2048")
         field(FTVL,"ULONG")
 }
