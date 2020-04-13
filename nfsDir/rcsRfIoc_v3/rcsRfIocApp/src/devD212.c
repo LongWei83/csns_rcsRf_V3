@@ -57,6 +57,7 @@
 #define CPCI_BI_BEAM_PHASE_OPTION	30
 #define CPCI_BI_FRONT_TUNE_FF_OPTION	31
 #define CPCI_BI_FRONT_TUNE_MODIFY_OPTION	32
+#define CPCI_BI_BEAM_SIGNAL_OPTION	33
 
 /******* no int ***********
 #define CPCI_BO_RUN_MODE		0
@@ -86,6 +87,7 @@
 #define CPCI_BO_BEAM_PHASE_OPTION	23
 #define CPCI_BO_FRONT_TUNE_FF_OPTION	24
 #define CPCI_BO_FRONT_TUNE_MODIFY_OPTION	25
+#define CPCI_BO_BEAM_SIGNAL_OPTION	26
 
 #define CPCI_AI_FIX_FREQUENCY           0
 #define CPCI_AI_WORK_PERIOD             1
@@ -122,18 +124,21 @@
 #define CPCI_AI_BPM_DELAY_SET		33
 #define CPCI_AI_CHOPPER_PAHSE_SET	34
 #define CPCI_AI_EX_DELAY_SET		35
-#define	CPCI_AI_FRONT_RF_VOL		36
-#define	CPCI_AI_CAV_RF_VOL		37
-#define	CPCI_AI_GRID_RF_VOL		38
-#define CPCI_AI_REF_DELAY_AB		39
-#define CPCI_AI_REF_DELAY_C		40
-#define CPCI_AI_REF_DELAY_D		41
-#define CPCI_AI_BEAM_FF_COEF		42
-#define CPCI_AI_BEAM_FF_PHASE_SET	43
-#define CPCI_AI_BEAM_FF_DELAY		44
-#define CPCI_AI_ALL_PRETRIG		45
-#define CPCI_AI_SYN_OSC_DELAY		46
-#define CPCI_AI_SYN_OSC_COUNT		47
+#define CPCI_AI_REF_DELAY_AB		36
+#define CPCI_AI_REF_DELAY_C		37
+#define CPCI_AI_REF_DELAY_D		38
+#define CPCI_AI_BEAM_FF_COEF		39
+#define CPCI_AI_BEAM_FF_PHASE_SET	40
+#define CPCI_AI_BEAM_FF_DELAY		41
+#define CPCI_AI_ALL_PRETRIG		42
+#define CPCI_AI_SYN_OSC_DELAY		43
+#define CPCI_AI_SYN_OSC_COUNT		44
+#define CPCI_AI_SYN_OSC_S_ENABLE	45
+#define CPCI_AI_SYN_OSC_E_ENABLE	46
+#define CPCI_AI_SYN_PHASE_COEF		47
+#define CPCI_AI_EX_TIMING		48
+#define CPCI_AI_VERSION			49
+#define CPCI_AI_FPGA_RESTART		50
 
 
 
@@ -183,6 +188,11 @@
 #define CPCI_AO_BEAM_FF_DELAY		44
 #define CPCI_AO_SYN_OSC_DELAY		45
 #define CPCI_AO_SYN_OSC_COUNT		46
+#define CPCI_AO_SYN_OSC_S_ENABLE	47
+#define CPCI_AO_SYN_OSC_E_ENABLE	48
+#define CPCI_AO_SYN_PHASE_COEF		49
+#define CPCI_AO_EX_TIMING		50
+#define CPCI_AO_FPGA_RESTART		51
 
 
 /******* no int ***********
@@ -194,17 +204,11 @@
 #define CPCI_WF_1			0
 #define CPCI_WF_2                       1
 #define CPCI_WF_3                       2
-#define CPCI_WF_4_A                     3
-#define CPCI_WF_4_B                     4
-#define CPCI_WF_5_A                     5
-#define CPCI_WF_5_B                     6
-#define CPCI_WF_6_A                     7
-#define CPCI_WF_6_B                     8
-#define CPCI_WF_7                       9
-#define CPCI_WF_8                       10
-#define CPCI_WF_AMP_SKEW		11
-#define CPCI_WF_GRID	                12
-#define CPCI_WF_FRONT                   13
+#define CPCI_WF_4                       3
+#define CPCI_WF_5                       4
+#define CPCI_WF_6                       5
+#define CPCI_WF_7                       6
+#define CPCI_WF_8                       7
 
 #define CPCI_WR_RD1	                0
 #define CPCI_WR_RD2	                1
@@ -486,6 +490,7 @@ static long init_bi(struct biRecord *pbi) {
 	CHECK_BIPARM("BEAM_PHASE_OPTION",  CPCI_BI_BEAM_PHASE_OPTION);
 	CHECK_BIPARM("FRONT_TUNE_FF_OPTION",  CPCI_BI_FRONT_TUNE_FF_OPTION);
 	CHECK_BIPARM("FRONT_TUNE_MODIFY_OPTION",  CPCI_BI_FRONT_TUNE_MODIFY_OPTION);
+	CHECK_BIPARM("BEAM_SIGNAL_OPTION",  CPCI_BI_BEAM_SIGNAL_OPTION);
     } while(0);
 
     if (!parmOK) {
@@ -596,6 +601,9 @@ static long read_bi(struct biRecord *pbi) {
        case CPCI_BI_FRONT_TUNE_MODIFY_OPTION:
            pbi->val = Front_Tune_Modify_OPTION_get(((recPrivate*)pbi->dpvt)->pCard);
            break;
+       case CPCI_BI_BEAM_SIGNAL_OPTION:
+           pbi->val = Beam_signal_OPTION_get(((recPrivate*)pbi->dpvt)->pCard);
+           break;
        default:
            recGblRecordError(S_db_badField,(void *)pbi,
                     "devBiD212 Read_bi, bad parm");
@@ -646,6 +654,7 @@ static long init_bo(struct boRecord *pbo) {
 	CHECK_BOPARM("BEAM_PHASE_OPTION",   CPCI_BO_BEAM_PHASE_OPTION);
 	CHECK_BOPARM("FRONT_TUNE_FF_OPTION",   CPCI_BO_FRONT_TUNE_FF_OPTION);
 	CHECK_BOPARM("FRONT_TUNE_MODIFY_OPTION",   CPCI_BO_FRONT_TUNE_MODIFY_OPTION);
+	CHECK_BOPARM("BEAM_SIGNAL_OPTION",   CPCI_BO_BEAM_SIGNAL_OPTION);
     } while(0);
 
     if (!parmOK) {
@@ -730,6 +739,9 @@ static long init_bo(struct boRecord *pbo) {
            pbo->val=0;
            break;
        case CPCI_BO_FRONT_TUNE_MODIFY_OPTION:
+           pbo->val=0;
+           break;
+       case CPCI_BO_BEAM_SIGNAL_OPTION:
            pbo->val=0;
            break;
        default:
@@ -890,17 +902,23 @@ static long write_bo(struct boRecord *pbo) {
            else
                set_Front_Tune_Modify_Option(((recPrivate*)pbo->dpvt)->pCard);
            break;
+       case CPCI_BO_BEAM_SIGNAL_OPTION:
+           if(pbo->val == 0)
+               clear_Beam_Signal_Option(((recPrivate*)pbo->dpvt)->pCard);
+           else
+               set_Beam_Signal_Option(((recPrivate*)pbo->dpvt)->pCard);
+           break;
        case CPCI_BO_CURVE_CHANGE_OPTION:
            if(pbo->val == 0){
                clear_curve_Change();
-	       for(i=0;i<9;i++){
+	       for(i=0;i<11;i++){
 	           int_Enable(getCardStruct(i));
 	       }
            }
            else
            {
                set_curve_Change();
-	       for(i=0;i<9;i++){
+	       for(i=0;i<11;i++){
 	           int_Enable(getCardStruct(i));
 	       }
            }
@@ -965,9 +983,6 @@ static long init_ai(struct aiRecord *pai)
 	CHECK_AIPARM("BPM_DELAY_SET", CPCI_AI_BPM_DELAY_SET);
 	CHECK_AIPARM("CHOPPER_PAHSE_SET", CPCI_AI_CHOPPER_PAHSE_SET);
 	CHECK_AIPARM("EX_DELAY_SET", CPCI_AI_EX_DELAY_SET);
-	CHECK_AIPARM("FRONT_RF_VOL", CPCI_AI_FRONT_RF_VOL);
-	CHECK_AIPARM("CAV_RF_VOL", CPCI_AI_CAV_RF_VOL);
-	CHECK_AIPARM("GRID_RF_VOL", CPCI_AI_GRID_RF_VOL);
 	CHECK_AIPARM("REF_DELAY_AB", CPCI_AI_REF_DELAY_AB);
 	CHECK_AIPARM("REF_DELAY_C", CPCI_AI_REF_DELAY_C);
 	CHECK_AIPARM("REF_DELAY_D", CPCI_AI_REF_DELAY_D);
@@ -979,6 +994,12 @@ static long init_ai(struct aiRecord *pai)
         CHECK_AIPARM("ALL_PRETRIG", CPCI_AI_ALL_PRETRIG);
         CHECK_AIPARM("SYN_OSC_DELAY", CPCI_AI_SYN_OSC_DELAY);
         CHECK_AIPARM("SYN_OSC_COUNT", CPCI_AI_SYN_OSC_COUNT);
+        CHECK_AIPARM("SYN_OSC_S_ENABLE", CPCI_AI_SYN_OSC_S_ENABLE);
+        CHECK_AIPARM("SYN_OSC_E_ENABLE", CPCI_AI_SYN_OSC_E_ENABLE);
+        CHECK_AIPARM("SYN_PHASE_COEF", CPCI_AI_SYN_PHASE_COEF);
+	CHECK_AIPARM("EX_TIMING", CPCI_AI_EX_TIMING);
+	CHECK_AIPARM("VERSION", CPCI_AI_VERSION);
+	CHECK_AIPARM("FPGA_RESTART", CPCI_AI_FPGA_RESTART);
     } while(0);
 
     if (!parmOK) {
@@ -996,15 +1017,6 @@ static long read_ai(struct aiRecord *pai) {
     signal = pai->inp.value.vmeio.signal;
 
     switch (((recPrivate*)pai->dpvt)->function) {
-       case CPCI_AI_CAV_RF_VOL:
-           pai->val=get_Cav_RF_Vol(((recPrivate*)pai->dpvt)->pCard);
-           break;
-       case CPCI_AI_GRID_RF_VOL:
-           pai->val=get_Grid_RF_Vol(((recPrivate*)pai->dpvt)->pCard);
-           break;
-       case CPCI_AI_FRONT_RF_VOL:
-           pai->val=get_Front_RF_Vol(((recPrivate*)pai->dpvt)->pCard);
-           break;
        case CPCI_AI_FIX_FREQUENCY:
            pai->val=get_Fix_Frequency(((recPrivate*)pai->dpvt)->pCard);
            break;
@@ -1137,6 +1149,24 @@ static long read_ai(struct aiRecord *pai) {
        case CPCI_AI_SYN_OSC_COUNT:
 	   pai->val=get_Syn_Osc_Count(((recPrivate*)pai->dpvt)->pCard);
            break;
+       case CPCI_AI_SYN_OSC_S_ENABLE:
+	   pai->val=get_Syn_Osc_S_Enable(((recPrivate*)pai->dpvt)->pCard);
+           break;
+       case CPCI_AI_SYN_OSC_E_ENABLE:
+	   pai->val=get_Syn_Osc_E_Enable(((recPrivate*)pai->dpvt)->pCard);
+           break;
+       case CPCI_AI_SYN_PHASE_COEF:
+	   pai->val=get_Syn_Phase_Coef(((recPrivate*)pai->dpvt)->pCard);
+           break;
+       case CPCI_AI_EX_TIMING:
+	   pai->val=get_ex_timing(((recPrivate*)pai->dpvt)->pCard);
+           break;
+       case CPCI_AI_VERSION:
+	   pai->val=get_version(((recPrivate*)pai->dpvt)->pCard);
+           break;
+       case CPCI_AI_FPGA_RESTART:
+	   pai->val=get_fpga_restart(((recPrivate*)pai->dpvt)->pCard);
+           break;
        default:
            recGblRecordError(S_db_badField,(void *)pai,
                     "devAiD212 Read_ai, bad parm");
@@ -1212,6 +1242,11 @@ static long init_ao(struct aoRecord *pao)
 	CHECK_AOPARM("BEAM_FF_DELAY", CPCI_AO_BEAM_FF_DELAY);
 	CHECK_AOPARM("SYN_OSC_DELAY", CPCI_AO_SYN_OSC_DELAY);
 	CHECK_AOPARM("SYN_OSC_COUNT", CPCI_AO_SYN_OSC_COUNT);
+	CHECK_AOPARM("SYN_OSC_S_ENABLE", CPCI_AO_SYN_OSC_S_ENABLE);
+	CHECK_AOPARM("SYN_OSC_E_ENABLE", CPCI_AO_SYN_OSC_E_ENABLE);
+	CHECK_AOPARM("SYN_PHASE_COEF", CPCI_AO_SYN_PHASE_COEF);
+	CHECK_AOPARM("EX_TIMING", CPCI_AO_EX_TIMING);
+	CHECK_AOPARM("FPGA_RESTART", CPCI_AO_FPGA_RESTART);
     } while(0);
 
     if (!parmOK) {
@@ -1359,6 +1394,21 @@ static long init_ao(struct aoRecord *pao)
 	   pao->val=0.0;
 	   break;
        case CPCI_AO_SYN_OSC_COUNT:
+	   pao->val=0.0;
+	   break;
+       case CPCI_AO_SYN_OSC_S_ENABLE:
+	   pao->val=0.0;
+	   break;
+       case CPCI_AO_SYN_OSC_E_ENABLE:
+	   pao->val=0.0;
+	   break;
+       case CPCI_AO_SYN_PHASE_COEF:
+	   pao->val=0.0;
+	   break;
+       case CPCI_AO_EX_TIMING:
+	   pao->val=0.0;
+	   break;
+       case CPCI_AO_FPGA_RESTART:
 	   pao->val=0.0;
 	   break;
        default:
@@ -1515,6 +1565,21 @@ static long write_ao(struct aoRecord *pao) {
        case CPCI_AO_SYN_OSC_COUNT:
            set_Syn_Osc_Count(((recPrivate*)pao->dpvt)->pCard, pao->val);
            break;
+       case CPCI_AO_SYN_OSC_S_ENABLE:
+           set_Syn_Osc_S_Enable(((recPrivate*)pao->dpvt)->pCard, pao->val);
+           break;
+       case CPCI_AO_SYN_OSC_E_ENABLE:
+           set_Syn_Osc_E_Enable(((recPrivate*)pao->dpvt)->pCard, pao->val);
+           break;
+       case CPCI_AO_SYN_PHASE_COEF:
+           set_Syn_Phase_Coef(((recPrivate*)pao->dpvt)->pCard, pao->val);
+           break;
+       case CPCI_AO_EX_TIMING:
+           set_ex_timing(((recPrivate*)pao->dpvt)->pCard, pao->val);
+           break;
+       case CPCI_AO_FPGA_RESTART:
+           set_fpga_restart(((recPrivate*)pao->dpvt)->pCard, pao->val);
+           break;
        default:
            recGblRecordError(S_db_badField,(void *)pao,
                     "devAoD212 Write_ao, bad parm");
@@ -1543,17 +1608,11 @@ static long init_wf(struct waveformRecord *pwf) {
         CHECK_WFPARM("WF_1", CPCI_WF_1);
         CHECK_WFPARM("WF_2", CPCI_WF_2);
         CHECK_WFPARM("WF_3", CPCI_WF_3);
-        CHECK_WFPARM("WF_4_A", CPCI_WF_4_A);
-        CHECK_WFPARM("WF_4_B", CPCI_WF_4_B);
-        CHECK_WFPARM("WF_5_A", CPCI_WF_5_A);
-        CHECK_WFPARM("WF_5_B", CPCI_WF_5_B);
-        CHECK_WFPARM("WF_6_A", CPCI_WF_6_A);
-        CHECK_WFPARM("WF_6_B", CPCI_WF_6_B);
+        CHECK_WFPARM("WF_4", CPCI_WF_4);
+        CHECK_WFPARM("WF_5", CPCI_WF_5);
+        CHECK_WFPARM("WF_6", CPCI_WF_6);
         CHECK_WFPARM("WF_7", CPCI_WF_7);
         CHECK_WFPARM("WF_8", CPCI_WF_8);
-        CHECK_WFPARM("WF_AMP_SKEW", CPCI_WF_AMP_SKEW);
-        CHECK_WFPARM("WF_GRID", CPCI_WF_GRID);
-        CHECK_WFPARM("WF_FRONT", CPCI_WF_FRONT);
     } while(0);
 
     if (!parmOK) {
@@ -1563,7 +1622,7 @@ static long init_wf(struct waveformRecord *pwf) {
         return (S_db_badField);
     }
 
-    if (pwf->ftvl != DBF_FLOAT) {
+    if (pwf->ftvl != DBF_ULONG) {
         recGblRecordError(S_db_badField, (void *)pwf,
                    "devWfD212 (init_record) Illegal FTVL field");
         return(S_db_badField);
@@ -1574,65 +1633,42 @@ static long init_wf(struct waveformRecord *pwf) {
 
 static long read_wf(struct waveformRecord *pwf) {
     int numRead = pwf->nelm;
-    float *pSrc;
-    float *pDest = pwf->bptr;
+    unsigned int *pSrc;
+    unsigned int *pDest = pwf->bptr;
     switch (((recPrivate*)pwf->dpvt)->function) {
        case CPCI_WF_1:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->floatBuffer + WF1_FADDR + 1;
+          pSrc = ((recPrivate*)pwf->dpvt)->pCard->buffer + WF1_ADDR + 1;
           memcpy(pDest, pSrc, numRead*sizeof(float));
           break;
        case CPCI_WF_2:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->floatBuffer + WF2_FADDR + 1;
+          pSrc = ((recPrivate*)pwf->dpvt)->pCard->buffer + WF2_ADDR + 1;
           memcpy(pDest, pSrc, numRead*sizeof(float));
           break;
        case CPCI_WF_3:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->floatBuffer + WF3_FADDR + 1;
+          pSrc = ((recPrivate*)pwf->dpvt)->pCard->buffer + WF3_ADDR + 1;
           memcpy(pDest, pSrc, numRead*sizeof(float));
           break;
-       case CPCI_WF_4_A:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->floatBuffer + WF4_FADDR_A + 1;
+       case CPCI_WF_4:
+          pSrc = ((recPrivate*)pwf->dpvt)->pCard->buffer + WF4_ADDR + 1;
           memcpy(pDest, pSrc, numRead*sizeof(float));
           break;
-       case CPCI_WF_4_B:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->floatBuffer + WF4_FADDR_B + 1;
+       case CPCI_WF_5:
+          pSrc = ((recPrivate*)pwf->dpvt)->pCard->buffer + WF5_ADDR + 1;
           memcpy(pDest, pSrc, numRead*sizeof(float));
           break;
-       case CPCI_WF_5_A:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->floatBuffer + WF5_FADDR_A + 1;
-          memcpy(pDest, pSrc, numRead*sizeof(float));
-          break;
-       case CPCI_WF_5_B:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->floatBuffer + WF5_FADDR_B + 1;
-          memcpy(pDest, pSrc, numRead*sizeof(float));
-          break;
-       case CPCI_WF_6_A:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->floatBuffer + WF6_FADDR_A + 1;
-          memcpy(pDest, pSrc, numRead*sizeof(float));
-          break;
-       case CPCI_WF_6_B:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->floatBuffer + WF6_FADDR_B + 1;
+       case CPCI_WF_6:
+          pSrc = ((recPrivate*)pwf->dpvt)->pCard->buffer + WF6_ADDR + 1;
           memcpy(pDest, pSrc, numRead*sizeof(float));
           break;
        case CPCI_WF_7:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->floatBuffer + WF7_FADDR + 1;
+          pSrc = ((recPrivate*)pwf->dpvt)->pCard->buffer + WF7_ADDR + 1;
           memcpy(pDest, pSrc, numRead*sizeof(float));
           break;
        case CPCI_WF_8:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->floatBuffer + WF8_FADDR + 1;
+          pSrc = ((recPrivate*)pwf->dpvt)->pCard->buffer + WF8_ADDR + 1;
           memcpy(pDest, pSrc, numRead*sizeof(float));
           break;
-       case CPCI_WF_AMP_SKEW:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->ampSkewBuffer + 1;
-          memcpy(pDest, pSrc, numRead*sizeof(float));
-          break;
-       case CPCI_WF_GRID:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->gridBuffer + 1;
-          memcpy(pDest, pSrc, numRead*sizeof(float));
-          break;
-       case CPCI_WF_FRONT:
-          pSrc = ((recPrivate*)pwf->dpvt)->pCard->frontBuffer + 1;
-          memcpy(pDest, pSrc, numRead*sizeof(float));
-          break;
+
        default:
            recGblRecordError(S_db_badField,(void *)pwf,
                     "devWfCPCI9110 Read_wf, bad parm");
@@ -1707,7 +1743,7 @@ static long write_wf_wr_1(struct waveformRecord *pwf) {
     unsigned int *pwdata;
     int i,j;
 
-    for(i=0;i<9;i++){
+    for(i=0;i<11;i++){
     pwrBuffer = getCardStruct(i)->wrBuffer1;
     pwdata = getCardStruct(i)->wdata1;
 

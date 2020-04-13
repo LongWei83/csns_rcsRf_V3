@@ -1,3 +1,15 @@
+record(bo,"rcsRf5:autoOff") {
+		field(DESC,"4")
+		field(DTYP,"AutoOff")
+		field(ZNAM,"0")
+		field(ONAM,"1")
+}
+record(bo,"rcsRf5:autoOn") {
+		field(DESC,"4")
+		field(DTYP,"AutoOn")
+		field(ZNAM,"0")
+		field(ONAM,"1")
+}
 record(bi,"rcsRf5:frontTuneFFOption_get") {
         field(DESC, "")
         field(DTYP,"D212")
@@ -464,33 +476,6 @@ record(bo,"rcsRf5:sgMode_set") {
         field(OUT,"#C4 S @SG_MODE")
         field(ZNAM,"0")
         field(ONAM,"1")
-}
-
-record(ai,"rcsRf5:FrontRfVol:ai")
-{
-	field(DESC, "")
-        field(PREC, "7")
-        field(DTYP, "D212")
-	field(INP, "#C4 S @FRONT_RF_VOL")
-        field(SCAN,"1 second")
-}
-
-record(ai,"rcsRf5:GridRfVol:ai")
-{
-	field(DESC, "")
-        field(PREC, "7")
-        field(DTYP, "D212")
-	field(INP, "#C4 S @GRID_RF_VOL")
-        field(SCAN,"1 second")
-}
-
-record(ai,"rcsRf5:CavRfVol:ai")
-{
-	field(DESC, "")
-        field(PREC, "7")
-        field(DTYP, "D212")
-	field(INP, "#C4 S @CAV_RF_VOL")
-        field(SCAN,"1 second")
 }
 
 record(ai,"rcsRf5:workPeriod_get")
@@ -1015,101 +1000,56 @@ record(waveform,"rcsRf5:wf_1") {
         field(DTYP,"D212 READ")
         field(INP,"#C4 S @WF_1")
         field(NELM,"2048")
-        field(FTVL,"FLOAT")
+        field(FTVL,"ULONG")
 }
 record(waveform,"rcsRf5:wf_2") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
         field(INP,"#C4 S @WF_2")
         field(NELM,"2048")
-        field(FTVL,"FLOAT")
+        field(FTVL,"ULONG")
 }
 record(waveform,"rcsRf5:wf_3") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
         field(INP,"#C4 S @WF_3")
         field(NELM,"2048")
-        field(FTVL,"FLOAT")
+        field(FTVL,"ULONG")
 }
-record(waveform,"rcsRf5:wf_4a") {
+record(waveform,"rcsRf5:wf_4") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
-        field(INP,"#C4 S @WF_4_A")
+        field(INP,"#C4 S @WF_4")
         field(NELM,"2048")
-        field(FTVL,"FLOAT")
+        field(FTVL,"ULONG")
 }
-record(waveform,"rcsRf5:wf_4b") {
+record(waveform,"rcsRf5:wf_5") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
-        field(INP,"#C4 S @WF_4_B")
+        field(INP,"#C4 S @WF_5")
         field(NELM,"2048")
-        field(FTVL,"FLOAT")
+        field(FTVL,"ULONG")
 }
-record(waveform,"rcsRf5:wf_5a") {
+record(waveform,"rcsRf5:wf_6") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
-        field(INP,"#C4 S @WF_5_A")
+        field(INP,"#C4 S @WF_6")
         field(NELM,"2048")
-        field(FTVL,"FLOAT")
-}
-record(waveform,"rcsRf5:wf_5b") {
-        field(SCAN,"I/O Intr")
-        field(DTYP,"D212 READ")
-        field(INP,"#C4 S @WF_5_B")
-        field(NELM,"2048")
-        field(FTVL,"FLOAT")
-}
-record(waveform,"rcsRf5:wf_6a") {
-        field(SCAN,"I/O Intr")
-        field(DTYP,"D212 READ")
-        field(INP,"#C4 S @WF_6_A")
-        field(NELM,"2048")
-        field(FTVL,"FLOAT")
-}
-record(waveform,"rcsRf5:wf_6b") {
-        field(SCAN,"I/O Intr")
-        field(DTYP,"D212 READ")
-        field(INP,"#C4 S @WF_6_B")
-        field(NELM,"2048")
-        field(FTVL,"FLOAT")
+        field(FTVL,"ULONG")
 }
 record(waveform,"rcsRf5:wf_7") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
         field(INP,"#C4 S @WF_7")
         field(NELM,"2048")
-        field(FTVL,"FLOAT")
+        field(FTVL,"ULONG")
 }
 record(waveform,"rcsRf5:wf_8") {
         field(SCAN,"I/O Intr")
         field(DTYP,"D212 READ")
         field(INP,"#C4 S @WF_8")
         field(NELM,"2048")
-        field(FTVL,"FLOAT")
-}
-record(waveform,"rcsRf5:wf_amp_skew") {
-        field(FLNK, "rcsRf5:ampErrMax")
-        field(SCAN,"I/O Intr")
-        field(DTYP,"D212 READ")
-        field(INP,"#C4 S @WF_AMP_SKEW")
-        field(NELM,"2048")
-        field(FTVL,"FLOAT")
-}
-
-record(waveform,"rcsRf5:wf_grid") {
-        field(SCAN,"I/O Intr")
-        field(DTYP,"D212 READ")
-        field(INP,"#C4 S @WF_GRID")
-        field(NELM,"2048")
-        field(FTVL,"FLOAT")
-}
-
-record(waveform,"rcsRf5:wf_front") {
-        field(SCAN,"I/O Intr")
-        field(DTYP,"D212 READ")
-        field(INP,"#C4 S @WF_FRONT")
-        field(NELM,"2048")
-        field(FTVL,"FLOAT")
+        field(FTVL,"ULONG")
 }
 
 

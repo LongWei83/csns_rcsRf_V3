@@ -1,0 +1,444 @@
+record(bi,"rcsRf11:intEnable_get") {
+        field(DESC, "")
+        field(DTYP,"D212")
+        field(INP,"#C9 S @INT_ENABLE")
+        field(ZNAM,"0")
+        field(ONAM,"1")
+        field(SCAN,"1 second")
+}
+
+record(bi,"rcsRf11:sweepOption_get") {
+        field(DESC, "")
+        field(DTYP,"D212")
+        field(INP,"#C9 S @SWEEP_OPTION")
+        field(ZNAM,"0")
+        field(ONAM,"1")
+        field(SCAN,"1 second")
+}
+
+record(bi,"rcsRf11:pointSweep_get") {
+        field(DESC, "")
+        field(DTYP,"D212")
+        field(INP,"#C9 S @POINT_SWEEP")
+        field(ZNAM,"0")
+        field(ONAM,"1")
+        field(SCAN,"1 second")
+}
+record(bi,"rcsRf11:rfReset_get") {
+        field(DESC, "")
+        field(DTYP,"D212")
+        field(INP,"#C9 S @RF_RESET")
+        field(ZNAM,"0")
+        field(ONAM,"1")
+        field(SCAN,"1 second")
+}
+
+record(bi,"rcsRf11:freChangeOption_get") {
+        field(DESC, "")
+        field(DTYP,"D212")
+        field(INP,"#C9 S @FRE_CHANGE_OPTION")
+        field(ZNAM,"0")
+        field(ONAM,"1")
+        field(SCAN,"1 second")
+}
+
+record(bi,"rcsRf11:alarm0_get") {
+        field(DESC, "")
+        field(DTYP,"D212")
+        field(INP,"#C9 S @ALARM0")
+        field(ZNAM,"0")
+        field(ONAM,"1")
+        field(SCAN,"1 second")
+}
+
+record(bi,"rcsRf11:alarm1_get") {
+        field(DESC, "")
+        field(DTYP,"D212")
+        field(INP,"#C9 S @ALARM1")
+        field(ZNAM,"0")
+        field(ONAM,"1")
+        field(SCAN,"1 second")
+}
+
+record(bi,"rcsRf11:alarm2_get") {
+        field(DESC, "")
+        field(DTYP,"D212")
+        field(INP,"#C9 S @ALARM2")
+        field(ZNAM,"0")
+        field(ONAM,"1")
+        field(SCAN,"1 second")
+}
+
+record(bi,"rcsRf11:alarm3_get") {
+        field(DESC, "")
+        field(DTYP,"D212")
+        field(INP,"#C9 S @ALARM3")
+        field(ZNAM,"0")
+        field(ONAM,"1")
+        field(SCAN,"1 second")
+}
+
+record(bi,"rcsRf11:alarm4_get") {
+        field(DESC, "")
+        field(DTYP,"D212")
+        field(INP,"#C9 S @ALARM4")
+        field(ZNAM,"0")
+        field(ONAM,"1")
+        field(SCAN,"1 second")
+}
+
+record(bi,"rcsRf11:alarm5_get") {
+        field(DESC, "")
+        field(DTYP,"D212")
+        field(INP,"#C9 S @ALARM5")
+        field(ZNAM,"0")
+        field(ONAM,"1")
+        field(SCAN,"1 second")
+}
+
+record(bi,"rcsRf11:alarm6_get") {
+        field(DESC, "")
+        field(DTYP,"D212")
+        field(INP,"#C9 S @ALARM6")
+        field(ZNAM,"0")
+        field(ONAM,"1")
+        field(SCAN,"1 second")
+}
+
+record(bi,"rcsRf11:alarm7_get") {
+        field(DESC, "")
+        field(DTYP,"D212")
+        field(INP,"#C9 S @ALARM7")
+        field(ZNAM,"0")
+        field(ONAM,"1")
+        field(SCAN,"1 second")
+}
+
+record(bi,"rcsRf11:alarm8_get") {
+        field(DESC, "")
+        field(DTYP,"D212")
+        field(INP,"#C9 S @ALARM8")
+        field(ZNAM,"0")
+        field(ONAM,"1")
+        field(SCAN,"1 second")
+}
+
+record(bi,"rcsRf11:drvReset_get") {
+        field(DESC, "")
+        field(DTYP,"D212")
+        field(INP,"#C9 S @DRV_RESET")
+        field(ZNAM,"0")
+        field(ONAM,"1")
+        field(SCAN,"1 second")
+}
+
+record(bi,"rcsRf11:beam_int_get") {
+        field(DESC, "")
+        field(DTYP,"D212")
+        field(INP,"#C9 S @BEAM_INT")
+        field(ZNAM,"0")
+        field(ONAM,"1")
+        field(SCAN,"1 second")
+}
+
+record(bo,"rcsRf11:beam_int_set") {
+        field(DESC, "")
+        field(DTYP,"D212")
+        field(OUT,"#C9 S @BEAM_INT")
+        field(ZNAM,"0")
+        field(ONAM,"1")
+}
+
+record(bo,"rcsRf11:intEnable_set") {
+        field(DESC, "")
+        field(DTYP,"D212")
+        field(OUT,"#C9 S @INT_ENABLE")
+        field(ZNAM,"0")
+        field(ONAM,"1")
+}
+
+record(bo,"rcsRf11:sweepOption_set") {
+        field(DESC, "")
+        field(DTYP,"D212")
+        field(OUT,"#C9 S @SWEEP_OPTION")
+        field(ZNAM,"0")
+        field(ONAM,"1")
+}
+
+record(bo,"rcsRf11:pointSweep_set") {
+        field(DESC, "")
+        field(DTYP,"D212")
+        field(OUT,"#C9 S @POINT_SWEEP")
+        field(ZNAM,"0")
+        field(ONAM,"1")
+}
+
+record(bo,"rcsRf11:rfReset_set") {
+        field(DESC, "")
+        field(DTYP,"D212")
+        field(OUT,"#C9 S @RF_RESET")
+        field(ZNAM,"0")
+        field(ONAM,"1")
+}
+
+record(bo,"rcsRf11:errorOption_set") {
+        field(DESC, "")
+        field(DTYP,"D212")
+        field(OUT,"#C9 S @ERROR_OPTION")
+        field(ZNAM,"0")
+        field(ONAM,"1")
+}
+
+record(bo,"rcsRf11:freChangeOption_set") {
+        field(DESC, "")
+        field(DTYP,"D212")
+        field(OUT,"#C9 S @FRE_CHANGE_OPTION")
+        field(ZNAM,"0")
+        field(ONAM,"1")
+}
+
+record(bo,"rcsRf11:drvReset_set") {
+        field(DESC, "")
+        field(DTYP,"D212")
+        field(OUT,"#C9 S @DRV_RESET")
+        field(ZNAM,"0")
+        field(ONAM,"1")
+}
+
+record(ai,"rcsRf11:workPeriod_get")
+{
+        field(DESC, "")
+        field(PREC, "4")
+        field(DTYP, "D212")
+        field(INP, "#C9 S @WORK_PERIOD")
+        field(SCAN,"1 second")
+	field(EGU,"ms")
+}
+
+record(ai,"rcsRf11:fixFrequency_get")
+{
+        field(DESC, "")
+        field(PREC, "6")
+        field(DTYP, "D212")
+        field(INP, "#C9 S @FIX_FREQUENCY")
+        field(SCAN,"1 second")
+	field(EGU,"MHz")
+}
+
+record(ai,"rcsRf11:PreTrig_Delay_get")
+{
+        field(DESC, "")
+        field(PREC, "4")
+        field(DTYP, "D212")
+	field(INP, "#C9 S @PRETRIG_DELAY")
+        field(SCAN,"1 second")
+}
+
+record(ai,"rcsRf11:Int_Delay_get")
+{
+        field(DESC, "")
+        field(PREC, "4")
+        field(DTYP, "D212")
+	field(INP, "#C9 S @INT_DELAY")
+        field(SCAN,"1 second")
+}
+
+record(ai,"rcsRf11:ref_delayAB_get")
+{
+        field(DESC, "")
+        field(PREC, "4")
+        field(DTYP, "D212")
+        field(INP, "#C9 S @REF_DELAY_AB")
+        field(SCAN,"1 second")
+}
+
+record(ai,"rcsRf11:ref_delayC_get")
+{
+        field(DESC, "")
+        field(PREC, "4")
+        field(DTYP, "D212")
+        field(INP, "#C9 S @REF_DELAY_C")
+        field(SCAN,"1 second")
+}
+
+record(ai,"rcsRf11:ref_delayD_get")
+{
+        field(DESC, "")
+        field(PREC, "4")
+        field(DTYP, "D212")
+        field(INP, "#C9 S @REF_DELAY_D")
+        field(SCAN,"1 second")
+}
+
+record(ai,"rcsRf11:allPretrig_get")
+{
+        field(DESC, "")
+        field(PREC, "4")
+        field(DTYP, "D212")
+        field(INP, "#C9 S @ALL_PRETRIG")
+        field(SCAN,"1 second")
+}
+
+record(ao,"rcsRf11:workPeriod_set")
+{
+        field(DESC, "")
+        field(PREC, "4")
+        field(DTYP, "D212")
+        field(OUT, "#C9 S @WORK_PERIOD")
+}
+
+
+record(ao,"rcsRf11:fixFrequency_set")
+{
+        field(DESC, "")
+        field(PREC, "6")
+        field(DTYP, "D212")
+        field(OUT, "#C9 S @FIX_FREQUENCY")
+}
+
+record(ao,"rcsRf11:PreTrig_Delay_set")
+{
+        field(DESC, "")
+        field(PREC, "4")
+        field(DTYP, "D212")
+        field(OUT, "#C9 S @PRETRIG_DELAY")
+	field(PINI, "YES")
+}
+
+record(ao,"rcsRf11:Int_Delay_set")
+{
+        field(DESC, "")
+        field(PREC, "4")
+        field(DTYP, "D212")
+        field(OUT, "#C9 S @INT_DELAY")
+}
+
+record(ao,"rcsRf11:ref_delayAB_set")
+{
+        field(DESC, "")
+        field(PREC, "6")
+        field(DTYP, "D212")
+        field(OUT, "#C9 S @REF_DELAY_AB")
+}
+
+record(ao,"rcsRf11:ref_delayC_set")
+{
+        field(DESC, "")
+        field(PREC, "6")
+        field(DTYP, "D212")
+        field(OUT, "#C9 S @REF_DELAY_C")
+}
+
+record(ao,"rcsRf11:ref_delayD_set")
+{
+        field(DESC, "")
+        field(PREC, "6")
+        field(DTYP, "D212")
+        field(OUT, "#C9 S @REF_DELAY_D")
+}
+
+record(waveform,"rcsRf11:wf_1") {
+        field(SCAN,"I/O Intr")
+        field(DTYP,"D212 READ")
+        field(INP,"#C9 S @WF_1")
+        field(NELM,"2048")
+        field(FTVL,"ULONG")
+}
+
+record(waveform,"rcsRf11:wf_2") {
+        field(SCAN,"I/O Intr")
+        field(DTYP,"D212 READ")
+        field(INP,"#C9 S @WF_2")
+        field(NELM,"2048")
+        field(FTVL,"ULONG")
+}
+
+record(waveform,"rcsRf11:wf_3") {
+        field(SCAN,"I/O Intr")
+        field(DTYP,"D212 READ")
+        field(INP,"#C9 S @WF_3")
+        field(NELM,"2048")
+        field(FTVL,"ULONG")
+}
+
+record(waveform,"rcsRf11:wf_4") {
+        field(SCAN,"I/O Intr")
+        field(DTYP,"D212 READ")
+        field(INP,"#C9 S @WF_4")
+        field(NELM,"2048")
+        field(FTVL,"ULONG")
+}
+
+record(waveform,"rcsRf11:wf_5") {
+        field(SCAN,"I/O Intr")
+        field(DTYP,"D212 READ")
+        field(INP,"#C9 S @WF_5")
+        field(NELM,"2048")
+        field(FTVL,"ULONG")
+}
+
+record(waveform,"rcsRf11:wf_6") {
+        field(SCAN,"I/O Intr")
+        field(DTYP,"D212 READ")
+        field(INP,"#C9 S @WF_6")
+        field(NELM,"2048")
+        field(FTVL,"ULONG")
+}
+
+record(waveform,"rcsRf11:wf_7") {
+        field(SCAN,"I/O Intr")
+        field(DTYP,"D212 READ")
+        field(INP,"#C9 S @WF_7")
+        field(NELM,"2048")
+        field(FTVL,"ULONG")
+}
+
+record(waveform,"rcsRf11:wf_8") {
+        field(SCAN,"I/O Intr")
+        field(DTYP,"D212 READ")
+        field(INP,"#C9 S @WF_8")
+        field(NELM,"2048")
+        field(FTVL,"ULONG")
+}
+
+record(waveform,"rcsRf11:wr_rd_fre") {
+        field(DTYP,"WR READ")
+        field(INP,"#C9 S @WR_RD1")
+        field(NELM,"8192")
+        field(FTVL,"ULONG")
+}
+
+record(ai,"rcsRf11:tuningAngleOffset_get")
+{
+        field(DESC, "")
+        field(PREC, "4")
+        field(DTYP, "D212")
+        field(INP, "#C9 S @TUNING_ANGLE_OFFSET")
+        field(SCAN,"1 second")
+}
+
+record(ao,"rcsRf11:tuningAngleOffset_set")
+{
+        field(DESC, "")
+        field(PREC, "4")
+        field(DTYP, "D212")
+        field(OUT, "#C9 S @TUNING_ANGLE_OFFSET")
+}
+
+record(ai,"rcsRf11:fpga_restart_get")
+{
+	field(DESC, "")
+        field(PREC, "7")
+        field(DTYP, "D212")
+	field(INP, "#C9 S @FPGA_RESTART")
+        field(SCAN,"1 second")
+}
+
+
+record(ao,"rcsRf11:fpga_restart_set")
+{
+        field(DESC, "")
+        field(PREC, "4")
+        field(DTYP, "D212")
+        field(OUT, "#C9 S @FPGA_RESTART")
+}

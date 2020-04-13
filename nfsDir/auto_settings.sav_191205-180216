@@ -1,0 +1,23 @@
+# autosave R5.3	Automatically generated - DO NOT MODIFY - 191205-164909
+! 1 channel(s) not connected - or not all gets were successful
+rcsRf1:PreTrig_Delay_set 0
+rcsRf2:PreTrig_Delay_set 0
+rcsRf3:PreTrig_Delay_set 0
+rcsRf4:PreTrig_Delay_set 0
+rcsRf5:PreTrig_Delay_set 0
+rcsRf6:PreTrig_Delay_set 0
+rcsRf7:PreTrig_Delay_set 0
+rcsRf8:PreTrig_Delay_set 0
+rcsRf9:PreTrig_Delay_set 0
+rcsRf10:PreTrig_Delay_set 0
+rcsRf11:PreTrig_Delay_set 0
+#rcsRf12:PreTrig_Delay_set Search Issued
+rcsRf9:allPretrig_set 130700
+rcsRf9:Rf_Harmonic_set 2
+rcsRf9:chopper_Phase_set 170
+rcsRf9:Chopper_Duty_set 41
+rcsRf9:ex_Delay_set 510
+rcsRf9:BPM_Delay_set 113
+rcsRf9:exPhase_set 52
+rcsRf9:allBeamPhase_set 0
+<END>
